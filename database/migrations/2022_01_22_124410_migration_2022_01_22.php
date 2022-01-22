@@ -117,7 +117,7 @@ class Migration20220122 extends Migration
             $table->string('nome');
             $table->string('sigla')->nullable();
             $table->string('ugr');
-            $table->json('logs');
+            $table->json('logs')->nullable();
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->unsignedBigInteger('unidade_gestora_id');

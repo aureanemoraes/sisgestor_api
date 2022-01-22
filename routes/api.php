@@ -6,6 +6,7 @@ use App\Http\Controllers\InstituicaoController;
 use App\Http\Controllers\ExercicioController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\UnidadeGestoraController;
+use App\Http\Controllers\UnidadeAdministrativaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,8 @@ Route::get('unidades_gestoras/opcoes', [UnidadeGestoraController::class, 'getOpc
 Route::get('unidades_gestoras/todos', [UnidadeGestoraController::class, 'indexWithTrashed']);
 Route::get('unidades_gestoras/restore/{id}', [UnidadeGestoraController::class, 'restore']);
 Route::apiResource('unidades_gestoras', UnidadeGestoraController::class);
+
+Route::get('unidades_administrativas/opcoes', [UnidadeAdministrativaController::class, 'getOpcoes']);
+Route::get('unidades_administrativas/todos', [UnidadeAdministrativaController::class, 'indexWithTrashed']);
+Route::get('unidades_administrativas/restore/{id}', [UnidadeAdministrativaController::class, 'restore']);
+Route::apiResource('unidades_administrativas', UnidadeAdministrativaController::class);
