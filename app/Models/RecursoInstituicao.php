@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use NumberFormatter;
 
 class RecursoInstituicao extends Model
 {
@@ -21,7 +22,7 @@ class RecursoInstituicao extends Model
     // Accessors
     public function getValorAttribute($value)
     {
-        $moeda = new NumberFormatter('pt_BR', NumberFormatter::DECIMAL);
+        $moeda = new NumberFormatter('pt_BR', NumberFormatter::CURRENCY);
    
         return $moeda->formatCurrency($value, 'BRL');
     }
