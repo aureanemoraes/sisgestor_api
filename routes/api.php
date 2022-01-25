@@ -7,6 +7,12 @@ use App\Http\Controllers\ExercicioController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\UnidadeGestoraController;
 use App\Http\Controllers\UnidadeAdministrativaController;
+use App\Http\Controllers\RecursoInstituicaoController;
+use App\Http\Controllers\RecursoGestoraController;
+use App\Http\Controllers\RecursoAdministrativaController;
+use App\Http\Controllers\MovimentoInstituicaoController;
+use App\Http\Controllers\MovimentoGestoraController;
+use App\Http\Controllers\MovimentoAdministrativaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +52,28 @@ Route::get('unidades_administrativas/opcoes', [UnidadeAdministrativaController::
 Route::get('unidades_administrativas/todos', [UnidadeAdministrativaController::class, 'indexWithTrashed']);
 Route::get('unidades_administrativas/restore/{id}', [UnidadeAdministrativaController::class, 'restore']);
 Route::apiResource('unidades_administrativas', UnidadeAdministrativaController::class);
+
+Route::get('recursos_instituicoes/todos', [RecursoInstituicaoController::class, 'indexWithTrashed']);
+Route::get('recursos_instituicoes/restore/{id}', [RecursoInstituicaoController::class, 'restore']);
+Route::apiResource('recursos_instituicoes', RecursoInstituicaoController::class);
+
+Route::get('recursos_gestoras/todos', [RecursoGestoraController::class, 'indexWithTrashed']);
+Route::get('recursos_gestoras/restore/{id}', [RecursoGestoraController::class, 'restore']);
+Route::apiResource('recursos_gestoras', RecursoGestoraController::class);
+
+Route::get('recursos_administrativas/todos', [RecursoAdministrativaController::class, 'indexWithTrashed']);
+Route::get('recursos_administrativas/restore/{id}', [RecursoAdministrativaController::class, 'restore']);
+Route::apiResource('recursos_administrativas', RecursoAdministrativaController::class);
+
+Route::get('movimentos_instituicoes/todos', [MovimentoInstituicaoController::class, 'indexWithTrashed']);
+Route::get('movimentos_instituicoes/restore/{id}', [MovimentoInstituicaoController::class, 'restore']);
+Route::apiResource('movimentos_instituicoes', MovimentoInstituicaoController::class);
+
+Route::get('movimentos_gestoras/todos', [MovimentoGestoraController::class, 'indexWithTrashed']);
+Route::get('movimentos_gestoras/restore/{id}', [MovimentoGestoraController::class, 'restore']);
+Route::apiResource('movimentos_gestoras', MovimentoGestoraController::class);
+
+Route::get('movimentos_administrativas/todos', [MovimentoAdministrativaController::class, 'indexWithTrashed']);
+Route::get('movimentos_administrativas/restore/{id}', [MovimentoAdministrativaController::class, 'restore']);
+Route::apiResource('movimentos_administrativas', MovimentoAdministrativaController::class);
+
