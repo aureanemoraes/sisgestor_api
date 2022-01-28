@@ -13,6 +13,7 @@ use App\Http\Controllers\RecursoAdministrativaController;
 use App\Http\Controllers\MovimentoInstituicaoController;
 use App\Http\Controllers\MovimentoGestoraController;
 use App\Http\Controllers\MovimentoAdministrativaController;
+use App\Http\Controllers\ManutencoesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,4 +77,6 @@ Route::apiResource('movimentos_gestoras', MovimentoGestoraController::class);
 Route::get('movimentos_administrativas/todos', [MovimentoAdministrativaController::class, 'indexWithTrashed']);
 Route::get('movimentos_administrativas/restore/{id}', [MovimentoAdministrativaController::class, 'restore']);
 Route::apiResource('movimentos_administrativas', MovimentoAdministrativaController::class);
+
+Route::get('/teste', [ManutencoesController::class, 'teste']);
 
