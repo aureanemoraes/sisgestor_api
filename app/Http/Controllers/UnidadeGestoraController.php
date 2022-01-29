@@ -134,7 +134,7 @@ class UnidadeGestoraController extends ApiBaseController
 			'uasg' => ['required'],
 			'data_inicio' => ['required'],
 			'data_fim' => ['required'],
-			'diretor_geral_id' => ['required', 'exists:pessoas,id'],
+			'diretor_geral' => ['required'],
 			'instituicao_id' => ['required', 'exists:instituicoes,id']
 		]);
 

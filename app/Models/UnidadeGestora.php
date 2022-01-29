@@ -22,7 +22,7 @@ class UnidadeGestora extends Model
         'numero',
         'bairro',
         'complemento',
-        'diretor_geral_id',
+        'diretor_geral',
         'data_inicio',
         'data_fim',
         'logs',

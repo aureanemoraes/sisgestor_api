@@ -28,36 +28,21 @@ class Migration20220122 extends Migration
             $table->date('data_fim');
             $table->timestamps();
         });
-        // Tabela de Pessoas
-        Schema::create('pessoas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
-            $table->string('cpf');
-            $table->string('logradouro')->nullable();
-            $table->string('cargo')->nullable();
-            $table->string('numero')->nullable();
-            $table->string('bairro')->nullable();
-            $table->string('complemento')->nullable();
-            $table->string('filiacao_1')->nullable();
-            $table->string('filiacao_2')->nullable();
-            $table->string('telefone')->nullable();
-            $table->string('email')->nullable();
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            $table->timestamps();
-        });
         // Tabela de Usuários
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('name');
+            $table->string('cpf');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('senha');
+            $table->string('password');
             $table->string('perfil');
-            $table->unsignedBigInteger('pessoa_id');
-            $table->foreign('pessoa_id')->references('id')->on('pessoas');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('unidade_gestora_id')->nullable();
+            $table->foreign('unidade_gestora_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('instituicoes');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -93,8 +78,7 @@ class Migration20220122 extends Migration
             $table->date('data_inicio');
             $table->date('data_fim');
             $table->json('logs')->nullable();
-            $table->unsignedBigInteger('diretor_geral_id');
-            $table->foreign('diretor_geral_id')->references('id')->on('pessoas');
+            $table->string('diretor_geral');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             // $table->unsignedBigInteger('usuario_exclusao_id');
