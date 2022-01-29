@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubnaturezaDespesa extends Model
+
+class NaturezaDespesaTipo extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    
 
-    protected $table = 'subnaturezas_despesas';
+    protected $table = 'naturezas_despesas_tipos';
 
     protected $fillable = [
         'nome',
         'codigo',
-        'natureza_despesa_id'
+        'tipo'
     ];
 }

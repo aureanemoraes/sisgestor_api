@@ -26,9 +26,6 @@ class Migration20220122 extends Migration
             $table->string('complemento')->nullable();
             $table->date('data_inicio');
             $table->date('data_fim');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Pessoas
@@ -47,9 +44,6 @@ class Migration20220122 extends Migration
             $table->string('email')->nullable();
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Usuários
@@ -83,9 +77,6 @@ class Migration20220122 extends Migration
             $table->tinyInteger('aprovado')->default(0);
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Unidades Gestoras
@@ -127,22 +118,43 @@ class Migration20220122 extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        // Tabela de Matrizez
+        Schema::create('matrizes', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('exercicio_id');
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->timestamps();
+        });
+        // Tabela de MatrizezGestoras
+        Schema::create('matrizes_gestoras', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('unidade_gestora_id');
+            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
+            $table->unsignedBigInteger('matriz_id');
+            $table->foreign('matriz_id')->references('id')->on('matrizes');
+            $table->timestamps();
+        });
+        // Tabela de MatrizezAdministrativas
+        Schema::create('matrizes_administrativas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('unidade_administrativa_id');
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->unsignedBigInteger('matriz_gestora_id');
+            $table->foreign('matriz_gestora_id')->references('id')->on('matrizes_gestoras');
+            $table->timestamps();
+        });
         // Tabela de GruposFontes
         Schema::create('grupos_fontes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Espeficacoes
         Schema::create('especificacoes', function (Blueprint $table) {
             $table->id()->from(0);
             $table->string('nome');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela FontesTipos
@@ -153,41 +165,108 @@ class Migration20220122 extends Migration
             $table->unsignedBigInteger('especificacao_id');
             $table->foreign('especificacao_id')->references('id')->on('especificacoes');
             $table->string('nome');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
-        Schema::create('acoes', function (Blueprint $table) {
+        // Tabela Fontes
+        Schema::create('fontes', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fonte_tipo_id');
+            $table->foreign('fonte_tipo_id')->references('id')->on('fontes_tipos');
+            $table->unsignedBigInteger('matriz_id');
+            $table->foreign('matriz_id')->references('id')->on('matrizes');
+            $table->float('valor');
+            $table->timestamps();
+        });
+        // Tabela Ações Tipos
+        Schema::create('acoes_tipos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('codigo');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
+            $table->timestamps();
+        });
+        // Tabela Ações
+        Schema::create('acoes', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('acao_tipo_id');
+            $table->foreign('acao_tipo_id')->references('id')->on('acoes_tipos');
+            $table->unsignedBigInteger('matriz_id');
+            $table->foreign('matriz_id')->references('id')->on('matrizes');
+            $table->timestamps();
+        });
+        // Tabela Fontes Ações
+        Schema::create('fontes_acoes', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fonte_id');
+            $table->foreign('fonte_id')->references('id')->on('fontes');
+            $table->unsignedBigInteger('acao_id');
+            $table->foreign('acao_id')->references('id')->on('acoes');
+            $table->unsignedBigInteger('matriz_id');
+            $table->foreign('matriz_id')->references('id')->on('matrizes');
+            $table->float('valor');
+            $table->timestamps();
+        });
+        // Tabela Fontes Ações Gestoras
+        Schema::create('fontes_acoes_gestoras', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fonte_acao_id');
+            $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
+            $table->unsignedBigInteger('matriz_gestora_id');
+            $table->foreign('matriz_gestora_id')->references('id')->on('matrizes_gestoras');
+            $table->float('valor');
+            $table->timestamps();
+        });
+        // Tabela Fontes Ações Administrativas
+        Schema::create('fontes_acoes_administrativas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fonte_acao_id');
+            $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
+            $table->unsignedBigInteger('matriz_administrativa_id');
+            $table->foreign('matriz_administrativa_id')->references('id')->on('matrizes_administrativas');
+            $table->float('valor');
+            $table->timestamps();
+        });
+        // Tabela Programas Tipos
+        Schema::create('programas_tipos', function (Blueprint $table) {
+            $table->id();
+            $table->string('codigo');
+            $table->string('nome');
+            $table->timestamps();
+        });
+        // Tabela Programas
+        Schema::create('programas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('programa_tipo_id');
+            $table->foreign('programa_tipo_id')->references('id')->on('programas_tipos');
+            $table->unsignedBigInteger('matriz_id');
+            $table->foreign('matriz_id')->references('id')->on('matrizes');
+            $table->timestamps();
+        });
+        // Tabela Fontes Programas
+        Schema::create('fontes_programas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fonte_id');
+            $table->foreign('fonte_id')->references('id')->on('fontes');
+            $table->unsignedBigInteger('programa_id');
+            $table->foreign('programa_id')->references('id')->on('programas');
+            $table->unsignedBigInteger('matriz_id');
+            $table->foreign('matriz_id')->references('id')->on('matrizes');
             $table->timestamps();
         });
         // Tabela de Naturezas Despesas
-        Schema::create('naturezas_despesas', function (Blueprint $table) {
+        Schema::create('naturezas_despesas_tipos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('codigo');
             $table->string('tipo');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Subnaturezas Despesas
-        Schema::create('subnaturezas_despesas', function (Blueprint $table) {
+        Schema::create('subnaturezas_despesas_tipos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('codigo');
         $table->unsignedBigInteger('natureza_despesa_id');
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Recursos Instituições
@@ -196,9 +275,6 @@ class Migration20220122 extends Migration
             $table->float('valor');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Recursos Gestoras
@@ -209,9 +285,6 @@ class Migration20220122 extends Migration
             $table->foreign('recurso_instituicao_id')->references('id')->on('recursos_instituicoes');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Recursos Administrativas
@@ -222,9 +295,6 @@ class Migration20220122 extends Migration
             $table->foreign('recurso_gestora_id')->references('id')->on('recursos_gestoras');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Movimentos Instituições
@@ -234,9 +304,6 @@ class Migration20220122 extends Migration
             $table->unsignedBigInteger('recurso_instituicao_id');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Recursos Gestoras
@@ -249,9 +316,6 @@ class Migration20220122 extends Migration
             $table->foreign('recurso_gestora_id')->references('id')->on('recursos_gestoras');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
         // Tabela de Recursos Administrativas
@@ -264,9 +328,6 @@ class Migration20220122 extends Migration
             $table->foreign('recurso_admistrativa_id')->references('id')->on('recursos_administrativas');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            // $table->unsignedBigInteger('usuario_exclusao_id');
-            // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

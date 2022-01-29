@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NaturezaDespesa;
+use App\Models\NaturezaDespesaTipo;
 use Illuminate\Http\Request;
 
-class NaturezaDespesaController extends Controller
+class NaturezaDespesaTipoController extends Controller
 {
     /**
      * Display a listing of the resource.
