@@ -218,8 +218,8 @@ class Migration20220122 extends Migration
         // Tabela Fontes Ações Administrativas
         Schema::create('fontes_acoes_administrativas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fonte_acao_id');
-            $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
+            $table->unsignedBigInteger('fonte_acao_gestora_id');
+            $table->foreign('fonte_acao_gestora_id')->references('id')->on('fontes_acoes_gestoras');
             $table->unsignedBigInteger('matriz_administrativa_id');
             $table->foreign('matriz_administrativa_id')->references('id')->on('matrizes_administrativas');
             $table->float('valor');

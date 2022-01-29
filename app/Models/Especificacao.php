@@ -17,4 +17,5 @@ class Especificacao extends Model
         'nome'
     ];
 
+    // Adicionar accessor para exibir o 0 na frente de números com somente uma casa decimal
 }
