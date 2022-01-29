@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class FonteTipo extends Model
+class ProgramaTipo extends Model
 {
     use HasFactory;
 
-    protected $table = 'fontes_tipos';
+    protected $table = 'programas_tipos';
 
     protected $fillable = [
-        'grupo_fonte_id',
-        'especificacao_id',
+        'codigo',
         'nome'
     ];
-
 }

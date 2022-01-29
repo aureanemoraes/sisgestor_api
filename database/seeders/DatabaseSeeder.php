@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GrupoFonteSeeder::class,
             EspecificacaoSeeder::class,
-            AcaoSeeder::class,
-            NaturezaDespesaSeeder::class,
-            SubnaturezaDespesaSeeder::class
+            AcaoTipoSeeder::class,
+            NaturezaDespesaTipoSeeder::class,
+            SubnaturezaDespesaTipoSeeder::class,
+            ProgramaTipoSeeder::class
         ]);
     }
 }

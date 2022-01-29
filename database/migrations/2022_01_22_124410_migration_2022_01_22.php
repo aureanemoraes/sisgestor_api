@@ -266,7 +266,7 @@ class Migration20220122 extends Migration
             $table->string('nome');
             $table->string('codigo');
         $table->unsignedBigInteger('natureza_despesa_id');
-            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas_tipos');
             $table->timestamps();
         });
         // Tabela de Recursos Instituições
