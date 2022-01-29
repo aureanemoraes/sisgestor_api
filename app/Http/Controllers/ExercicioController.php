@@ -87,20 +87,24 @@ class ExercicioController extends ApiBaseController
 
     public function update(Request $request, $id)
     {
-        $exercicio = Exercicio::find($id);
-		if(isset($exercicio)) {
-			try {
-				DB::beginTransaction();
-				$exercicio = ExercicioTransformer::toInstance($request->all(), $exercicio);
-				$exercicio->save();
-				DB::commit();
+			$invalido = $this->validation($request);
 
-				return $this->response(true, $exercicio, 200);
-			} catch (Exception $ex) {
-				DB::rollBack();
-				return $this->response(false, $ex->getMessage(), 409);
+			if($invalido) return $this->response(false, $invalido, 422);
+			
+			$exercicio = Exercicio::find($id);
+			if(isset($exercicio)) {
+				try {
+					DB::beginTransaction();
+					$exercicio = ExercicioTransformer::toInstance($request->all(), $exercicio);
+					$exercicio->save();
+					DB::commit();
+
+					return $this->response(true, $exercicio, 200);
+				} catch (Exception $ex) {
+					DB::rollBack();
+					return $this->response(false, $ex->getMessage(), 409);
+				}
 			}
-		}
     }
 
     public function destroy($id)

@@ -14,6 +14,9 @@ use App\Http\Controllers\MovimentoInstituicaoController;
 use App\Http\Controllers\MovimentoGestoraController;
 use App\Http\Controllers\MovimentoAdministrativaController;
 use App\Http\Controllers\ManutencoesController;
+use App\Http\Controllers\ProgramaTipoController;
+use App\Http\Controllers\GrupoFonteController;
+use App\Http\Controllers\EspecificacaoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +80,10 @@ Route::apiResource('movimentos_gestoras', MovimentoGestoraController::class);
 Route::get('movimentos_administrativas/todos', [MovimentoAdministrativaController::class, 'indexWithTrashed']);
 Route::get('movimentos_administrativas/restore/{id}', [MovimentoAdministrativaController::class, 'restore']);
 Route::apiResource('movimentos_administrativas', MovimentoAdministrativaController::class);
+
+Route::apiResource('programas_tipos', ProgramaTipoController::class);
+Route::apiResource('grupos_fontes', GrupoFonteController::class);
+Route::apiResource('especificacoes', EspecificacaoController::class);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 

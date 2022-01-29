@@ -15,6 +15,9 @@ class GrupoFonteTransformer
 
       foreach ($input as $key => $value) {
         switch ($key) {
+          case 'id':
+            $grupo_fonte->id = $value;
+            break;
           case 'nome':
             $grupo_fonte->nome = $value;
             break;

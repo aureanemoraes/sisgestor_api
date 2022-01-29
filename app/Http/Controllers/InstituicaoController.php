@@ -87,6 +87,10 @@ class InstituicaoController extends ApiBaseController
 
 	public function update(Request $request, $id)
 	{
+		$invalido = $this->validation($request);
+
+		if($invalido) return $this->response(false, $invalido, 422);
+		
 		$instituicao = Instituicao::find($id);
 		if(isset($instituicao)) {
 			try {

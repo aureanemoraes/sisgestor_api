@@ -73,9 +73,9 @@ class UnidadeGestoraController extends ApiBaseController
 
 	public function show($id)
 	{
+		$unidade_gestora = UnidadeGestora::find($id);
+
 		try {
-			$unidade_gestora = UnidadeGestora::find($id);
-			
 			if(isset($unidade_gestora)) 
 				return $this->response(true, $unidade_gestora, 200);
 			else 
@@ -87,20 +87,28 @@ class UnidadeGestoraController extends ApiBaseController
 
 	public function update(Request $request, $id)
 	{
+
+		$invalido = $this->validation($request);
+
+		if($invalido) return $this->response(false, $invalido, 422);
+
 		$unidade_gestora = UnidadeGestora::find($id);
-		if(isset($unidade_gestora)) {
-			try {
+		
+		try {
+			if(isset($unidade_gestora)) {
 				DB::beginTransaction();
 				$unidade_gestora = UnidadeGestoraTransformer::toInstance($request->all(), $unidade_gestora);
 				$unidade_gestora->save();
 				DB::commit();
-
-				return $this->response(true, $unidade_gestora, 200);
-			} catch (Exception $ex) {
-				DB::rollBack();
-				return $this->response(false, $ex->getMessage(), 409);
+			} else {
+				return $this->response(false,'Not found.', 404);
 			}
+			return $this->response(true, $unidade_gestora, 200);
+		} catch (Exception $ex) {
+			DB::rollBack();
+			return $this->response(false, $ex->getMessage(), 409);
 		}
+		
 	}
 
 	public function destroy($id)

@@ -14,8 +14,15 @@ class Especificacao extends Model
     protected $table = 'especificacoes';
 
     protected $fillable = [
+        'id',
         'nome'
     ];
 
     // Adicionar accessor para exibir o 0 na frente de números com somente uma casa decimal
+    public function getIdAttribute($value)
+    {
+        $id = str_pad($value, 2, '0', STR_PAD_LEFT); 
+   
+        return $id;
+    }
 }

@@ -15,6 +15,9 @@ class EspecificacaoTransformer
 
       foreach ($input as $key => $value) {
         switch ($key) {
+          case 'id':
+            $especificacao->id = $value;
+            break;
           case 'nome':
             $especificacao->nome = $value;
             break;

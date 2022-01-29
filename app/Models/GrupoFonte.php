@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class GrupoFonte extends Model
 {
     use HasFactory;
-    
 
     protected $table = 'grupos_fontes';
 
     protected $fillable = [
+        'id',
         'nome'
     ];
 

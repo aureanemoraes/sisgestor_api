@@ -87,6 +87,10 @@ class UnidadeAdministrativaController extends ApiBaseController
 
 	public function update(Request $request, $id)
 	{
+		$invalido = $this->validation($request);
+
+		if($invalido) return $this->response(false, $invalido, 422);
+		
 		$unidade_administrativa = UnidadeAdministrativa::find($id);
 		if(isset($unidade_administrativa)) {
 			try {

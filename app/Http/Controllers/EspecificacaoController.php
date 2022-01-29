@@ -4,61 +4,109 @@ namespace App\Http\Controllers;
 
 use App\Models\Especificacao;
 use Illuminate\Http\Request;
+use App\Http\Transformers\EspecificacaoTransformer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ApiBaseController;
 
-class EspecificacaoController extends Controller
+class EspecificacaoController extends ApiBaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	public function index()
+	{
+		try {
+			return $this->response(true, Especificacao::paginate(), 200);
+		} catch (Exception $ex) {
+			return $this->response(false, $ex->getMessage(), 409);
+		}
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	public function store(Request $request)
+	{
+		$invalido = $this->validation($request);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Especificacao  $especificacao
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Especificacao $especificacao)
-    {
-        //
-    }
+		if($invalido) return $this->response(false, $invalido, 422);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Especificacao  $especificacao
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Especificacao $especificacao)
-    {
-        //
-    }
+		try {
+			DB::beginTransaction();
+			$especificacao = EspecificacaoTransformer::toInstance($request->all());
+			$especificacao->save();
+			DB::commit();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Especificacao  $especificacao
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Especificacao $especificacao)
-    {
-        //
-    }
+			return $this->response(true, $especificacao, 200);
+		} catch (Exception $ex) {
+			DB::rollBack();
+			return $this->response(false, $ex->getMessage(), 409);
+		}
+	}
+
+	public function show($id)
+	{
+        $especificacao = Especificacao::find($id);
+
+        if(isset($especificacao)) {
+            try {
+			
+                if(isset($especificacao)) 
+                    return $this->response(true, $especificacao, 200);
+                else 
+                    return $this->response(false,'Not found.', 404);
+            } catch (Exception $ex) {
+                return $this->response(false, $ex->getMessage(), 409);
+            }
+        } else {
+            return $this->response(false, 'Not found.', 404); 
+        }
+	
+	}
+
+	public function update(Request $request, $id)
+	{
+		$invalido = $this->validation($request);
+
+		if($invalido) return $this->response(false, $invalido, 422);
+        
+		$especificacao = Especificacao::find($id);
+		if(isset($especificacao)) {
+			try {
+				DB::beginTransaction();
+				$especificacao = EspecificacaoTransformer::toInstance($request->all(), $especificacao);
+				$especificacao->save();
+				DB::commit();
+
+				return $this->response(true, $especificacao, 200);
+			} catch (Exception $ex) {
+				DB::rollBack();
+				return $this->response(false, $ex->getMessage(), 409);
+			}
+		} else {
+            return $this->response(false, 'Not found.', 404); 
+        }
+	}
+
+	public function destroy($id)
+	{
+		$especificacao = Especificacao::find($id);
+		if(isset($especificacao)) {
+				try {
+						$especificacao->delete();
+						return $this->response(true, 'Item deleted.', 200);
+				} catch(Exception $ex) {
+						return $this->response(false, $ex->getMessage(), 409);
+				}
+		} else {
+				return $this->response(false, 'Item not found.', 404);
+			}
+	}
+
+	protected function validation($request) 
+	{
+		$validator = Validator::make($request->all(), [
+			'id' => ['required', 'unique:especificacoes,id'],
+			'nome' => ['required']
+		]);
+
+		if ($validator->fails()) {
+				return $validator->errors()->toArray();
+		}
+	}
 }
