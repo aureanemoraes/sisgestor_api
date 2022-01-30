@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class SubnaturezaDespesaTipo extends Model
+class SubNaturezaDespesa extends Model
 {
     use HasFactory;
     
 
-    protected $table = 'subnaturezas_despesas_tipos';
+    protected $table = 'subnaturezas_despesas';
 
     protected $fillable = [
         'nome',

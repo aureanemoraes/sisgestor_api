@@ -18,9 +18,10 @@ use App\Http\Controllers\ProgramaTipoController;
 use App\Http\Controllers\GrupoFonteController;
 use App\Http\Controllers\EspecificacaoController;
 use App\Http\Controllers\FonteTipoController;
+use App\Http\Controllers\AcaoTipoController;
 use App\Http\Controllers\AcaoController;
-use App\Http\Controllers\NaturezaDespesaTipoController;
-use App\Http\Controllers\SubnaturezaDespesaTipoController;
+use App\Http\Controllers\NaturezaDespesaController;
+use App\Http\Controllers\SubNaturezaDespesaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,9 +90,10 @@ Route::apiResource('programas_tipos', ProgramaTipoController::class);
 Route::apiResource('grupos_fontes', GrupoFonteController::class);
 Route::apiResource('especificacoes', EspecificacaoController::class);
 Route::apiResource('fontes_tipos', FonteTipoController::class);
+Route::apiResource('acoes_tipos', AcaoTipoController::class);
 Route::apiResource('acoes', AcaoController::class);
-Route::apiResource('naturezas_despesas_tipos', NaturezaDespezaTipoController::class);
-Route::apiResource('subnaturezas_despesas_tipos', SubnaturezaDespezaTipoController::class);
+Route::apiResource('naturezas_despesas', NaturezaDespesaController::class);
+Route::apiResource('subnaturezas_despesas', SubNaturezaDespesaController::class);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 

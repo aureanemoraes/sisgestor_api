@@ -2,15 +2,15 @@
 
 namespace App\Http\Transformers;
 
-use App\Models\NaturezaDespesaTipo;
+use App\Models\NaturezaDespesa;
 
-class NaturezaDespesaTipoTransformer
+class NaturezaDespesaTransformer
 {
 
     public static function toInstance(array $input, $natureza_despesa_tipo = null)
     {
       if (empty($natureza_despesa_tipo)) {
-        $natureza_despesa_tipo = new NaturezaDespesaTipo();
+        $natureza_despesa_tipo = new NaturezaDespesa();
       }
 
       foreach ($input as $key => $value) {

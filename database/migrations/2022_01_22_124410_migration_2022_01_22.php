@@ -237,7 +237,7 @@ class Migration20220122 extends Migration
             $table->timestamps();
         });
         // Tabela de Naturezas Despesas
-        Schema::create('naturezas_despesas_tipos', function (Blueprint $table) {
+        Schema::create('naturezas_despesas', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('codigo');
@@ -245,12 +245,12 @@ class Migration20220122 extends Migration
             $table->timestamps();
         });
         // Tabela de Subnaturezas Despesas
-        Schema::create('subnaturezas_despesas_tipos', function (Blueprint $table) {
+        Schema::create('subnaturezas_despesas', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('codigo');
         $table->unsignedBigInteger('natureza_despesa_id');
-            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas_tipos');
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
             $table->timestamps();
         });
         // Tabela de Recursos Instituições

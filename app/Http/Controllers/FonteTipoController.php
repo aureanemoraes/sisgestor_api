@@ -101,6 +101,8 @@ class FonteTipoController extends ApiBaseController
 	protected function validation($request) 
 	{
 		$validator = Validator::make($request->all(), [
+			'grupo_fonte_id' => ['required', 'exists:grupos_fontes,id'],
+			'especificacao_id' => ['required', 'exists:especificacoes,id']
 		]);
 
 		if ($validator->fails()) {

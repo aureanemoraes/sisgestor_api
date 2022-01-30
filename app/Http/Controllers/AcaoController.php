@@ -101,6 +101,8 @@ class AcaoController extends ApiBaseController
 	protected function validation($request) 
 	{
 		$validator = Validator::make($request->all(), [
+				'acao_tipo_id' => ['required', 'exists:acoes_tipos,id'],
+        'matriz_id' => ['required', 'exists:matrizes,id']
 		]);
 
 		if ($validator->fails()) {

@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
             GrupoFonteSeeder::class,
             EspecificacaoSeeder::class,
             AcaoTipoSeeder::class,
-            NaturezaDespesaTipoSeeder::class,
-            SubnaturezaDespesaTipoSeeder::class,
+            NaturezaDespesaSeeder::class,
+            SubNaturezaDespesaSeeder::class,
             ProgramaTipoSeeder::class
         ]);
     }
