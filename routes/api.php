@@ -21,7 +21,7 @@ use App\Http\Controllers\FonteTipoController;
 use App\Http\Controllers\AcaoTipoController;
 use App\Http\Controllers\AcaoController;
 use App\Http\Controllers\NaturezaDespesaController;
-use App\Http\Controllers\SubNaturezaDespesaController;
+use App\Http\Controllers\SubnaturezaDespesaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ Route::apiResource('fontes_tipos', FonteTipoController::class);
 Route::apiResource('acoes_tipos', AcaoTipoController::class);
 Route::apiResource('acoes', AcaoController::class);
 Route::apiResource('naturezas_despesas', NaturezaDespesaController::class);
-Route::apiResource('subnaturezas_despesas', SubNaturezaDespesaController::class);
+Route::apiResource('subnaturezas_despesas', SubnaturezaDespesaController::class);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 

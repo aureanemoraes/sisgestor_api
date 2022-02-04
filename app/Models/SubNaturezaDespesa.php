@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class SubNaturezaDespesa extends Model
+class SubnaturezaDespesa extends Model
 {
     use HasFactory;
     
