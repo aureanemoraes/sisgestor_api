@@ -2,15 +2,15 @@
 
 namespace App\Http\Transformers;
 
-use App\Models\SubNaturezaDespesa;
+use App\Models\SubnaturezaDespesa;
 
-class SubNaturezaDespesaTransformer
+class SubnaturezaDespesaTransformer
 {
 
     public static function toInstance(array $input, $subnatureza_despesa_tipo = null)
     {
       if (empty($subnatureza_despesa_tipo)) {
-        $subnatureza_despesa_tipo = new SubNaturezaDespesa();
+        $subnatureza_despesa_tipo = new SubnaturezaDespesa();
       }
 
       foreach ($input as $key => $value) {

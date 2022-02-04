@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubNaturezaDespesa;
+use App\Models\SubnaturezaDespesa;
 use Illuminate\Http\Request;
-use App\Http\Transformers\SubNaturezaDespesaTransformer;
+use App\Http\Transformers\SubnaturezaDespesaTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiBaseController;
 
-class SubNaturezaDespesaController extends ApiBaseController
+class SubnaturezaDespesaController extends ApiBaseController
 {
 	public function index()
 	{
 		try {
-			return $this->response(true, SubNaturezaDespesa::paginate(), 200);
+			return $this->response(true, SubnaturezaDespesa::paginate(), 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
@@ -28,7 +28,7 @@ class SubNaturezaDespesaController extends ApiBaseController
 
 		try {
 			DB::beginTransaction();
-			$subnatureza_despesa_tipo = SubNaturezaDespesaTransformer::toInstance($request->all());
+			$subnatureza_despesa_tipo = SubnaturezaDespesaTransformer::toInstance($request->all());
 			$subnatureza_despesa_tipo->save();
 			DB::commit();
 
@@ -41,7 +41,7 @@ class SubNaturezaDespesaController extends ApiBaseController
 
 	public function show($id)
 	{
-        $subnatureza_despesa_tipo = SubNaturezaDespesa::find($id);
+        $subnatureza_despesa_tipo = SubnaturezaDespesa::find($id);
 
         if(isset($subnatureza_despesa_tipo)) {
             try {
@@ -65,11 +65,11 @@ class SubNaturezaDespesaController extends ApiBaseController
 
 		if($invalido) return $this->response(false, $invalido, 422);
         
-		$subnatureza_despesa_tipo = SubNaturezaDespesa::find($id);
+		$subnatureza_despesa_tipo = SubnaturezaDespesa::find($id);
 		if(isset($subnatureza_despesa_tipo)) {
 			try {
 				DB::beginTransaction();
-				$subnatureza_despesa_tipo = SubNaturezaDespesaTransformer::toInstance($request->all(), $subnatureza_despesa_tipo);
+				$subnatureza_despesa_tipo = SubnaturezaDespesaTransformer::toInstance($request->all(), $subnatureza_despesa_tipo);
 				$subnatureza_despesa_tipo->save();
 				DB::commit();
 
@@ -85,7 +85,7 @@ class SubNaturezaDespesaController extends ApiBaseController
 
 	public function destroy($id)
 	{
-		$subnatureza_despesa_tipo = SubNaturezaDespesa::find($id);
+		$subnatureza_despesa_tipo = SubnaturezaDespesa::find($id);
 		if(isset($subnatureza_despesa_tipo)) {
 				try {
 						$subnatureza_despesa_tipo->delete();
