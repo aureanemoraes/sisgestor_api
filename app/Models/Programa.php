@@ -13,7 +13,7 @@ class Programa extends Model
 
     protected $fillable = [
         'programa_tipo_id',
-        'matriz_id'
+        'exercicio_id'
     ];
 
     public function programa_tipo()
@@ -21,8 +21,8 @@ class Programa extends Model
         return $this->belongsTo(ProgramaTipo::class);
     }
     
-    public function matriz()
+    public function exercicio()
     {
-        return $this->belongsTo(Matriz::class);
+        return $this->belongsTo(exercicio::class);
     } 
 }

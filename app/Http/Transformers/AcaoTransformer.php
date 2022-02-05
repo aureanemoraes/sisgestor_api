@@ -18,8 +18,8 @@ class AcaoTransformer
           case 'acao_tipo_id':
             $acao->acao_tipo_id = $value;
             break;
-          case 'matriz_id':
-            $acao->matriz_id = $value;
+          case 'exercicio_id':
+            $acao->exercicio_id = $value;
             break;
         }
       }

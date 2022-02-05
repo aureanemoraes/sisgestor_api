@@ -127,9 +127,7 @@ class InstituicaoController extends ApiBaseController
 		$validator = Validator::make($request->all(), [
 			'nome' => ['required'],
 			'cnpj' => ['required'],
-			'uasg' => ['required'],
-			'data_inicio' => ['required'],
-			'data_fim' => ['required']
+			'uasg' => ['required']
 		]);
 
 		if ($validator->fails()) {

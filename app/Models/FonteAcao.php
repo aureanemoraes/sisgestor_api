@@ -14,8 +14,11 @@ class FonteAcao extends Model
     protected $fillable = [
         'fonte_id',
         'acao_id',
-        'matriz_id',
-        'valor'
+        'exercicio_id',
+        'valor',
+        'instituicao_id',
+        'unidade_gestora_id',
+        'unidade_administrativa_id'
     ];
 
     public function fonte()
@@ -28,8 +31,8 @@ class FonteAcao extends Model
         return $this->belongsTo(AcaoTipo::class);
     }
     
-    public function matriz()
+    public function exercicio()
     {
-        return $this->belongsTo(Matriz::class);
+        return $this->belongsTo(exercicio::class);
     }
 }

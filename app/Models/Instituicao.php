@@ -21,14 +21,7 @@ class Instituicao extends Model
         'logradouro',
         'numero',
         'bairro',
-        'complemento',
-        'data_inicio',
-        'data_fim'
-    ];
-
-    protected $casts = [
-        'data_inicio' => 'datetime:Y-m-d',
-        'data_fim' => 'datetime:Y-m-d'
+        'complemento'
     ];
 
     public static function getOpcoes() {

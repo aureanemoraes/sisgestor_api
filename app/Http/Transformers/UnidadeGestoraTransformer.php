@@ -40,15 +40,6 @@ class UnidadeGestoraTransformer
           case 'uasg':
             $unidade_gestora->uasg = $value;
             break;
-          case 'diretor_geral':
-            $unidade_gestora->diretor_geral = $value;
-            break;
-          case 'data_inicio':
-            $unidade_gestora->data_inicio = $value;
-            break;
-          case 'data_fim':
-            $unidade_gestora->data_fim = $value;
-            break;
           case 'instituicao_id':
             $unidade_gestora->instituicao_id = $value;
             break;

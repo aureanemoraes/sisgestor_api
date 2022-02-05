@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +12,7 @@ class Fonte extends Model
 
     protected $fillable = [
         'fonte_tipo_id',
-        'matriz_id',
+        'exercicio_id',
         'valor'
     ];
 
@@ -22,8 +21,8 @@ class Fonte extends Model
         return $this->belongsTo(FonteTipo::class);
     }
     
-    public function matriz()
+    public function exercicio()
     {
-        return $this->belongsTo(Matriz::class);
+        return $this->belongsTo(Exercicio::class);
     } 
 }

@@ -21,11 +21,20 @@ class FonteAcaoTransformer
           case 'acao_id':
             $fonte_acao->acao_id = $value;
             break;
-          case 'matriz_id':
-            $fonte_acao->matriz_id = $value;
+          case 'exercicio_id':
+            $fonte_acao->exercicio_id = $value;
             break;
           case 'valor':
             $fonte_acao->valor = $value;
+            break;
+          case 'instituicao_id':
+            $fonte_acao->instituicao_id = $value;
+            break;
+          case 'unidade_gestora_id':
+            $fonte_acao->unidade_gestora_id = $value;
+            break;
+          case 'unidade_administrativa_id':
+            $fonte_acao->unidade_administrativa_id = $value;
             break;
         }
       }

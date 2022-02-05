@@ -14,7 +14,7 @@ class FontePrograma extends Model
     protected $fillable = [
         'fonte_id',
         'programa_id',
-        'matriz_id'
+        'exercicio_id'
     ];
 
     public function fonte()
@@ -27,8 +27,8 @@ class FontePrograma extends Model
         return $this->belongsTo(Programa::class);
     }
 
-    public function matriz()
+    public function exercicio()
     {
-        return $this->belongsTo(Matriz::class);
+        return $this->belongsTo(exercicio::class);
     }
 }

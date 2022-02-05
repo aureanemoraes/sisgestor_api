@@ -102,7 +102,7 @@ class AcaoController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
 				'acao_tipo_id' => ['required', 'exists:acoes_tipos,id'],
-        'matriz_id' => ['required', 'exists:matrizes,id']
+        'exercicio_id' => ['required', 'exists:exercicios,id']
 		]);
 
 		if ($validator->fails()) {
