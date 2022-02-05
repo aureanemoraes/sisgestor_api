@@ -17,6 +17,7 @@ use App\Http\Controllers\NaturezaDespesaController;
 use App\Http\Controllers\SubnaturezaDespesaController;
 use App\Http\Controllers\CentroCustoController;
 use App\Http\Controllers\FonteController;
+use App\Http\Controllers\FonteAcaoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -63,6 +64,7 @@ Route::apiResource('centros_custos', CentroCustoController::class);
 
 Route::apiResource('acoes', AcaoController::class);
 Route::apiResource('fontes', FonteController::class);
+Route::apiResource('fontes_acoes', FonteAcaoController::class);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 

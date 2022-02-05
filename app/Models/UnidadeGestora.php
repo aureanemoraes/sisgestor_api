@@ -27,8 +27,6 @@ class UnidadeGestora extends Model
     ];
 
     protected $casts = [
-        'data_inicio' => 'datetime:Y-m-d',
-        'data_fim' => 'datetime:Y-m-d',
         'logs' => 'array'
     ];
 
