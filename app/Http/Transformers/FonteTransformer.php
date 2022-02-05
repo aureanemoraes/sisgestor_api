@@ -18,8 +18,8 @@ class FonteTransformer
           case 'fonte_tipo_id':
             $fonte->fonte_tipo_id = $value;
             break;
-          case 'matriz_id':
-            $fonte->matriz_id = $value;
+          case 'exercicio_id':
+            $fonte->exercicio_id = $value;
             break;
           case 'valor':
             $fonte->valor = $value;

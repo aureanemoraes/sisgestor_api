@@ -13,7 +13,7 @@ class Fonte extends Model
 
     protected $fillable = [
         'fonte_tipo_id',
-        'matriz_id',
+        'exercicio_id',
         'valor'
     ];
 

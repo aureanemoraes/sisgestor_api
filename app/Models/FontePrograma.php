@@ -14,7 +14,7 @@ class FontePrograma extends Model
     protected $fillable = [
         'fonte_id',
         'programa_id',
-        'matriz_id'
+        'exercicio_id'
     ];
 
     public function fonte()

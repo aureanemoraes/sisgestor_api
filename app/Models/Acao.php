@@ -13,7 +13,7 @@ class Acao extends Model
 
     protected $fillable = [
         'acao_tipo_id',
-        'matriz_id'
+        'exercicio_id'
     ];
 
     public function acao_tipo()

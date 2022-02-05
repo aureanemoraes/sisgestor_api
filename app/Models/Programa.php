@@ -13,7 +13,7 @@ class Programa extends Model
 
     protected $fillable = [
         'programa_tipo_id',
-        'matriz_id'
+        'exercicio_id'
     ];
 
     public function programa_tipo()

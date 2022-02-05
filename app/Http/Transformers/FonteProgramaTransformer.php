@@ -21,8 +21,8 @@ class FonteProgramaTransformer
           case 'programa_id':
             $fonte_programa->programa_id = $value;
             break;
-          case 'matriz_id':
-            $fonte_programa->matriz_id = $value;
+          case 'exercicio_id':
+            $fonte_programa->exercicio_id = $value;
             break;
         }
       }

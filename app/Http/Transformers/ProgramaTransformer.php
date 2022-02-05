@@ -18,8 +18,8 @@ class ProgramaTransformer
           case 'programa_tipo_id':
             $programa->programa_tipo_id = $value;
             break;
-          case 'matriz_id':
-            $programa->matriz_id = $value;
+          case 'exercicio_id':
+            $programa->exercicio_id = $value;
             break;
         }
       }
