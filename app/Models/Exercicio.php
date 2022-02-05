@@ -17,13 +17,17 @@ class Exercicio extends Model
         'nome',
         'data_inicio',
         'data_fim',
+        'data_inicio_loa',
+        'data_fim_loa',
         'aprovado',
         'instituicao_id'
     ];
 
     protected $casts = [
         'data_inicio' => 'datetime:Y-m-d',
-        'data_fim' => 'datetime:Y-m-d'
+        'data_fim' => 'datetime:Y-m-d',
+        'data_inicio_loa' => 'datetime:Y-m-d',
+        'data_fim_loa' => 'datetime:Y-m-d',
     ];
 
     public static function getOpcoes() {

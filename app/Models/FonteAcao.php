@@ -14,8 +14,11 @@ class FonteAcao extends Model
     protected $fillable = [
         'fonte_id',
         'acao_id',
-        'matriz_id',
-        'valor'
+        'exercicio_id',
+        'valor',
+        'instituicao_id',
+        'unidade_gestora_id',
+        'unidade_administrativa_id'
     ];
 
     public function fonte()

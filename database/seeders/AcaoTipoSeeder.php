@@ -14,6 +14,7 @@ class AcaoTipoSeeder extends Seeder
      */
     public function run()
     {
+        // FAVORITAR AÇÕES
         AcaoTipo::create([ 'codigo' => '0581', 'nome' => 'ABONO SALARIAL' ]);
         AcaoTipo::create([ 'codigo' => '15ST', 'nome' => 'ACESSAO A ORGANIZACAO PARA A COOPERACAO E DESENVOLVIMENTO ECONOMICO - OCDE' ]);
         AcaoTipo::create([ 'codigo' => '2317', 'nome' => 'ACESSO A INFORMACAO CIENTIFICA E TECNOLOGICA' ]);
