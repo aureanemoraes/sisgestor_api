@@ -60,7 +60,7 @@ Route::apiResource('acoes_tipos', AcaoTipoController::class);
 Route::apiResource('acoes', AcaoController::class);
 Route::apiResource('naturezas_despesas', NaturezaDespesaController::class);
 Route::apiResource('subnaturezas_despesas', SubnaturezaDespesaController::class);
-Route::apiResource('centros_custos', SubnaturezaDespesaController::class);
+Route::apiResource('centros_custos', CentroCustoController::class);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 

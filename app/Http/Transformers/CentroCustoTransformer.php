@@ -2,15 +2,15 @@
 
 namespace App\Http\Transformers;
 
-use App\Models\CentroCurso;
+use App\Models\CentroCusto;
 
-class CentroCursoTransformer
+class CentroCustoTransformer
 {
 
     public static function toInstance(array $input, $centro_custo = null)
     {
       if (empty($centro_custo)) {
-        $centro_custo = new CentroCurso();
+        $centro_custo = new CentroCusto();
       }
 
       foreach ($input as $key => $value) {

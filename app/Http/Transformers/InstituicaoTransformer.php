@@ -39,12 +39,6 @@ class InstituicaoTransformer
           case 'complemento':
             $instituicao->complemento = $value;
             break;
-          case 'data_inicio':
-            $instituicao->data_inicio = $value;
-            break;
-          case 'data_fim':
-            $instituicao->data_fim = $value;
-            break;
         }
       }
 

@@ -82,7 +82,6 @@ class Migration20220122 extends Migration
             $table->date('data_inicio');
             $table->date('data_fim');
             $table->json('logs')->nullable();
-            $table->string('diretor_geral');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             // $table->unsignedBigInteger('usuario_exclusao_id');

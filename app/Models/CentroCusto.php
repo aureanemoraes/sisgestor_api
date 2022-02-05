@@ -9,6 +9,8 @@ class CentroCusto extends Model
 {
     use HasFactory;
 
+    protected $table = 'centros_custos';
+    
     protected $fillable = [
         'nome'
     ];
