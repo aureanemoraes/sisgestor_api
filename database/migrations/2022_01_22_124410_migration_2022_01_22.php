@@ -131,8 +131,8 @@ class Migration20220122 extends Migration
             $table->id();
             $table->unsignedBigInteger('fonte_tipo_id');
             $table->foreign('fonte_tipo_id')->references('id')->on('fontes_tipos');
-            $table->unsignedBigInteger('exericio_id');
-            $table->foreign('exericio_id')->references('id')->on('exercicios');
+            $table->unsignedBigInteger('exercicio_id');
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->float('valor');
             $table->timestamps();
         });

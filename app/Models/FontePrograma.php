@@ -27,8 +27,8 @@ class FontePrograma extends Model
         return $this->belongsTo(Programa::class);
     }
 
-    public function matriz()
+    public function exercicio()
     {
-        return $this->belongsTo(Matriz::class);
+        return $this->belongsTo(exercicio::class);
     }
 }

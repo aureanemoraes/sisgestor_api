@@ -16,7 +16,7 @@ use App\Http\Controllers\AcaoController;
 use App\Http\Controllers\NaturezaDespesaController;
 use App\Http\Controllers\SubnaturezaDespesaController;
 use App\Http\Controllers\CentroCustoController;
-
+use App\Http\Controllers\FonteController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,10 +57,12 @@ Route::apiResource('grupos_fontes', GrupoFonteController::class);
 Route::apiResource('especificacoes', EspecificacaoController::class);
 Route::apiResource('fontes_tipos', FonteTipoController::class);
 Route::apiResource('acoes_tipos', AcaoTipoController::class);
-Route::apiResource('acoes', AcaoController::class);
 Route::apiResource('naturezas_despesas', NaturezaDespesaController::class);
 Route::apiResource('subnaturezas_despesas', SubnaturezaDespesaController::class);
 Route::apiResource('centros_custos', CentroCustoController::class);
+
+Route::apiResource('acoes', AcaoController::class);
+Route::apiResource('fontes', FonteController::class);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 

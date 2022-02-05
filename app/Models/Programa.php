@@ -21,8 +21,8 @@ class Programa extends Model
         return $this->belongsTo(ProgramaTipo::class);
     }
     
-    public function matriz()
+    public function exercicio()
     {
-        return $this->belongsTo(Matriz::class);
+        return $this->belongsTo(exercicio::class);
     } 
 }

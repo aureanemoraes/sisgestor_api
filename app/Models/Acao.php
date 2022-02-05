@@ -21,8 +21,8 @@ class Acao extends Model
         return $this->belongsTo(AcaoTipo::class);
     }
     
-    public function matriz()
+    public function exercicio()
     {
-        return $this->belongsTo(Matriz::class);
+        return $this->belongsTo(exercicio::class);
     }
 }
