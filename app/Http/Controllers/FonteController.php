@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fonte;
+use App\Models\FonteAcao;
 use Illuminate\Http\Request;
 use App\Http\Transformers\FonteTransformer;
 use Illuminate\Support\Facades\DB;
@@ -11,10 +12,34 @@ use App\Http\Controllers\ApiBaseController;
 
 class FonteController extends ApiBaseController
 {
-	public function index()
+	public function index(Request $request)
 	{
+		$tipo = $request->header('tipo', null);
+		$id = $request->header('id', null);
+		$valor_utilizado = 0;
+
+		$fontes = Fonte::paginate();
+
+		foreach($fontes as $fonte) {
+			if(isset($tipo) && isset($id)) {
+				switch($tipo) {
+					case 'instituicao':
+						$valor_utilizado = FonteAcao::where('fonte_id', $fonte->id)->where('instituicao_id', $id)->sum('valor');
+					break;
+					case 'unidade_gestora':
+						$valor_utilizado = FonteAcao::where('fonte_id', $fonte->id)->where('unidade_gestora_id', $id)->sum('valor');
+					break;
+					case 'unidade_administrativa':
+						$valor_utilizado = FonteAcao::where('fonte_id', $fonte->id)->where('unidade_administrativa_id', $id)->sum('valor');
+					break;
+				}
+			}
+
+			$fonte->valor_utilizado = $valor_utilizado;
+		}
+
 		try {
-			return $this->response(true, Fonte::paginate(), 200);
+			return $this->response(true, $fontes, 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
@@ -29,8 +54,14 @@ class FonteController extends ApiBaseController
 		try {
 			DB::beginTransaction();
 			$fonte = FonteTransformer::toInstance($request->all());
-			$fonte->save();
-			DB::commit();
+			$rule = $this->rules($fonte);
+			if($rule['status']) {
+				$fonte->save();
+				DB::commit();
+				return $this->response($rule['status'], $fonte, 200);
+			} else {
+					return $this->response($rule['status'], $rule['msg'], 400);
+			}
 
 			return $this->response(true, $fonte, 200);
 		} catch (Exception $ex) {
@@ -41,21 +72,20 @@ class FonteController extends ApiBaseController
 
 	public function show($id)
 	{
-        $fonte = Fonte::find($id);
+		$fonte = Fonte::find($id);
 
-        if(isset($fonte)) {
-            try {
-			
-                if(isset($fonte)) 
-                    return $this->response(true, $fonte, 200);
-                else 
-                    return $this->response(false,'Not found.', 404);
-            } catch (Exception $ex) {
-                return $this->response(false, $ex->getMessage(), 409);
-            }
-        } else {
-            return $this->response(false, 'Not found.', 404); 
-        }
+		if(isset($fonte)) {
+				try {
+						if(isset($fonte)) 
+								return $this->response(true, $fonte, 200);
+						else 
+								return $this->response(false,'Not found.', 404);
+				} catch (Exception $ex) {
+						return $this->response(false, $ex->getMessage(), 409);
+				}
+		} else {
+				return $this->response(false, 'Not found.', 404); 
+		}
 	
 	}
 
@@ -109,5 +139,20 @@ class FonteController extends ApiBaseController
 		if ($validator->fails()) {
 				return $validator->errors()->toArray();
 		}
+	}
+
+	protected function rules($fonte) {
+		$exists = Fonte::where('fonte_tipo_id', $fonte->fonte_tipo_id)->where('exercicio_id', $fonte->exercicio_id)->exists();
+
+		if(!$exists) 
+			return [
+				'status' => true,
+				'msg' => ''
+			];
+		else
+			return [
+				'status' => false,
+				'msg' => 'Fonte já cadastrada.'
+			];
 	}
 }

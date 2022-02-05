@@ -35,8 +35,7 @@ class FonteAcaoController extends ApiBaseController
                 $fonte_acao->save();
                 DB::commit();
 			    return $this->response($rule['status'], $fonte_acao, 200);
-            }
-            else {
+            } else {
                 return $this->response($rule['status'], $rule['msg'], 400);
             }
 		} catch (Exception $ex) {

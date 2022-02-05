@@ -35,7 +35,7 @@ class Exercicio extends Model
     ];
 
     public function getTotalMatrizAttribute() {
-        return $this->attributes['total_matriz'];
+        return isset($this->attributes['total_matriz']) ? $this->attributes['total_matriz'] : 0;
     }
 
     public static function getOpcoes() {
