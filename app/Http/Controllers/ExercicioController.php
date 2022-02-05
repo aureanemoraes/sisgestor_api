@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exercicio;
+use App\Models\FonteAcao;
 use Illuminate\Http\Request;
 use App\Http\Transformers\ExercicioTransformer;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +45,7 @@ class ExercicioController extends ApiBaseController
 			}
 		}
 
-    public function index()
+    public function index(Request $request)
     {
 			try {
 				return $this->response(true, Exercicio::paginate(), 200);
@@ -72,9 +73,30 @@ class ExercicioController extends ApiBaseController
 			}
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
 			$exercicio = Exercicio::find($id);
+
+			$tipo = $request->header('tipo', null);
+			$id = $request->header('id', null);
+			$total_matriz = 0;
+
+			if(isset($tipo) && isset($id)) {
+				switch($tipo) {
+					case 'instituicao':
+						$total_matriz = FonteAcao::where('instituicao_id', $id)->sum('valor');
+					break;
+					case 'unidade_gestora':
+						$total_matriz = FonteAcao::where('unidade_gestora_id', $id)->sum('valor');
+					break;
+					case 'unidade_administrativa':
+						$total_matriz = FonteAcao::where('unidade_administrativa_id', $id)->sum('valor');
+					break;
+				}
+			}
+
+			$exercicio->total_matriz = $total_matriz;
+
 			if(isset($exercicio)) {
 				try {
 					return $this->response(true, $exercicio, 200);

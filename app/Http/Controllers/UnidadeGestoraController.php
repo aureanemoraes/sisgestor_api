@@ -132,9 +132,6 @@ class UnidadeGestoraController extends ApiBaseController
 			'nome' => ['required'],
 			'cnpj' => ['required'],
 			'uasg' => ['required'],
-			'data_inicio' => ['required'],
-			'data_fim' => ['required'],
-			'diretor_geral' => ['required'],
 			'instituicao_id' => ['required', 'exists:instituicoes,id']
 		]);
 

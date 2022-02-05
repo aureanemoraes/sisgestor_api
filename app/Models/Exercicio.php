@@ -30,6 +30,14 @@ class Exercicio extends Model
         'data_fim_loa' => 'datetime:Y-m-d',
     ];
 
+    protected $appends = [
+        'total_matriz'
+    ];
+
+    public function getTotalMatrizAttribute() {
+        return $this->attributes['total_matriz'];
+    }
+
     public static function getOpcoes() {
         $opcoes = Exercicio::select('id', 'nome')->get()->toArray();
 

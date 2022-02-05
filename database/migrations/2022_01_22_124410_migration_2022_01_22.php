@@ -77,8 +77,6 @@ class Migration20220122 extends Migration
             $table->string('numero')->nullable();
             $table->string('bairro')->nullable();
             $table->string('complemento')->nullable();
-            $table->date('data_inicio');
-            $table->date('data_fim');
             $table->json('logs')->nullable();
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
