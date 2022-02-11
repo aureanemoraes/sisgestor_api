@@ -16,6 +16,14 @@ class Fonte extends Model
         'valor'
     ];
 
+    protected $appends = [
+        'valor_utilizado'
+    ];
+
+    public function getValorUtilizadoAttribute() {
+        return isset($this->attributes['valor_utilizado']) ? $this->attributes['valor_utilizado'] : 0;
+    }
+
     public function fonte_tipo()
     {
         return $this->belongsTo(FonteTipo::class);
