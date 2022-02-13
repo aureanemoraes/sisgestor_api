@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             AcaoTipoSeeder::class,
             NaturezaDespesaSeeder::class,
             SubnaturezaDespesaSeeder::class,
-            ProgramaTipoSeeder::class
+            ProgramaTipoSeeder::class,
+            InstituicaoSeeder::class,
+            UnidadeGestoraSeeder::class
         ]);
     }
 }

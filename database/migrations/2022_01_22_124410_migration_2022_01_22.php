@@ -218,6 +218,35 @@ class Migration20220122 extends Migration
             $table->string('nome');
             $table->timestamps();
         });
+        // Tabela de Despesas
+        Schema::create('despesas', function (Blueprint $table) {
+            $table->id();
+            $table->string('descricao');
+            $table->float('valor');
+            $table->integer('qtd');
+            $table->integer('qtd_pessoas');
+            $table->string('tipo'); // fixa ou variável
+            $table->unsignedBigInteger('fonte_acao_id');
+            $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
+            $table->unsignedBigInteger('centro_custo_id');
+            $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
+            $table->unsignedBigInteger('natureza_despesa_id');
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('subnatureza_despesa_id')->nullable();
+            $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->timestamps();
+        });
+        Schema::create('movimentos', function (Blueprint $table) {
+            $table->id();
+            $table->longText('descricao');
+            $table->float('valor');
+            $table->unsignedBigInteger('exercicio_id')->nullable();
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->string('tipo'); // entrada ou saída (contigenciamento)
+            $table->timestamps();
+        });
     }
 
     /**
