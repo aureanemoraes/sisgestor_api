@@ -24,6 +24,9 @@ class FonteTipoTransformer
           case 'nome':
             $fonte_tipo->nome = $value;
             break;
+          case 'fav':
+            $fonte_tipo->fav = $value;
+            break;
         }
       }
 

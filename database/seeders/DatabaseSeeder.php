@@ -21,7 +21,11 @@ class DatabaseSeeder extends Seeder
             SubnaturezaDespesaSeeder::class,
             ProgramaTipoSeeder::class,
             InstituicaoSeeder::class,
-            UnidadeGestoraSeeder::class
+            UnidadeGestoraSeeder::class,
+            CentroCustoSeeder::class,
+            ExercicioSeeder::class,
+            FonteTipoSeeder::class,
+            UnidadeAdministrativaSeeder::class
         ]);
     }
 }

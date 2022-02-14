@@ -106,12 +106,14 @@ class Migration20220122 extends Migration
         Schema::create('grupos_fontes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela de Espeficacoes
         Schema::create('especificacoes', function (Blueprint $table) {
             $table->id()->from(0);
             $table->string('nome');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela FontesTipos
@@ -121,6 +123,7 @@ class Migration20220122 extends Migration
             $table->foreign('grupo_fonte_id')->references('id')->on('grupos_fontes');
             $table->unsignedBigInteger('especificacao_id');
             $table->foreign('especificacao_id')->references('id')->on('especificacoes');
+            $table->tinyInteger('fav')->default(0);
             $table->string('nome');
             $table->timestamps();
         });
@@ -131,6 +134,7 @@ class Migration20220122 extends Migration
             $table->foreign('fonte_tipo_id')->references('id')->on('fontes_tipos');
             $table->unsignedBigInteger('exercicio_id');
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->tinyInteger('fav')->default(0);
             $table->float('valor');
             $table->timestamps();
         });
@@ -139,6 +143,7 @@ class Migration20220122 extends Migration
             $table->id();
             $table->string('nome');
             $table->string('codigo');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela Ações
@@ -147,6 +152,7 @@ class Migration20220122 extends Migration
             $table->unsignedBigInteger('acao_tipo_id');
             $table->foreign('acao_tipo_id')->references('id')->on('acoes_tipos');
             $table->unsignedBigInteger('exercicio_id');
+            $table->tinyInteger('fav')->default(0);
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->timestamps();
         });
@@ -201,6 +207,7 @@ class Migration20220122 extends Migration
             $table->string('nome');
             $table->string('codigo');
             $table->string('tipo');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela de Subnaturezas Despesas

@@ -11,6 +11,8 @@ class UnidadeAdministrativa extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'unidades_administrativas';
+
     protected $fillable = [
         'nome',
         'sigla',

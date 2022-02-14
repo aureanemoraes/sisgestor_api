@@ -15,7 +15,8 @@ class Especificacao extends Model
 
     protected $fillable = [
         'id',
-        'nome'
+        'nome',
+        'fav'
     ];
 
     // Adicionar accessor para exibir o 0 na frente de números com somente uma casa decimal

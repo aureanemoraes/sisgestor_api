@@ -12,13 +12,30 @@ use App\Http\Controllers\ApiBaseController;
 
 class FonteController extends ApiBaseController
 {
+	public function pesquisa(Request $request) {
+		if(isset($request->termo)) {
+			$termo = $request->termo;
+
+			$resultado = Fonte::whereHas('fonte_tipo', function ($query) use ($termo) {
+					$query->where('nome', 'ilike', '%' . $termo . '%')
+					->orderBy('fav', 'desc');
+				}
+			)->get();
+
+			if(count($resultado) > 0) return $this->response(true, $resultado, 200);
+			else return $this->response(true, 'Nenhum resultado encontrado.', 404);
+		} else {
+			return $this->response(false, 'Nenhum termo enviado para pesquisa.', 404);
+		}
+	}
+
 	public function index(Request $request)
 	{
 		$tipo = $request->header('tipo', null);
 		$id = $request->header('id', null);
 		$valor_utilizado = 0;
 
-		$fontes = Fonte::paginate();
+		$fontes = Fonte::orderBy('fav', 'desc')->orderBy('id')->paginate();
 
 		foreach($fontes as $fonte) {
 			if(isset($tipo) && isset($id)) {

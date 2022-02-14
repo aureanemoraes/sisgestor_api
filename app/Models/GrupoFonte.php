@@ -14,7 +14,8 @@ class GrupoFonte extends Model
 
     protected $fillable = [
         'id',
-        'nome'
+        'nome',
+        'fav'
     ];
 
 }

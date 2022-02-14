@@ -55,14 +55,20 @@ Route::apiResource('unidades_administrativas', UnidadeAdministrativaController::
 
 Route::apiResource('programas_tipos', ProgramaTipoController::class);
 Route::apiResource('grupos_fontes', GrupoFonteController::class);
+Route::get('especificacoes/pesquisa', [EspecificacaoController::class, 'pesquisa']);
 Route::apiResource('especificacoes', EspecificacaoController::class);
+Route::get('fontes_tipos/pesquisa', [FonteTipoController::class, 'pesquisa']);
 Route::apiResource('fontes_tipos', FonteTipoController::class);
+Route::get('acoes_tipos/pesquisa', [AcaoTipoController::class, 'pesquisa']);
 Route::apiResource('acoes_tipos', AcaoTipoController::class);
+Route::get('naturezas_despesas/pesquisa', [NaturezaDespesaController::class, 'pesquisa']);
 Route::apiResource('naturezas_despesas', NaturezaDespesaController::class);
 Route::apiResource('subnaturezas_despesas', SubnaturezaDespesaController::class);
 Route::apiResource('centros_custos', CentroCustoController::class);
 
+Route::get('acoes/pesquisa', [AcaoController::class, 'pesquisa']);
 Route::apiResource('acoes', AcaoController::class);
+Route::get('fontes/pesquisa', [FonteController::class, 'pesquisa']);
 Route::apiResource('fontes', FonteController::class);
 Route::apiResource('fontes_acoes', FonteAcaoController::class);
 
