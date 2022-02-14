@@ -30,6 +30,10 @@ class UnidadeGestora extends Model
         'logs' => 'array'
     ];
 
+    protected $with = [
+        'instituicao'
+    ];
+
     public function setNomeAttribute($value)
     {
         $this->attributes['nome'] = strtoupper($value);

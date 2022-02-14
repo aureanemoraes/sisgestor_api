@@ -22,6 +22,14 @@ class Despesa extends Model
         'unidade_administrativa_id'
     ];
 
+    protected $with = [
+        'fonte_acao',
+        'centro_custo',
+        'natureza_despesa',
+        'subnatureza_despesa',
+        'unidade_administrativa'
+    ];
+
     protected $appends = [
         'valor_total'
     ];

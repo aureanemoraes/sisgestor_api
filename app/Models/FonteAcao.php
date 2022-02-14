@@ -21,6 +21,12 @@ class FonteAcao extends Model
         'unidade_administrativa_id'
     ];
 
+    protected $with = [
+        'fonte',
+        'acao_tipo',
+        'exercicio'
+    ];
+
     public function fonte()
     {
         return $this->belongsTo(Fonte::class);

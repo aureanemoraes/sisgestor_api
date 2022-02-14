@@ -17,6 +17,12 @@ class FontePrograma extends Model
         'exercicio_id'
     ];
 
+    protected $with = [
+        'fonte',
+        'programa',
+        'exercicio'
+    ];
+
     public function fonte()
     {
         return $this->belongsTo(Fonte::class);

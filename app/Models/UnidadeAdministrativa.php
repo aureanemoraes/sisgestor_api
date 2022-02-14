@@ -26,6 +26,11 @@ class UnidadeAdministrativa extends Model
         'logs' => 'array'
     ];
 
+    protected $with = [
+        'instituicao',
+        'unidade_gestora'
+    ];
+
     public function setNomeAttribute($value)
     {
         $this->attributes['nome'] = strtoupper($value);
