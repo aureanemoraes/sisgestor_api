@@ -134,6 +134,8 @@ class Migration20220122 extends Migration
             $table->foreign('fonte_tipo_id')->references('id')->on('fontes_tipos');
             $table->unsignedBigInteger('exercicio_id');
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->tinyInteger('fav')->default(0);
             $table->float('valor');
             $table->timestamps();
@@ -154,6 +156,8 @@ class Migration20220122 extends Migration
             $table->unsignedBigInteger('exercicio_id');
             $table->tinyInteger('fav')->default(0);
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
         });
         // Tabela Fontes Ações

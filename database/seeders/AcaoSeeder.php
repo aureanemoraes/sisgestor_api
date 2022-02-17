@@ -17,17 +17,20 @@ class AcaoSeeder extends Seeder
         Acao::create([
             'acao_tipo_id' => 1294,
             'exercicio_id' => 1,
+            'instituicao_id' => 1,
             'fav' => 1 
         ]);
 
         Acao::create([
             'acao_tipo_id' => 365,
+            'instituicao_id' => 1,
             'exercicio_id' => 1
         ]);
 
         Acao::create([
             'acao_tipo_id' => 2049,
             'exercicio_id' => 1,
+            'instituicao_id' => 1,
             'fav' => 1 
         ]);
     }

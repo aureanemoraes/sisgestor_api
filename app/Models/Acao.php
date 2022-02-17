@@ -14,6 +14,7 @@ class Acao extends Model
     protected $fillable = [
         'acao_tipo_id',
         'exercicio_id',
+        'instituicao_id',
         'fav'
     ];
 
@@ -21,6 +22,19 @@ class Acao extends Model
     //     'acao_tipo',
     //     'exercicio'
     // ];
+
+    protected $casts = [
+        'valor_total'
+    ];
+
+    public function scopeWithAndWhereHas($query, $relation, $constraint){
+        return $query->whereHas($relation, $constraint)
+                     ->with([$relation => $constraint]);
+    }
+
+    public function getValorTotalAttribute() {
+        return isset($this->attributes['valor_total']) ? $this->attributes['valor_total'] : 0;
+    }
 
     public function acao_tipo()
     {
@@ -34,6 +48,12 @@ class Acao extends Model
 
     public function fontes()
     {
-        return $this->belongsToMany(Fonte::class, 'fontes_acoes', 'acao_id', 'fonte_id');
+        return $this->belongsToMany(Fonte::class, 'fontes_acoes', 'acao_id', 'fonte_id')->withPivot(
+            'exercicio_id',
+            'valor',
+            'instituicao_id',
+            'unidade_gestora_id',
+            'unidade_administrativa_id'
+        );
     }
 }

@@ -37,7 +37,7 @@ class FonteController extends ApiBaseController
 				'acoes' => function ($query) use($request) {
 					$query->where('instituicao_id', $request->instituicao_id);
 				}
-			])->orderBy('fav', 'desc')->orderBy('id')->paginate();
+			])->where('instituicao_id', $request->instituicao_id)->orderBy('fav', 'desc')->orderBy('id')->paginate();
 	
 			$fontes = $this->fontes_tratadas($fontes, $request->instituicao_id);
 			
@@ -187,7 +187,6 @@ class FonteController extends ApiBaseController
 				}
 			}
 			$fonte->valor_utilizado = $valor_utilizado;
-
 
 			switch($tipo) {
 				case 'instituicao':

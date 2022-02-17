@@ -17,6 +17,7 @@ class FonteSeeder extends Seeder
         Fonte::create([
             'fonte_tipo_id' => 1,
             'exercicio_id' => 1,
+            'instituicao_id' => 1,
             'valor' => 10000,
             'fav' => 1
         ]);
@@ -24,6 +25,7 @@ class FonteSeeder extends Seeder
         Fonte::create([
             'fonte_tipo_id' => 2,
             'exercicio_id' => 1,
+            'instituicao_id' => 1,
             'valor' => 30000
         ]);
     }
