@@ -56,4 +56,9 @@ class FonteAcao extends Model
     {
         return $this->belongsTo(UnidadeAdministrativa::class);
     }
+
+    public function despesas()
+    {
+        return $this->hasMany(Despesa::class);
+    }
 }

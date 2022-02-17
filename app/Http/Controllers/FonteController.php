@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fonte;
 use App\Models\FonteAcao;
+use App\Models\Despesa;
 use Illuminate\Http\Request;
 use App\Http\Transformers\FonteTransformer;
 use Illuminate\Support\Facades\DB;
@@ -51,11 +52,11 @@ class FonteController extends ApiBaseController
 		} else if(isset($request->unidade_administrativa_id)) {
 			$fontes = Fonte::with([
 				'acoes' => function ($query) use ($request) {
-					$query->where('unidade_gestora_id', $request->unidade_gestora_id);
+					$query->where('unidade_administrativa_id', $request->unidade_administrativa_id);
 				}
 			])->orderBy('fav', 'desc')->orderBy('id')->paginate();
 
-			$fontes = $this->fontes_tratadas($fontes, $request->unidade_gestora_id, 'unidade_gestora');
+			$fontes = $this->fontes_tratadas($fontes, $request->unidade_administrativa_id, 'unidade_administrativa');
 		}
 
 
@@ -206,6 +207,18 @@ class FonteController extends ApiBaseController
 							$query->where('unidade_gestora_id', $id);
 						}
 					)->where('fonte_id', $fonte->id)->sum('valor');
+
+					$fonte->valor_distribuido = $valor_distribuido;
+					break;
+				case 'unidade_administrativa':
+					$valor = FonteAcao::where('fonte_id', $fonte->id)->where('unidade_administrativa_id', $id)->sum('valor');
+					$fonte->valor = $valor;
+
+					$valor_distribuido = Despesa::whereHas(
+						'fonte_acao', function ($query) use ($fonte) {
+							$query->where('fonte_id', $fonte->id);
+						}
+					)->where('unidade_administrativa_id', $id)->sum('valor_total');
 
 					$fonte->valor_distribuido = $valor_distribuido;
 					break;
