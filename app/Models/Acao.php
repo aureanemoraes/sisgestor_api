@@ -17,10 +17,10 @@ class Acao extends Model
         'fav'
     ];
 
-    protected $with = [
-        'acao_tipo',
-        'exercicio'
-    ];
+    // protected $with = [
+    //     'acao_tipo',
+    //     'exercicio'
+    // ];
 
     public function acao_tipo()
     {
@@ -30,5 +30,10 @@ class Acao extends Model
     public function exercicio()
     {
         return $this->belongsTo(exercicio::class);
+    }
+
+    public function fontes()
+    {
+        return $this->belongsToMany(Fonte::class, 'fontes_acoes', 'acao_id', 'fonte_id');
     }
 }

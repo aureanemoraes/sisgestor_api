@@ -19,9 +19,9 @@ class SubnaturezaDespesa extends Model
         'natureza_despesa_id'
     ];
 
-    protected $with = [
-        'natureza_despesa'
-    ];
+    // protected $with = [
+    //     'natureza_despesa'
+    // ];
 
     public function natureza_despesa()
     {

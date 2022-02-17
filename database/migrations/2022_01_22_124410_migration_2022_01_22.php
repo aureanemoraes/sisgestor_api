@@ -230,8 +230,9 @@ class Migration20220122 extends Migration
             $table->id();
             $table->string('descricao');
             $table->float('valor');
-            $table->integer('qtd');
-            $table->integer('qtd_pessoas');
+            $table->float('valor_total');
+            $table->integer('qtd')->default(1);
+            $table->integer('qtd_pessoas')->default(1);
             $table->string('tipo'); // fixa ou variável
             $table->unsignedBigInteger('fonte_acao_id');
             $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
@@ -252,6 +253,17 @@ class Migration20220122 extends Migration
             $table->unsignedBigInteger('exercicio_id')->nullable();
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->string('tipo'); // entrada ou saída (contigenciamento)
+            $table->timestamps();
+        });
+        Schema::create('metas_orcamentarias', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->float('qtd_estimada')->nullable();
+            $table->float('qtd_alcancada')->nullable();
+            $table->unsignedBigInteger('natureza_despesa_id')->nullable();
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
         });
     }

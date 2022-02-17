@@ -20,6 +20,7 @@ class DespesaTransformer
             break;
           case 'valor':
             $despesa->valor = $value;
+            $despesa->valor_total = $value;
             break;
           case 'qtd':
             $despesa->qtd = $value;

@@ -16,10 +16,10 @@ class Programa extends Model
         'exercicio_id'
     ];
 
-    protected $with = [
-        'programa_tipo',
-        'exercicio'
-    ];
+    // protected $with = [
+    //     'programa_tipo',
+    //     'exercicio'
+    // ];
 
     public function programa_tipo()
     {

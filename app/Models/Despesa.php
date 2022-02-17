@@ -12,6 +12,7 @@ class Despesa extends Model
     protected $fillable = [
         'descricao',
         'valor',
+        'valor_total',
         'qtd',
         'qtd_pessoas',
         'tipo',
@@ -22,23 +23,22 @@ class Despesa extends Model
         'unidade_administrativa_id'
     ];
 
-    protected $with = [
-        'fonte_acao',
-        'centro_custo',
-        'natureza_despesa',
-        'subnatureza_despesa',
-        'unidade_administrativa'
-    ];
+    // protected $with = [
+    //     'fonte_acao',
+    //     'centro_custo',
+    //     'natureza_despesa',
+    //     'subnatureza_despesa',
+    //     'unidade_administrativa'
+    // ];
 
     protected $appends = [
         'valor_total'
     ];
 
-
-    public function getValorTotalAttribute()
+    public function getValorTotalAttribute($value)
     {
-        if(isset($this->attributes['valor'])) {
-            $valor_total = $this->attributes['valor'];
+        if(isset($value)) {
+            $valor_total = $value;
             if(isset($this->attributes['qtd'])) {
                 $valor_total = $valor_total  * $this->attributes['qtd'];
                 if(isset($this->attributes['qtd_pessoas'])) {
@@ -53,7 +53,7 @@ class Despesa extends Model
 
     public function fonte_acao()
     {
-        return $this->belongsTo(FonteAcao::class);
+        return $this->belongsTo(FonteAcao::class, 'fonte_acao_id', 'id');
     } 
 
     public function centro_custo()

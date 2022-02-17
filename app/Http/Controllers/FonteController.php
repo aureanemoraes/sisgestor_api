@@ -31,29 +31,33 @@ class FonteController extends ApiBaseController
 
 	public function index(Request $request)
 	{
-		$tipo = $request->header('tipo', null);
-		$id = $request->header('id', null);
-		$valor_utilizado = 0;
-
-		$fontes = Fonte::orderBy('fav', 'desc')->orderBy('id')->paginate();
-
-		foreach($fontes as $fonte) {
-			if(isset($tipo) && isset($id)) {
-				switch($tipo) {
-					case 'instituicao':
-						$valor_utilizado = FonteAcao::where('fonte_id', $fonte->id)->where('instituicao_id', $id)->sum('valor');
-					break;
-					case 'unidade_gestora':
-						$valor_utilizado = FonteAcao::where('fonte_id', $fonte->id)->where('unidade_gestora_id', $id)->sum('valor');
-					break;
-					case 'unidade_administrativa':
-						$valor_utilizado = FonteAcao::where('fonte_id', $fonte->id)->where('unidade_administrativa_id', $id)->sum('valor');
-					break;
+		if(isset($request->instituicao_id)) {
+			$fontes = Fonte::with([
+				'acoes' => function ($query) use($request) {
+					$query->where('instituicao_id', $request->instituicao_id);
 				}
-			}
+			])->orderBy('fav', 'desc')->orderBy('id')->paginate();
+	
+			$fontes = $this->fontes_tratadas($fontes, $request->instituicao_id);
+			
+		} else if(isset($request->unidade_gestora_id)) {
+			$fontes = Fonte::with([
+				'acoes' => function ($query) use ($request) {
+					$query->where('unidade_gestora_id', $request->unidade_gestora_id);
+				}
+			])->orderBy('fav', 'desc')->orderBy('id')->paginate();
 
-			$fonte->valor_utilizado = $valor_utilizado;
+			$fontes = $this->fontes_tratadas($fontes, $request->unidade_gestora_id, 'unidade_gestora');
+		} else if(isset($request->unidade_administrativa_id)) {
+			$fontes = Fonte::with([
+				'acoes' => function ($query) use ($request) {
+					$query->where('unidade_gestora_id', $request->unidade_gestora_id);
+				}
+			])->orderBy('fav', 'desc')->orderBy('id')->paginate();
+
+			$fontes = $this->fontes_tratadas($fontes, $request->unidade_gestora_id, 'unidade_gestora');
 		}
+
 
 		try {
 			return $this->response(true, $fontes, 200);
@@ -171,5 +175,45 @@ class FonteController extends ApiBaseController
 				'status' => false,
 				'msg' => 'Fonte já cadastrada.'
 			];
+	}
+
+	protected function fontes_tratadas($fontes, $id, $tipo='instituicao') {
+		foreach($fontes as $fonte) {
+			$valor_utilizado = 0;
+			if(count($fonte->acoes) > 0) {
+				foreach($fonte->acoes as $acao) {
+					$valor_utilizado += $acao->pivot->valor;
+				}
+			}
+			$fonte->valor_utilizado = $valor_utilizado;
+
+
+			switch($tipo) {
+				case 'instituicao':
+					$valor_distribuido = FonteAcao::whereHas(
+						'unidade_gestora', function ($query) use($id) {
+							$query->where('instituicao_id', $id);
+						}
+					)->where('fonte_id', $fonte->id)->sum('valor');
+					$fonte->valor_distribuido = $valor_distribuido;
+					break;
+				case 'unidade_gestora':
+					$valor = FonteAcao::where('fonte_id', $fonte->id)->where('unidade_gestora_id', $id)->sum('valor');
+					$fonte->valor = $valor;
+
+					$valor_distribuido = FonteAcao::whereHas(
+						'unidade_administrativa', function ($query) use($id) {
+							$query->where('unidade_gestora_id', $id);
+						}
+					)->where('fonte_id', $fonte->id)->sum('valor');
+
+					$fonte->valor_distribuido = $valor_distribuido;
+					break;
+			}
+		}
+
+	
+
+		return $fontes;
 	}
 }

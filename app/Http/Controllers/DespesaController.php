@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Despesa;
 use App\Models\Fonte;
+use App\Models\FonteAcao;
 use Illuminate\Http\Request;
 use App\Http\Transformers\DespesaTransformer;
 use Illuminate\Support\Facades\DB;
@@ -111,10 +112,10 @@ class DespesaController extends ApiBaseController
 			'qtd' => ['nullable', 'integer'],
 			'qtd_pessoas' => ['nullable', 'integer'],
 			'tipo' => ['required'],
-			'fonte_acao_id' => ['required', 'exists:fontes_acoes, id'],
+			'fonte_acao_id' => ['required', 'exists:fontes_acoes,id'],
 			'centro_custo_id' => ['required', 'exists:centros_custos,id'],
 			'natureza_despesa_id' => ['required', 'exists:naturezas_despesas,id'],
-			'subnatureza_despesa_id' => ['nullable', 'exists:naturezas_despesas,id'],
+			'subnatureza_despesa_id' => ['nullable', 'exists:subnaturezas_despesas,id'],
 			'unidade_administrativa_id'  => ['required', 'exists:unidades_administrativas,id']
 		]);
 
@@ -123,7 +124,25 @@ class DespesaController extends ApiBaseController
 		}
 	}
 
-    protected function rules($despesa) {
+    protected function rules($despesa) 
+		{
         // Verificar se tem recurso disponível para cadastrar a despesa no valor setado
+				$fonte_acao = FonteAcao::find($despesa->fonte_acao_id);
+
+				$recurso_planejado = $fonte_acao->valor;
+				$despesas_lancadas = Despesa::where('fonte_acao_id', $fonte_acao->id)->sum('valor_total');
+				$recurso_disponivel = $recurso_planejado - $despesas_lancadas;
+
+				if($despesa->valor <= $recurso_disponivel) {
+					return [
+						'status' => true,
+						'msg' => ''
+					];
+				} else {
+					return [
+						'status' => false,
+						'msg' => 'O valor inserido não está disponível.'
+					];
+				}
     }   
 }

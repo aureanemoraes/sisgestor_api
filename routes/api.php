@@ -18,6 +18,8 @@ use App\Http\Controllers\SubnaturezaDespesaController;
 use App\Http\Controllers\CentroCustoController;
 use App\Http\Controllers\FonteController;
 use App\Http\Controllers\FonteAcaoController;
+use App\Http\Controllers\DespesaController;
+use App\Http\Controllers\MetaOrcamentariaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -71,6 +73,8 @@ Route::apiResource('acoes', AcaoController::class);
 Route::get('fontes/pesquisa', [FonteController::class, 'pesquisa']);
 Route::apiResource('fontes', FonteController::class);
 Route::apiResource('fontes_acoes', FonteAcaoController::class);
+Route::apiResource('despesas', DespesaController::class);
+Route::apiResource('metas_orcamentarias', MetaOrcamentariaController::class);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 

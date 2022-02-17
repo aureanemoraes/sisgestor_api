@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FonteAcao;
 use App\Models\Fonte;
+use App\Models\UnidadeAdministrativa;
 use Illuminate\Http\Request;
 use App\Http\Transformers\FonteAcaoTransformer;
 use Illuminate\Support\Facades\DB;
@@ -168,7 +169,7 @@ class FonteAcaoController extends ApiBaseController
                     ->where('unidade_administrativa_id', $fonte_acao->unidade_administrativa_id)
                     ->exists();
                 if(!$exists) {
-                    $unidade_gestora_id = UnidadeAdministrativa::where('id', $fonte_acao->unidade_administrativa_id)->unidade_gestora_id;
+                    $unidade_gestora_id = UnidadeAdministrativa::where('id', $fonte_acao->unidade_administrativa_id)->first()->unidade_gestora_id;
                     $valor_configurado = FonteAcao::where('fonte_id', $fonte_acao->fonte_id)
                         ->where('acao_id', $fonte_acao->acao_id)
                         ->where('unidade_gestora_id', $unidade_gestora_id)

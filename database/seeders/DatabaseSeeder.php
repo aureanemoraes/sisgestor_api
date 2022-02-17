@@ -25,7 +25,12 @@ class DatabaseSeeder extends Seeder
             CentroCustoSeeder::class,
             ExercicioSeeder::class,
             FonteTipoSeeder::class,
-            UnidadeAdministrativaSeeder::class
+            UnidadeAdministrativaSeeder::class,
+            FonteSeeder::class,
+            AcaoSeeder::class,
+            FonteAcaoSeeder::class,
+            MetaOrcamentariaSeeder::class,
+            DespesaSeeder::class
         ]);
     }
 }
