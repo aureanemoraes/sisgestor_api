@@ -21,6 +21,9 @@ class AcaoTipoTransformer
           case 'nome':
             $acao_tipo->nome = $value;
             break;
+          case 'fav':
+            $acao_tipo->fav = $value;
+            break;
         }
       }
 

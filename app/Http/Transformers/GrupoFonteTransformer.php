@@ -21,6 +21,9 @@ class GrupoFonteTransformer
           case 'nome':
             $grupo_fonte->nome = $value;
             break;
+          case 'fav':
+            $grupo_fonte->fav = $value;
+            break;
         }
       }
 

@@ -16,6 +16,11 @@ class Programa extends Model
         'exercicio_id'
     ];
 
+    // protected $with = [
+    //     'programa_tipo',
+    //     'exercicio'
+    // ];
+
     public function programa_tipo()
     {
         return $this->belongsTo(ProgramaTipo::class);

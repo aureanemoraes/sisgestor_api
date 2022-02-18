@@ -30,6 +30,10 @@ class Exercicio extends Model
         'data_fim_loa' => 'datetime:Y-m-d',
     ];
 
+    // protected $with = [
+    //     'instituicao'
+    // ];
+
     protected $appends = [
         'total_matriz'
     ];

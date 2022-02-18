@@ -21,6 +21,9 @@ class EspecificacaoTransformer
           case 'nome':
             $especificacao->nome = $value;
             break;
+          case 'fav':
+            $especificacao->fav = $value;
+            break;
         }
       }
 

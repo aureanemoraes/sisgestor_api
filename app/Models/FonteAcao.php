@@ -21,6 +21,12 @@ class FonteAcao extends Model
         'unidade_administrativa_id'
     ];
 
+    // protected $with = [
+    //     'fonte',
+    //     'acao_tipo',
+    //     'exercicio'
+    // ];
+
     public function fonte()
     {
         return $this->belongsTo(Fonte::class);
@@ -33,6 +39,26 @@ class FonteAcao extends Model
     
     public function exercicio()
     {
-        return $this->belongsTo(exercicio::class);
+        return $this->belongsTo(Exercicio::class);
+    }
+
+    public function instituicao()
+    {
+        return $this->belongsTo(Instituicao::class);
+    }
+
+    public function unidade_gestora()
+    {
+        return $this->belongsTo(UnidadeGestora::class);
+    }
+
+    public function unidade_administrativa()
+    {
+        return $this->belongsTo(UnidadeAdministrativa::class);
+    }
+
+    public function despesas()
+    {
+        return $this->hasMany(Despesa::class);
     }
 }

@@ -15,7 +15,8 @@ class FonteTipo extends Model
     protected $fillable = [
         'grupo_fonte_id',
         'especificacao_id',
-        'nome'
+        'nome',
+        'fav'
     ];
 
 }

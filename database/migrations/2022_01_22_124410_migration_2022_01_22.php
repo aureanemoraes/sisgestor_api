@@ -106,12 +106,14 @@ class Migration20220122 extends Migration
         Schema::create('grupos_fontes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela de Espeficacoes
         Schema::create('especificacoes', function (Blueprint $table) {
             $table->id()->from(0);
             $table->string('nome');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela FontesTipos
@@ -121,6 +123,7 @@ class Migration20220122 extends Migration
             $table->foreign('grupo_fonte_id')->references('id')->on('grupos_fontes');
             $table->unsignedBigInteger('especificacao_id');
             $table->foreign('especificacao_id')->references('id')->on('especificacoes');
+            $table->tinyInteger('fav')->default(0);
             $table->string('nome');
             $table->timestamps();
         });
@@ -131,6 +134,9 @@ class Migration20220122 extends Migration
             $table->foreign('fonte_tipo_id')->references('id')->on('fontes_tipos');
             $table->unsignedBigInteger('exercicio_id');
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->tinyInteger('fav')->default(0);
             $table->float('valor');
             $table->timestamps();
         });
@@ -139,6 +145,7 @@ class Migration20220122 extends Migration
             $table->id();
             $table->string('nome');
             $table->string('codigo');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela Ações
@@ -147,7 +154,10 @@ class Migration20220122 extends Migration
             $table->unsignedBigInteger('acao_tipo_id');
             $table->foreign('acao_tipo_id')->references('id')->on('acoes_tipos');
             $table->unsignedBigInteger('exercicio_id');
+            $table->tinyInteger('fav')->default(0);
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
         });
         // Tabela Fontes Ações
@@ -201,6 +211,7 @@ class Migration20220122 extends Migration
             $table->string('nome');
             $table->string('codigo');
             $table->string('tipo');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela de Subnaturezas Despesas
@@ -216,6 +227,47 @@ class Migration20220122 extends Migration
         Schema::create('centros_custos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->timestamps();
+        });
+        // Tabela de Despesas
+        Schema::create('despesas', function (Blueprint $table) {
+            $table->id();
+            $table->string('descricao');
+            $table->float('valor');
+            $table->float('valor_total');
+            $table->integer('qtd')->default(1);
+            $table->integer('qtd_pessoas')->default(1);
+            $table->string('tipo'); // fixa ou variável
+            $table->unsignedBigInteger('fonte_acao_id');
+            $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
+            $table->unsignedBigInteger('centro_custo_id');
+            $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
+            $table->unsignedBigInteger('natureza_despesa_id');
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('subnatureza_despesa_id')->nullable();
+            $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->timestamps();
+        });
+        Schema::create('movimentos', function (Blueprint $table) {
+            $table->id();
+            $table->longText('descricao');
+            $table->float('valor');
+            $table->unsignedBigInteger('exercicio_id')->nullable();
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->string('tipo'); // entrada ou saída (contigenciamento)
+            $table->timestamps();
+        });
+        Schema::create('metas_orcamentarias', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->float('qtd_estimada')->nullable();
+            $table->float('qtd_alcancada')->nullable();
+            $table->unsignedBigInteger('natureza_despesa_id')->nullable();
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
         });
     }

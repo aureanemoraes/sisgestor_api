@@ -14,12 +14,15 @@ class AcaoTransformer
       }
 
       foreach ($input as $key => $value) {
-        switch ($key) {
+      switch ($key) {
           case 'acao_tipo_id':
             $acao->acao_tipo_id = $value;
             break;
           case 'exercicio_id':
             $acao->exercicio_id = $value;
+            break;
+          case 'fav':
+            $acao->fav = $value;
             break;
         }
       }

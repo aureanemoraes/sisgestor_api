@@ -16,6 +16,7 @@ class NaturezaDespesa extends Model
     protected $fillable = [
         'nome',
         'codigo',
-        'tipo'
+        'tipo',
+        'fav'
     ];
 }
