@@ -26,31 +26,6 @@ class Migration20220122 extends Migration
             $table->string('complemento')->nullable();
             $table->timestamps();
         });
-        // Tabela de Usuários
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('cpf');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('perfil');
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            $table->unsignedBigInteger('unidade_gestora_id')->nullable();
-            $table->foreign('unidade_gestora_id')->references('id')->on('instituicoes');
-            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
-            $table->foreign('unidade_administrativa_id')->references('id')->on('instituicoes');
-            $table->rememberToken();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-        // Tabela de Passwords Resets
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
         // Tabela de Exercícios
         Schema::create('exercicios', function (Blueprint $table) {
             $table->id();
@@ -101,6 +76,31 @@ class Migration20220122 extends Migration
             // $table->foreign('usuario_exclusao_id')->references('id')->on('usuarios');
             $table->softDeletes();
             $table->timestamps();
+        });
+         // Tabela de Usuários
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('cpf');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('perfil');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('unidade_gestora_id')->nullable();
+            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->rememberToken();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        // Tabela de Passwords Resets
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
         // Tabela de GruposFontes
         Schema::create('grupos_fontes', function (Blueprint $table) {
@@ -268,6 +268,24 @@ class Migration20220122 extends Migration
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->timestamps();
+        });
+        Schema::create('creditos_planejados', function (Blueprint $table) {
+            $table->id();
+            $table->longText('descricao');
+            $table->float('valor_disponivel')->nullable();
+            $table->unsignedBigInteger('despesa_id')->nullable();
+            $table->foreign('despesa_id')->references('id')->on('despesas');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->timestamps();
+        });
+        Schema::create('creditos_disponiveis', function (Blueprint $table) {
+            $table->id();
+            $table->longText('descricao');
+            $table->float('valor_disponivel')->nullable();
+            $table->unsignedBigInteger('credito_planejado_id')->nullable();
+            $table->foreign('credito_planejado_id')->references('id')->on('creditos_planejados');
             $table->timestamps();
         });
     }

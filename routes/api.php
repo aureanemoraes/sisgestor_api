@@ -20,6 +20,9 @@ use App\Http\Controllers\FonteController;
 use App\Http\Controllers\FonteAcaoController;
 use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\MetaOrcamentariaController;
+use App\Http\Controllers\DistribuicaoController;
+use App\Http\Controllers\MovimentoController;
+use App\Http\Controllers\CreditoPlanejadoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -75,6 +78,12 @@ Route::apiResource('fontes', FonteController::class);
 Route::apiResource('fontes_acoes', FonteAcaoController::class);
 Route::apiResource('despesas', DespesaController::class);
 Route::apiResource('metas_orcamentarias', MetaOrcamentariaController::class);
+Route::apiResource('movimentos', MovimentoController::class);
+Route::apiResource('creditos_planejados', CreditoPlanejadoController::class);
+
+Route::get('/index_instituicao/{unidade_gestora_id}/{exercicio_id}', [DistribuicaoController::class, 'index_instituicao']);
+Route::get('/index_unidade_gestora/{unidade_administrativa_id}/{exercicio_id}', [DistribuicaoController::class, 'index_unidade_gestora']);
+Route::get('/index_unidade_administrativa/{unidade_administrativa_id}/{exercicio_id}', [DistribuicaoController::class, 'index_unidade_administrativa']);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
 
