@@ -24,6 +24,9 @@ class FonteTransformer
           case 'valor':
             $fonte->valor = $value;
             break;
+          case 'instituicao_id':
+            $fonte->instituicao_id = $value;
+            break;
           case 'fav':
             $fonte->fav = $value;
             break;

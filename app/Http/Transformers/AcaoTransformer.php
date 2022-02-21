@@ -21,6 +21,9 @@ class AcaoTransformer
           case 'exercicio_id':
             $acao->exercicio_id = $value;
             break;
+          case 'instituicao_id':
+            $acao->instituicao_id = $value;
+            break;
           case 'fav':
             $acao->fav = $value;
             break;
