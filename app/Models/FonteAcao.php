@@ -21,11 +21,11 @@ class FonteAcao extends Model
         'unidade_administrativa_id'
     ];
 
-    // protected $with = [
-    //     'fonte',
-    //     'acao_tipo',
-    //     'exercicio'
-    // ];
+    protected $with = [
+        'fonte:id,nome',
+        'acao_tipo:id,nome',
+        'exercicio:id,nome'
+    ];
 
     public function fonte()
     {

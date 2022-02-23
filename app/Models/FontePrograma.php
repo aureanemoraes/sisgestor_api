@@ -17,11 +17,11 @@ class FontePrograma extends Model
         'exercicio_id'
     ];
 
-    // protected $with = [
-    //     'fonte',
-    //     'programa',
-    //     'exercicio'
-    // ];
+    protected $with = [
+        'fonte:id,nome',
+        'programa:id,nome',
+        'exercicio:id,nome'
+    ];
 
     public function fonte()
     {

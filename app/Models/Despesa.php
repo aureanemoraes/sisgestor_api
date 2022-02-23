@@ -23,13 +23,13 @@ class Despesa extends Model
         'unidade_administrativa_id'
     ];
 
-    // protected $with = [
-    //     'fonte_acao',
-    //     'centro_custo',
-    //     'natureza_despesa',
-    //     'subnatureza_despesa',
-    //     'unidade_administrativa'
-    // ];
+    protected $with = [
+        // 'fonte_acao:',
+        'centro_custo:id,nome',
+        'natureza_despesa:id,nome',
+        'subnatureza_despesa:id,nome',
+        'unidade_administrativa:id,nome'
+    ];
 
     protected $appends = [
         'valor_total'

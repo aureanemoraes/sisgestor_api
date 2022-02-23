@@ -30,9 +30,9 @@ class UnidadeGestora extends Model
         'logs' => 'array'
     ];
 
-    // protected $with = [
-    //     'instituicao'
-    // ];
+    protected $with = [
+        'instituicao:id,nome'
+    ];
 
     public function setNomeAttribute($value)
     {

@@ -18,10 +18,10 @@ class Fonte extends Model
         'fav'
     ];
 
-    // protected $with = [
-    //     'fonte_tipo',
-    //     'exercicio'
-    // ];
+    protected $with = [
+        'fonte_tipo:id,nome',
+        'exercicio:id,nome'
+    ];
 
     protected $appends = [
         'valor_utilizado',
