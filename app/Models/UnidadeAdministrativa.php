@@ -26,10 +26,10 @@ class UnidadeAdministrativa extends Model
         'logs' => 'array'
     ];
 
-    // protected $with = [
-    //     'instituicao',
-    //     'unidade_gestora'
-    // ];
+    protected $with = [
+        'instituicao:id,nome',
+        'unidade_gestora:id,nome'
+    ];
 
     public function setNomeAttribute($value)
     {

@@ -18,10 +18,10 @@ class Acao extends Model
         'fav'
     ];
 
-    // protected $with = [
-    //     'acao_tipo',
-    //     'exercicio'
-    // ];
+    protected $with = [
+        'acao_tipo:id,nome',
+        'exercicio:id,nome'
+    ];
 
     protected $casts = [
         'valor_total'

@@ -22,6 +22,11 @@ class CreditoPlanejado extends Model
         'valor_solicitado' // valor planejado na despesa
     ];
 
+    protected $with = [
+        'despesa:id,nome', 
+        'unidade_administrativa:id,nome'
+    ];
+
     public function getValorSolicitadoAttribute($value) {
         if(isset($this->despesa_id))
             return $this->despesa->valor_total;
@@ -32,6 +37,11 @@ class CreditoPlanejado extends Model
     public function despesa()
     {
         return $this->belongsTo(Despesa::class);
+    } 
+
+    public function unidade_administrativa()
+    {
+        return $this->belongsTo(UnidadeAdministrativa::class);
     } 
 
 }

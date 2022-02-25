@@ -19,4 +19,18 @@ class FonteTipo extends Model
         'fav'
     ];
 
+    protected $with = [
+        'grupo_fonte:id,nome',
+        'especificacao:id,nome'
+    ];
+
+    public function grupo_fonte()
+    {
+        return $this->belongsTo(GrupoFonte::class);
+    }
+
+    public function especificacao()
+    {
+        return $this->belongsTo(Especificacao::class, 'especificacao_id', 'id');
+    }
 }
