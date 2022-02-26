@@ -292,7 +292,7 @@ class Migration20220122 extends Migration
         });
         Schema::create('empenhos', function (Blueprint $table) {
             $table->id();
-            $table->float('valor_empenhado')->nullable();
+            $table->float('valor_empenhado');
             $table->date('data_empenho');
             $table->unsignedBigInteger('credito_disponivel_id');
             $table->foreign('credito_disponivel_id')->references('id')->on('creditos_disponiveis');
