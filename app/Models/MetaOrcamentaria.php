@@ -31,6 +31,25 @@ class MetaOrcamentaria extends Model
         }
     }
 
+    public function getQtdAlcancadaAttribute($value)
+    {
+        if(!isset($value)) {
+            if(isset($this->natureza_despesa_id)) {
+                $qtd_estimada = Empenho::whereHas(
+                    'credito_disponivel', function ($query) {
+                        $query->whereHas(
+                            'despesa', function ($query2) {
+                            $query2->where('natureza_despesa_id', $this->natureza_despesa_id);
+                        });
+                    }
+                )->first()->valor_empenhado;
+                return $qtd_estimada;
+            }
+        } else {
+            return $value;
+        }
+    }
+
     public function natureza_despesa()
     {
         return $this->belongsTo(NaturezaDespesa::class);

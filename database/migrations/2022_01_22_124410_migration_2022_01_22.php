@@ -178,20 +178,11 @@ class Migration20220122 extends Migration
             $table->float('valor');
             $table->timestamps();
         });
-        // Tabela Programas Tipos
-        Schema::create('programas_tipos', function (Blueprint $table) {
-            $table->id();
-            $table->string('codigo');
-            $table->string('nome');
-            $table->timestamps();
-        });
         // Tabela Programas
         Schema::create('programas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('programa_tipo_id');
-            $table->foreign('programa_tipo_id')->references('id')->on('programas_tipos');
-            $table->unsignedBigInteger('exercicio_id');
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->string('codigo');
+            $table->string('nome');
             $table->timestamps();
         });
         // Tabela Fontes Programas
@@ -274,7 +265,7 @@ class Migration20220122 extends Migration
             $table->id();
             $table->longText('descricao');
             $table->float('valor_disponivel')->nullable();
-            $table->unsignedBigInteger('despesa_id')->nullable();
+            $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');
             $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
             $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
@@ -284,8 +275,20 @@ class Migration20220122 extends Migration
             $table->id();
             $table->longText('descricao');
             $table->float('valor_disponivel')->nullable();
-            $table->unsignedBigInteger('credito_planejado_id')->nullable();
-            $table->foreign('credito_planejado_id')->references('id')->on('creditos_planejados');
+            $table->unsignedBigInteger('despesa_id');
+            $table->foreign('despesa_id')->references('id')->on('despesas');
+            $table->unsignedBigInteger('unidade_administrativa_id');
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->timestamps();
+        });
+        Schema::create('empenhos', function (Blueprint $table) {
+            $table->id();
+            $table->float('valor_empenhado');
+            $table->date('data_empenho');
+            $table->unsignedBigInteger('credito_disponivel_id');
+            $table->foreign('credito_disponivel_id')->references('id')->on('creditos_disponiveis');
+            $table->unsignedBigInteger('unidade_administrativa_id');
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
             $table->timestamps();
         });
     }

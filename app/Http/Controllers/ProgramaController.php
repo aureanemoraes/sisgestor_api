@@ -4,61 +4,105 @@ namespace App\Http\Controllers;
 
 use App\Models\Programa;
 use Illuminate\Http\Request;
+use App\Http\Transformers\ProgramaTransformer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ApiBaseController;
 
-class ProgramaController extends Controller
+class ProgramaController extends ApiBaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	public function index()
+	{
+		try {
+			return $this->response(true, Programa::paginate(), 200);
+		} catch (Exception $ex) {
+			return $this->response(false, $ex->getMessage(), 409);
+		}
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	public function store(Request $request)
+	{
+		$invalido = $this->validation($request);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Programa  $programa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Programa $programa)
-    {
-        //
-    }
+		if($invalido) return $this->response(false, $invalido, 422);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Programa  $programa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Programa $programa)
-    {
-        //
-    }
+		try {
+			DB::beginTransaction();
+			$programa = ProgramaTransformer::toInstance($request->all());
+			$programa->save();
+			DB::commit();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Programa  $programa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Programa $programa)
-    {
-        //
-    }
+			return $this->response(true, $programa, 200);
+		} catch (Exception $ex) {
+			DB::rollBack();
+			return $this->response(false, $ex->getMessage(), 409);
+		}
+	}
+
+	public function show($id)
+	{
+        $programa = Programa::find($id);
+
+        if(isset($programa)) {
+            try {
+			
+                if(isset($programa)) 
+                    return $this->response(true, $programa, 200);
+                else 
+                    return $this->response(false,'Not found.', 404);
+            } catch (Exception $ex) {
+                return $this->response(false, $ex->getMessage(), 409);
+            }
+        } else {
+            return $this->response(false, 'Not found.', 404); 
+        }
+	
+	}
+
+	public function update(Request $request, $id)
+	{
+		$programa = Programa::find($id);
+		if(isset($programa)) {
+			try {
+				DB::beginTransaction();
+				$programa = ProgramaTransformer::toInstance($request->all(), $programa);
+				$programa->save();
+				DB::commit();
+
+				return $this->response(true, $programa, 200);
+			} catch (Exception $ex) {
+				DB::rollBack();
+				return $this->response(false, $ex->getMessage(), 409);
+			}
+		} else {
+            return $this->response(false, 'Not found.', 404); 
+        }
+	}
+
+	public function destroy($id)
+	{
+		$programa = Programa::find($id);
+        if(isset($programa)) {
+            try {
+                $programa->delete();
+                return $this->response(true, 'Item deleted.', 200);
+            } catch(Exception $ex) {
+                return $this->response(false, $ex->getMessage(), 409);
+            }
+        } else {
+            return $this->response(false, 'Item not found.', 404);
+        }
+	}
+
+	protected function validation($request) 
+	{
+		$validator = Validator::make($request->all(), [
+			'codigo' => ['required'],
+			'nome' => ['required']
+		]);
+
+		if ($validator->fails()) {
+				return $validator->errors()->toArray();
+		}
+	}
 }

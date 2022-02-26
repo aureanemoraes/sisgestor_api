@@ -2,28 +2,28 @@
 
 namespace App\Http\Transformers;
 
-use App\Models\ProgramaTipo;
+use App\Models\Programa;
 
-class ProgramaTipoTransformer
+class ProgramaTransformer
 {
 
-    public static function toInstance(array $input, $programa_tipo = null)
+    public static function toInstance(array $input, $programa = null)
     {
-      if (empty($programa_tipo)) {
-        $programa_tipo = new ProgramaTipo();
+      if (empty($programa)) {
+        $programa = new Programa();
       }
 
       foreach ($input as $key => $value) {
         switch ($key) {
           case 'codigo':
-            $programa_tipo->codigo = $value;
+            $programa->codigo = $value;
             break;
           case 'nome':
-            $programa_tipo->nome = $value;
+            $programa->nome = $value;
             break;
         }
       }
 
-      return $programa_tipo;
+      return $programa;
     }
 }

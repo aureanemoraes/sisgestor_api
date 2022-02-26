@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CreditoPlanejado;
+use App\Models\CreditoDisponivel;
 use Illuminate\Http\Request;
-use App\Http\Transformers\CreditoPlanejadoTransformer;
+use App\Http\Transformers\CreditoDisponivelTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiBaseController;
 
-class CreditoPlanejadoController extends ApiBaseController
+class CreditoDisponivelController extends ApiBaseController
 {
 	public function getOpcoes() 
 	{
 		try {
-			return $this->response(true, CreditoPlanejado::getOpcoes(), 200);
+			return $this->response(true, CreditoDisponivel::getOpcoes(), 200);
 		} catch(Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
 	}
 
 	public function restore($id) {
-		$credito_planejado = CreditoPlanejado::withTrashed()->where('id', $id)->first();
-		if(isset($credito_planejado)) {
+		$credito_disponivel = CreditoDisponivel::withTrashed()->where('id', $id)->first();
+		if(isset($credito_disponivel)) {
 			try {
-				$credito_planejado->restore();
+				$credito_disponivel->restore();
 				return $this->response(true, 'Item restored.', 200);
 			}	catch(Exception $ex) {
 				return $this->response(false, $ex->getMessage(), 409);
@@ -37,7 +37,7 @@ class CreditoPlanejadoController extends ApiBaseController
 	public function indexWithTrashed()
 	{
 		try {
-			return $this->response(true, CreditoPlanejado::withTrashed()->paginate(), 200);
+			return $this->response(true, CreditoDisponivel::withTrashed()->paginate(), 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
@@ -46,7 +46,7 @@ class CreditoPlanejadoController extends ApiBaseController
 	public function index()
 	{
 		try {
-			return $this->response(true, CreditoPlanejado::paginate(), 200);
+			return $this->response(true, CreditoDisponivel::paginate(), 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
@@ -60,11 +60,11 @@ class CreditoPlanejadoController extends ApiBaseController
 
 		try {
 			DB::beginTransaction();
-			$credito_planejado = CreditoPlanejadoTransformer::toInstance($request->all());
-			$credito_planejado->save();
+			$credito_disponivel = CreditoDisponivelTransformer::toInstance($request->all());
+			$credito_disponivel->save();
 			DB::commit();
 
-			return $this->response(true, $credito_planejado, 200);
+			return $this->response(true, $credito_disponivel, 200);
 		} catch (Exception $ex) {
 			DB::rollBack();
 			return $this->response(false, $ex->getMessage(), 409);
@@ -74,10 +74,10 @@ class CreditoPlanejadoController extends ApiBaseController
 	public function show($id)
 	{
 		try {
-			$credito_planejado = CreditoPlanejado::find($id);
+			$credito_disponivel = CreditoDisponivel::find($id);
 			
-			if(isset($credito_planejado)) 
-				return $this->response(true, $credito_planejado, 200);
+			if(isset($credito_disponivel)) 
+				return $this->response(true, $credito_disponivel, 200);
 			else 
 				return $this->response(false,'Not found.', 404);
 		} catch (Exception $ex) {
@@ -91,15 +91,15 @@ class CreditoPlanejadoController extends ApiBaseController
 
 		if($invalido) return $this->response(false, $invalido, 422);
 		
-		$credito_planejado = CreditoPlanejado::find($id);
-		if(isset($credito_planejado)) {
+		$credito_disponivel = CreditoDisponivel::find($id);
+		if(isset($credito_disponivel)) {
 			try {
 				DB::beginTransaction();
-				$credito_planejado = CreditoPlanejadoTransformer::toInstance($request->all(), $credito_planejado);
-				$credito_planejado->save();
+				$credito_disponivel = CreditoDisponivelTransformer::toInstance($request->all(), $credito_disponivel);
+				$credito_disponivel->save();
 				DB::commit();
 
-				return $this->response(true, $credito_planejado, 200);
+				return $this->response(true, $credito_disponivel, 200);
 			} catch (Exception $ex) {
 				DB::rollBack();
 				return $this->response(false, $ex->getMessage(), 409);
@@ -109,10 +109,10 @@ class CreditoPlanejadoController extends ApiBaseController
 
 	public function destroy($id)
 	{
-		$credito_planejado = CreditoPlanejado::find($id);
+		$credito_disponivel = CreditoDisponivel::find($id);
 		try {
-			if(isset($credito_planejado)) {
-				$credito_planejado->delete();
+			if(isset($credito_disponivel)) {
+				$credito_disponivel->delete();
 				return $this->response(true, 'Item deleted.', 200);
 			} else {
 				return $this->response(false, 'Item not found.', 404);

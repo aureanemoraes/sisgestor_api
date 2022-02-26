@@ -53,8 +53,8 @@ class ManutencoesController extends Controller
         foreach($array as $key => $value) {
             foreach($value as $attribute => $item) {
                 if($attribute == 'fields') {
-                    // echo "ProgramaTipo::create([ 'codigo' => '" . $item['codigo'] . "', 'nome' =>  '" . trim($item['nome']) . "', 'natureza_despesa_id' => '" . $item['natureza_despesa'] . "' ]);" . "<br>";
-                  echo "ProgramaTipo::create([ 'codigo' => '" . $item['codigo'] . "', 'nome' =>  '" . $item['nome'] . "' ]);" . "<br>";
+                    // echo "Programa::create([ 'codigo' => '" . $item['codigo'] . "', 'nome' =>  '" . trim($item['nome']) . "', 'natureza_despesa_id' => '" . $item['natureza_despesa'] . "' ]);" . "<br>";
+                  echo "Programa::create([ 'codigo' => '" . $item['codigo'] . "', 'nome' =>  '" . $item['nome'] . "' ]);" . "<br>";
                 }
             }
         }
