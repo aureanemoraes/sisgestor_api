@@ -15,11 +15,11 @@ class ProgramaTransformer
 
       foreach ($input as $key => $value) {
         switch ($key) {
-          case 'programa_tipo_id':
-            $programa->programa_tipo_id = $value;
+          case 'codigo':
+            $programa->codigo = $value;
             break;
-          case 'exercicio_id':
-            $programa->exercicio_id = $value;
+          case 'nome':
+            $programa->nome = $value;
             break;
         }
       }
