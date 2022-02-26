@@ -7,7 +7,7 @@ use App\Http\Controllers\ExercicioController;
 use App\Http\Controllers\UnidadeGestoraController;
 use App\Http\Controllers\UnidadeAdministrativaController;
 use App\Http\Controllers\ManutencoesController;
-use App\Http\Controllers\ProgramaTipoController;
+use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\GrupoFonteController;
 use App\Http\Controllers\EspecificacaoController;
 use App\Http\Controllers\FonteTipoController;
@@ -60,7 +60,7 @@ Route::get('unidades_administrativas/todos', [UnidadeAdministrativaController::c
 Route::get('unidades_administrativas/restore/{id}', [UnidadeAdministrativaController::class, 'restore']);
 Route::apiResource('unidades_administrativas', UnidadeAdministrativaController::class);
 
-Route::apiResource('programas_tipos', ProgramaTipoController::class);
+Route::apiResource('programas', ProgramaController::class);
 Route::apiResource('grupos_fontes', GrupoFonteController::class);
 Route::get('especificacoes/pesquisa', [EspecificacaoController::class, 'pesquisa']);
 Route::apiResource('especificacoes', EspecificacaoController::class);

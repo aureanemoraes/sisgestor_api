@@ -12,22 +12,7 @@ class Programa extends Model
     protected $table = 'programas';
 
     protected $fillable = [
-        'programa_tipo_id',
-        'exercicio_id'
+        'codigo',
+        'nome'
     ];
-
-    protected $with = [
-        'programa_tipo:id,nome',
-        'exercicio:id,nome'
-    ];
-
-    public function programa_tipo()
-    {
-        return $this->belongsTo(ProgramaTipo::class);
-    }
-    
-    public function exercicio()
-    {
-        return $this->belongsTo(exercicio::class);
-    } 
 }

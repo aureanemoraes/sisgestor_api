@@ -178,20 +178,11 @@ class Migration20220122 extends Migration
             $table->float('valor');
             $table->timestamps();
         });
-        // Tabela Programas Tipos
-        Schema::create('programas_tipos', function (Blueprint $table) {
-            $table->id();
-            $table->string('codigo');
-            $table->string('nome');
-            $table->timestamps();
-        });
         // Tabela Programas
         Schema::create('programas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('programa_tipo_id');
-            $table->foreign('programa_tipo_id')->references('id')->on('programas_tipos');
-            $table->unsignedBigInteger('exercicio_id');
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->string('codigo');
+            $table->string('nome');
             $table->timestamps();
         });
         // Tabela Fontes Programas
