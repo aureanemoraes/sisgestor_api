@@ -128,7 +128,7 @@ class CreditoPlanejadoController extends ApiBaseController
 			'descricao' => ['required'],
 			'valor_disponivel' => ['nullable'],
 			'despesa_id' => ['required', 'exists:despesas,id'],
-            'unidade_administrativa_id' => ['required', 'exists:unidades_administrativas,id']
+			'unidade_administrativa_id' => ['required', 'exists:unidades_administrativas,id']
 		]);
 
 		if ($validator->fails()) {

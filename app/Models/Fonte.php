@@ -28,6 +28,12 @@ class Fonte extends Model
         'valor_distribuido'
     ];
 
+    public function scopeWithAndWhereHas($query, $relation, $constraint){
+        return $query->whereHas($relation, $constraint)
+                     ->with([$relation => $constraint]);
+    }
+
+
     public function getValorUtilizadoAttribute() {
         return isset($this->attributes['valor_utilizado']) ? $this->attributes['valor_utilizado'] : 0;
     }

@@ -32,11 +32,11 @@ class AcaoController extends ApiBaseController
 	public function index(Request $request)
 	{
 		if ($request->instituicao_id) {
-			$acoes = Acao::with([
-				'fontes' => function ($query) use ($request) {
+			$acoes = Acao::withAndWhereHas(
+				'fontes', function ($query) use ($request) {
 					$query->where('fontes_acoes.instituicao_id', $request->instituicao_id);
 				}
-			])->where('instituicao_id', $request->instituicao_id)->orderBy('fav', 'desc')->orderBy('id')->paginate();
+			)->where('instituicao_id', $request->instituicao_id)->orderBy('fav', 'desc')->orderBy('id')->paginate();
 			$acoes = $this->acoes_tratadas($acoes, $request->instituicao_id);
 		} else if ($request->unidade_gestora_id) {
 			$acoes = Acao::withAndWhereHas(

@@ -33,28 +33,41 @@ class FonteController extends ApiBaseController
 	public function index(Request $request)
 	{
 		if(isset($request->instituicao_id)) {
-			$fontes = Fonte::with([
-				'acoes' => function ($query) use($request) {
-					$query->where('instituicao_id', $request->instituicao_id);
+			$fontes = Fonte::withAndWhereHas(
+				'acoes', function ($query) use($request) {
+					$query->where('fontes_acoes.instituicao_id', $request->instituicao_id);
 				}
-			])->where('instituicao_id', $request->instituicao_id)->orderBy('fav', 'desc')->orderBy('id')->paginate();
+			)
+			->where('instituicao_id', $request->instituicao_id)
+			->where('exercicio_id', $request->exercicio_id)
+			->orderBy('fav', 'desc')
+			->orderBy('id')
+			->paginate();
 	
 			$fontes = $this->fontes_tratadas($fontes, $request->instituicao_id);
 			
 		} else if(isset($request->unidade_gestora_id)) {
-			$fontes = Fonte::with([
-				'acoes' => function ($query) use ($request) {
-					$query->where('unidade_gestora_id', $request->unidade_gestora_id);
+			$fontes = Fonte::withAndWhereHas(
+				'acoes', function ($query) use ($request) {
+					$query->where('fontes_acoes.unidade_gestora_id', $request->unidade_gestora_id);
 				}
-			])->orderBy('fav', 'desc')->orderBy('id')->paginate();
+			)
+			->where('exercicio_id', $request->exercicio_id)
+			->orderBy('fav', 'desc')
+			->orderBy('id')
+			->paginate();
 
 			$fontes = $this->fontes_tratadas($fontes, $request->unidade_gestora_id, 'unidade_gestora');
 		} else if(isset($request->unidade_administrativa_id)) {
-			$fontes = Fonte::with([
-				'acoes' => function ($query) use ($request) {
-					$query->where('unidade_administrativa_id', $request->unidade_administrativa_id);
+			$fontes = Fonte::withAndWhereHas(
+				'acoes', function ($query) use ($request) {
+					$query->where('fontes_acoes.unidade_administrativa_id', $request->unidade_administrativa_id);
 				}
-			])->orderBy('fav', 'desc')->orderBy('id')->paginate();
+			)
+			->where('exercicio_id', $request->exercicio_id)
+			->orderBy('fav', 'desc')
+			->orderBy('id')
+			->paginate();
 
 			$fontes = $this->fontes_tratadas($fontes, $request->unidade_administrativa_id, 'unidade_administrativa');
 		}
