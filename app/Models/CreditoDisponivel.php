@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CreditoPlanejado extends Model
+class CreditoDisponivel extends Model
 {
     use HasFactory;
 
-    protected $table = 'creditos_planejados';
+    protected $table = 'creditos_disponiveis';
 
     protected $fillable = [
         'descricao',
@@ -44,6 +44,4 @@ class CreditoPlanejado extends Model
             return floatval($valor_solicitado);
         }
     }
-
-
 }

@@ -9,6 +9,8 @@ class Despesa extends Model
 {
     use HasFactory;
 
+    protected $table = 'despesas';
+
     protected $fillable = [
         'descricao',
         'valor',
@@ -30,24 +32,21 @@ class Despesa extends Model
         'subnatureza_despesa:id,nome',
         'unidade_administrativa:id,nome'
     ];
-
-    protected $appends = [
-        'valor_total'
-    ];
-
-    public function getValorTotalAttribute($value)
+    
+ 
+    public function setValorTotalAttribute($value)
     {
         if(isset($value)) {
-            $valor_total = $value;
+            $this->attributes['valor_total'] = $value;
             if(isset($this->attributes['qtd'])) {
-                $valor_total = $valor_total  * $this->attributes['qtd'];
+                $this->attributes['valor_total'] = $this->attributes['valor_total']  * $this->attributes['qtd'];
                 if(isset($this->attributes['qtd_pessoas'])) {
-                    $valor_total = $valor_total * $this->attributes['qtd_pessoas'];
+                    $this->attributes['valor_total'] = $this->attributes['valor_total'] * $this->attributes['qtd_pessoas'];
                 }
             }
-            return $valor_total;
+            $this->attributes['valor_total'];
         } else {
-            return null;
+            $this->attributes['valor_total'];
         }
     }
 

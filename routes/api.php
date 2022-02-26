@@ -23,6 +23,7 @@ use App\Http\Controllers\MetaOrcamentariaController;
 use App\Http\Controllers\DistribuicaoController;
 use App\Http\Controllers\MovimentoController;
 use App\Http\Controllers\CreditoPlanejadoController;
+use App\Http\Controllers\CreditoDisponivelController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -80,6 +81,7 @@ Route::apiResource('despesas', DespesaController::class);
 Route::apiResource('metas_orcamentarias', MetaOrcamentariaController::class);
 Route::apiResource('movimentos', MovimentoController::class);
 Route::apiResource('creditos_planejados', CreditoPlanejadoController::class);
+Route::apiResource('creditos_disponiveis', CreditoDisponivelController::class);
 
 Route::get('/index_instituicao/{unidade_gestora_id}/{exercicio_id}', [DistribuicaoController::class, 'index_instituicao']);
 Route::get('/index_unidade_gestora/{unidade_administrativa_id}/{exercicio_id}', [DistribuicaoController::class, 'index_unidade_gestora']);
