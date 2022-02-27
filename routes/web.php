@@ -25,5 +25,5 @@ Route::get('/instituicoes/matriz/fontes', function () {
 
 Route::get('/instituicoes/matriz/programas', function () {
     $fontes = Fonte::all();
-    return view('fontes')->with(['fontes' => $fontes]);
-})->name('fontes');
+    return view('programas')->with(['programas' => $programas]);
+})->name('programas');

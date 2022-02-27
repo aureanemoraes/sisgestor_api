@@ -69,4 +69,11 @@ class Fonte extends Model
             'unidade_administrativa_id'
         );
     }
+
+    public function programas()
+    {
+        return $this->belongsToMany(Programa::class, 'fontes_programas', 'fonte_id', 'programa_id')->withPivot(
+            'exercicio_id',
+        );
+    }
 }

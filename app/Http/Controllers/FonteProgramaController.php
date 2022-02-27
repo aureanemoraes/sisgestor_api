@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FontePrograma;
 use App\Models\Fonte;
+use App\Models\Programa;
 use App\Models\UnidadeAdministrativa;
 use Illuminate\Http\Request;
 use App\Http\Transformers\FonteProgramaTransformer;
@@ -13,10 +14,29 @@ use App\Http\Controllers\ApiBaseController;
 
 class FonteProgramaController extends ApiBaseController
 {
-	public function index()
+	public function index(Request $request)
 	{
+        if($request->exercicio_id) {
+			if(isset($request->instituicao_id)) {
+				if($request->order_by == 'fontes') {
+                    $dados = Fonte::with(['programas' => function ($query) use($request) {
+                        $query->where('fontes_programas.exercicio_id', $request->exercicio_id);
+                    }])
+                    ->orderBy('fav', 'desc')
+                    ->orderBy('id')
+                    ->paginate();
+                } else {
+                    $dados = Programa::with(['fontes' => function ($query) use($request) {
+                        $query->where('fontes_programas.exercicio_id', $request->exercicio_id);
+                    }])
+                    ->orderBy('id')
+                    ->paginate();
+                }
+			} 
+		}
+
 		try {
-			return $this->response(true, FontePrograma::paginate(), 200);
+			return $this->response(true, $dados, 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
