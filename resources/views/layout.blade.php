@@ -32,7 +32,7 @@
             <a href="{{ route('fontes') }}" class="list-group-item list-group-item-action">Fontes</a>
           </div>
           <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Programas</a>
+            <a href="{{ route('programas', ['exercicio_id' => 1]) }}" class="list-group-item list-group-item-action">Programas</a>
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action">Ações</a>

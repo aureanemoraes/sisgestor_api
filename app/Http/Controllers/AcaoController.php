@@ -31,27 +31,40 @@ class AcaoController extends ApiBaseController
 
 	public function index(Request $request)
 	{
-		if ($request->instituicao_id) {
-			$acoes = Acao::withAndWhereHas(
-				'fontes', function ($query) use ($request) {
-					$query->where('fontes_acoes.instituicao_id', $request->instituicao_id);
-				}
-			)->where('instituicao_id', $request->instituicao_id)->orderBy('fav', 'desc')->orderBy('id')->paginate();
-			$acoes = $this->acoes_tratadas($acoes, $request->instituicao_id);
-		} else if ($request->unidade_gestora_id) {
-			$acoes = Acao::withAndWhereHas(
-				'fontes', function ($query) use ($request) {
-					$query->where('fontes_acoes.unidade_gestora_id', $request->unidade_gestora_id);
-				}
-			)->orderBy('fav', 'desc')->orderBy('id')->paginate();
-			$acoes = $this->acoes_tratadas($acoes, $request->instituicao_id);
-		} else if ($request->unidade_administrativa_id) {
-			$acoes = Acao::withAndWhereHas(
-				'fontes', function ($query) use ($request) {
-					$query->where('fontes_acoes.unidade_administrativa_id', $request->unidade_administrativa_id);
-				}
-			)->orderBy('fav', 'desc')->orderBy('id')->paginate();
-			$acoes = $this->acoes_tratadas($acoes, $request->instituicao_id);
+		if($request->exercicio_id) {
+			if ($request->instituicao_id) {
+				$acoes = Acao::withAndWhereHas(
+					'fontes', function ($query) use ($request) {
+						$query->where('fontes_acoes.instituicao_id', $request->instituicao_id);
+					}
+				)
+				->where('instituicao_id', $request->instituicao_id)
+				->where('exercicio_id', $request->exercicio_id)
+				->orderBy('fav', 'desc')->orderBy('id')->paginate();
+				$acoes = $this->acoes_tratadas($acoes, $request->instituicao_id);
+			} else if ($request->unidade_gestora_id) {
+				$acoes = Acao::withAndWhereHas(
+					'fontes', function ($query) use ($request) {
+						$query->where('fontes_acoes.unidade_gestora_id', $request->unidade_gestora_id);
+					}
+				)
+				->where('exercicio_id', $request->exercicio_id)
+				->orderBy('fav', 'desc')
+				->orderBy('id')
+				->paginate();
+				$acoes = $this->acoes_tratadas($acoes, $request->instituicao_id);
+			} else if ($request->unidade_administrativa_id) {
+				$acoes = Acao::withAndWhereHas(
+					'fontes', function ($query) use ($request) {
+						$query->where('fontes_acoes.unidade_administrativa_id', $request->unidade_administrativa_id);
+					}
+				)
+				->where('exercicio_id', $request->exercicio_id)
+				->orderBy('fav', 'desc')
+				->orderBy('id')
+				->paginate();
+				$acoes = $this->acoes_tratadas($acoes, $request->instituicao_id);
+			}
 		}
 		try {
 			return $this->response(true, $acoes, 200);

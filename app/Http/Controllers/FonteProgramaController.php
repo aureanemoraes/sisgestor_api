@@ -17,23 +17,21 @@ class FonteProgramaController extends ApiBaseController
 	public function index(Request $request)
 	{
         if($request->exercicio_id) {
-			if(isset($request->instituicao_id)) {
-				if($request->order_by == 'fontes') {
-                    $dados = Fonte::with(['programas' => function ($query) use($request) {
-                        $query->where('fontes_programas.exercicio_id', $request->exercicio_id);
-                    }])
-                    ->orderBy('fav', 'desc')
-                    ->orderBy('id')
-                    ->paginate();
-                } else {
-                    $dados = Programa::with(['fontes' => function ($query) use($request) {
-                        $query->where('fontes_programas.exercicio_id', $request->exercicio_id);
-                    }])
-                    ->orderBy('id')
-                    ->paginate();
-                }
-			} 
-		}
+					if($request->order_by == 'fontes') {
+							$dados = Fonte::with(['programas' => function ($query) use($request) {
+									$query->where('fontes_programas.exercicio_id', $request->exercicio_id);
+							}])
+							->orderBy('fav', 'desc')
+							->orderBy('id')
+							->paginate();
+					} else {
+							$dados = Programa::with(['fontes' => function ($query) use($request) {
+									$query->where('fontes_programas.exercicio_id', $request->exercicio_id);
+							}])
+							->orderBy('id')
+							->paginate();
+					}
+				}
 
 		try {
 			return $this->response(true, $dados, 200);
