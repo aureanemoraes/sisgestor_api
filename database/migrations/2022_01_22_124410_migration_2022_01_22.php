@@ -261,6 +261,16 @@ class Migration20220122 extends Migration
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
         });
+        Schema::create('limites_orcamentarios', function (Blueprint $table) {
+            $table->id();
+            $table->float('valor_solicitado');
+            $table->float('valor_disponivel');
+            $table->unsignedBigInteger('despesa_id');
+            $table->foreign('despesa_id')->references('id')->on('despesas');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->timestamps();
+        });
         Schema::create('creditos_planejados', function (Blueprint $table) {
             $table->id();
             $table->longText('descricao');
