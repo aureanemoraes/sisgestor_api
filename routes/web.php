@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Fonte;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return "OK";
 });
+
+Route::get('/instituicoes/matriz/fontes', function () {
+    $fontes = Fonte::all();
+    return view('fontes')->with(['fontes' => $fontes]);
+})->name('fontes');
+
+Route::get('/instituicoes/matriz/programas', function () {
+    $fontes = Fonte::all();
+    return view('fontes')->with(['fontes' => $fontes]);
+})->name('fontes');

@@ -18,7 +18,7 @@ class FontePrograma extends Model
     ];
 
     protected $with = [
-        'fonte:id,nome',
+        'fonte:id,fonte_tipo_id',
         'programa:id,nome',
         'exercicio:id,nome'
     ];

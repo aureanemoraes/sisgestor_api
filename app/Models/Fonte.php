@@ -20,7 +20,8 @@ class Fonte extends Model
 
     protected $with = [
         'fonte_tipo:id,nome',
-        'exercicio:id,nome'
+        'exercicio:id,nome',
+        'instituicao:id,nome'
     ];
 
     protected $appends = [
@@ -51,6 +52,12 @@ class Fonte extends Model
     {
         return $this->belongsTo(Exercicio::class);
     } 
+
+    public function instituicao()
+    {
+        return $this->belongsTo(Instituicao::class);
+    } 
+
 
     public function acoes()
     {
