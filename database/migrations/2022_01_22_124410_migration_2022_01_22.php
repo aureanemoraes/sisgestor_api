@@ -264,7 +264,9 @@ class Migration20220122 extends Migration
         Schema::create('limites_orcamentarios', function (Blueprint $table) {
             $table->id();
             $table->float('valor_solicitado');
-            $table->float('valor_disponivel');
+            $table->float('valor_disponivel')->nullable();
+            $table->integer('numero_processo');
+            $table->longText('descricao');
             $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');
             $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
@@ -274,6 +276,7 @@ class Migration20220122 extends Migration
         Schema::create('creditos_planejados', function (Blueprint $table) {
             $table->id();
             $table->longText('descricao');
+            $table->float('valor_solicitado');
             $table->float('valor_disponivel')->nullable();
             $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');
@@ -284,6 +287,7 @@ class Migration20220122 extends Migration
         Schema::create('creditos_disponiveis', function (Blueprint $table) {
             $table->id();
             $table->longText('descricao');
+            $table->float('valor_solicitado');
             $table->float('valor_disponivel')->nullable();
             $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');

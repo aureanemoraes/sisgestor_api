@@ -126,6 +126,7 @@ class CreditoPlanejadoController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
 			'descricao' => ['required'],
+			'valor_solicitado' => ['required'],
 			'valor_disponivel' => ['nullable'],
 			'despesa_id' => ['required', 'exists:despesas,id'],
 			'unidade_administrativa_id' => ['required', 'exists:unidades_administrativas,id']

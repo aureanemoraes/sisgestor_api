@@ -13,14 +13,15 @@ class CreditoPlanejado extends Model
 
     protected $fillable = [
         'descricao',
+        'valor_solicitado',
         'valor_disponivel',
         'despesa_id',
         'unidade_administrativa_id'
     ];
 
-    protected $appends = [
-        'valor_solicitado' // valor planejado na despesa
-    ];
+    // protected $appends = [
+    //     'valor_solicitado' // valor planejado na despesa
+    // ];
 
     protected $with = [
         'despesa:id,descricao', 
@@ -38,12 +39,10 @@ class CreditoPlanejado extends Model
         return $this->belongsTo(UnidadeAdministrativa::class);
     } 
 
-    public function getValorSolicitadoAttribute($value) {
-        if(isset($this->attributes['despesa_id'])) {
-            $valor_solicitado = Despesa::find($this->attributes['despesa_id'])->valor_total;
-            return floatval($valor_solicitado);
-        }
-    }
-
-
+    // public function getValorSolicitadoAttribute($value) {
+    //     if(isset($this->attributes['despesa_id'])) {
+    //         $valor_solicitado = Despesa::find($this->attributes['despesa_id'])->valor_total;
+    //         return floatval($valor_solicitado);
+    //     }
+    // }
 }
