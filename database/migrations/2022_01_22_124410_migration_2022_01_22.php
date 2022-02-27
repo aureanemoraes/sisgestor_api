@@ -265,7 +265,7 @@ class Migration20220122 extends Migration
             $table->id();
             $table->float('valor_solicitado');
             $table->float('valor_disponivel')->nullable();
-            $table->integer('numero_processo');
+            $table->string('numero_processo');
             $table->longText('descricao');
             $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');

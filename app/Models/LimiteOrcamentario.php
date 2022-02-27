@@ -12,10 +12,10 @@ class LimiteOrcamentario extends Model
     protected $table = 'limites_orcamentarios';
 
     protected $fillable = [
+        'descricao',
         'valor_solicitado',
         'valor_disponivel',
         'numero_processo',
-        'descricao',
         'despesa_id',
         'unidade_administrativa_id'
     ];
