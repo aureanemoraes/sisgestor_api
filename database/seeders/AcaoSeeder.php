@@ -15,7 +15,7 @@ class AcaoSeeder extends Seeder
     public function run()
     {
         Acao::create([
-            'acao_tipo_id' => 1294,
+            'acao_tipo_id' => 1295,
             'exercicio_id' => 1,
             'instituicao_id' => 1,
             'fav' => 1 
@@ -29,6 +29,14 @@ class AcaoSeeder extends Seeder
 
         Acao::create([
             'acao_tipo_id' => 2049,
+            'exercicio_id' => 1,
+            'instituicao_id' => 1,
+            'fav' => 1 
+        ]);
+
+        // 1294 - Ação 20RL
+        Acao::create([
+            'acao_tipo_id' => 1294,
             'exercicio_id' => 1,
             'instituicao_id' => 1,
             'fav' => 1 

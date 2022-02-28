@@ -47,5 +47,6 @@ class SubnaturezaDespesaSeeder extends Seeder
         SubnaturezaDespesa::create([ 'codigo' => '33904601', 'nome' => 'Indenização Auxílio Alimentação', 'natureza_despesa_id' => '122' ]);
         SubnaturezaDespesa::create([ 'codigo' => '33904901', 'nome' => 'Indenização Auxílio Transporte', 'natureza_despesa_id' => '125' ]);
         SubnaturezaDespesa::create([ 'codigo' => '33909308', 'nome' => 'Ressarcimento Assistência Medico/Odonto', 'natureza_despesa_id' => '129' ]);
+        SubnaturezaDespesa::create([ 'codigo' => '33903017', 'nome' => 'Material de Processamento de Dados', 'natureza_despesa_id' => '111' ]);
     }
 }

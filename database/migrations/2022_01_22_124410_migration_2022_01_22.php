@@ -239,6 +239,8 @@ class Migration20220122 extends Migration
             $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
             $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
             $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->unsignedBigInteger('exercicio_id')->nullable();
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->timestamps();
         });
         Schema::create('movimentos', function (Blueprint $table) {

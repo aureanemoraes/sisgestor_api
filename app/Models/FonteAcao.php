@@ -22,8 +22,6 @@ class FonteAcao extends Model
     ];
 
     protected $with = [
-        'fonte:id,nome',
-        'acao_tipo:id,nome',
         'exercicio:id,nome'
     ];
 

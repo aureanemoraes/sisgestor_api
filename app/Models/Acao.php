@@ -19,7 +19,7 @@ class Acao extends Model
     ];
 
     protected $with = [
-        'acao_tipo:id,nome',
+        'acao_tipo:id,codigo,nome',
         'exercicio:id,nome'
     ];
 

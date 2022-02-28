@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Fonte;
 use App\Models\Programa;
 use Illuminate\Http\Request;
+use App\Http\Controllers\RelatorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return "OK";
 });
+
+Route::get('/relatorio_simplificado', [RelatorioController::class, 'relatorio_simplificado']);
 
 Route::get('/instituicoes/matriz/fontes', function (Request $request) {
     $fontes = FonteController::index_teste($request);
