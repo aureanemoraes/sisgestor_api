@@ -18,13 +18,32 @@ class MetaOrcamentariaSeeder extends Seeder
             'nome' => 'Meta Orçamentária 1',
             'qtd_estimada' => 100,
             'qtd_alcancada' => 50,
-            'instituicao_id' => 1
+            'instituicao_id' => 1,
+            'unidade_gestora_id' => 1
         ]);
 
         MetaOrcamentaria::create([
             'nome' => 'Meta Orçamentária 2',
+            'acao_id' => 1,
             'natureza_despesa_id' => 1,
-            'instituicao_id' => 1
+            'instituicao_id' => 1,
+            'unidade_gestora_id' => 1
+        ]);
+
+        // MetaOrcamentaria::create([
+        //     'nome' => 'Meta Orçamentária 3',
+        //     'acao_id' => 1,
+        //     'natureza_despesa_id' => 111,
+        //     'instituicao_id' => 1,
+        //     'unidade_gestora_id' => 1
+        // ]);
+
+        MetaOrcamentaria::create([
+            'nome' => 'Meta Orçamentária 4',
+            'acao_id' => 4,
+            'natureza_despesa_id' => 103,
+            'instituicao_id' => 1,
+            'unidade_gestora_id' => 1
         ]);
     }
 }

@@ -259,8 +259,12 @@ class Migration20220122 extends Migration
             $table->float('qtd_alcancada')->nullable();
             $table->unsignedBigInteger('natureza_despesa_id')->nullable();
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('acao_id')->nullable();
+            $table->foreign('acao_id')->references('id')->on('acoes');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('unidade_gestora_id');
+            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
             $table->timestamps();
         });
         Schema::create('limites_orcamentarios', function (Blueprint $table) {

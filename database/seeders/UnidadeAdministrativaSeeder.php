@@ -26,7 +26,7 @@ class UnidadeAdministrativaSeeder extends Seeder
             'sigla' => 'UA2',
             'ugr' => '223456',
             'instituicao_id' => 1,
-            'unidade_gestora_id' => 2
+            'unidade_gestora_id' => 1
         ]);
     }
 }

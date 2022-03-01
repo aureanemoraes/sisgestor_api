@@ -16,13 +16,27 @@
        font-size: 10px;
        margin: 0;
        padding: 0;
+       offset: 0;
        box-sizing: border-box;
      }
 
+     html {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+     }
+     @media print {
+      table { page-break-inside:auto }
+      tr    { page-break-inside:avoid; page-break-after:auto }
+   
+     }
+
      .container {
-       margin: 50px;
        padding: 30px;
-       border: 1px solid #0f0f0f;
+     }
+
+     .title {
+       text-align: right;
      }
 
      .header {
@@ -47,10 +61,139 @@
      th.total-custeio {
        text-align: right;
      }
+
+     .resumo {
+       display: flex;
+       justify-content: space-around;
+       align-items: center;
+     }
+
+     .valor-matriz {
+        vertical-align: middle;
+        text-align: center;
+     }
+
+     .table {
+      vertical-align: middle;
+     }
+
+     .resumo-valores {
+       text-align: center;
+     }
    </style>
 </head>
 <body>
   <div class="container">
+    <div class="title">
+      <p>
+        PLANEJAMENTO ORÇAMENTÁRIO <strong>{{ Str::upper($instituicao->nome) }}</strong> - EXERCÍCIO <strong>{{ Str::upper($exercicio->nome) }}</strong> - {{ $exercicio->aprovado ? 'LOA' : 'PLOA' }}
+      </p>
+      <p>
+        UNIDADE ADMINISTRATIVA: <span class="acao">{{ $unidade_administrativa->nome }}</span>
+      </p>
+    </div>
+    <div class="resumo">
+      <div class="resumo-metas">
+        <table class="table">
+          <p>Metas Orçamentárias</p>
+        </table>
+      </div>
+      <div class="resumo-acoes">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>MATRIZ</th>
+              <th>PLANEJADO</th>
+              <th>SALDO A PLANEJAR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>AÇÃO</th>
+              <th>DETALHAMENTO</th>
+              <td class="resumo-valores">
+                @php
+                  $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                  $total_matriz = $formatter->formatCurrency($resumo_acoes['total_matriz'], "BRL")
+                @endphp
+                {{ $total_matriz }}
+              </td>
+              <td class="resumo-valores">
+                @php
+                  $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                  $total_planejado = $formatter->formatCurrency($resumo_acoes['total_planejado'], "BRL")
+                @endphp
+                {{ $total_planejado }}
+              </td>
+              <td class="resumo-valores">
+                @php
+                  $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                  $total_diferenca = $formatter->formatCurrency($resumo_acoes['total_diferenca'], "BRL")
+                @endphp
+                {{ $total_diferenca }}
+              </td>
+            </tr>
+            @foreach($resumo_acoes as $keyR => $resumo_acao)
+              @if($keyR == 'acoes')
+                @foreach($resumo_acao as $codigo_acao => $acao)
+                  <tr>
+                    <td rowspan="3">{{ $codigo_acao }}</td>
+                  </tr>
+                  <tr>
+                    <td>Custeio</td>
+                    <td rowspan="2" class="valor-matriz">
+                      @php
+                        if($acao['valores']['matriz'] > 0) {
+                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                          $valor_matriz = $formatter->formatCurrency($acao['valores']['matriz'], "BRL");
+                        } else 
+                          $valor_matriz = '';
+                      @endphp
+                      {{ $valor_matriz }}
+                    </td>
+                    <td>
+                      @php
+                        if($acao['valores']['planejado']['custeio'] > 0) {
+                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                          $valor_planejado_custeio = $formatter->formatCurrency($acao['valores']['planejado']['custeio'], "BRL");
+                        } else 
+                          $valor_planejado_custeio = '';
+                      @endphp
+                      {{ $valor_planejado_custeio }}
+                    </td>
+                    <td rowspan="2" class="valor-matriz">
+                      @php
+                        if($acao['valores']['diferenca'] > 0) {
+                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                          $valor_diferenca = $formatter->formatCurrency($acao['valores']['diferenca'], "BRL");
+                        } else 
+                          $valor_diferenca = '';
+                      @endphp
+                      {{ $valor_diferenca }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Investimento</td>
+                    <td>
+                      @php
+                        if($acao['valores']['planejado']['investimento'] > 0) {
+                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                          $valor_planejado_investimento = $formatter->formatCurrency($acao['valores']['planejado']['investimento'], "BRL");
+                        } else 
+                          $valor_planejado_investimento = '';
+                      @endphp
+                      {{ $valor_planejado_investimento }}
+                    </td>
+                  </tr>
+                @endforeach
+              @endif
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
     <div class="header">
       <div class="item">
         <h4>Relatório Geral Simplificado</h4>

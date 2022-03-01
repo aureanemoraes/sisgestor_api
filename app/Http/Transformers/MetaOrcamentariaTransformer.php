@@ -24,11 +24,17 @@ class MetaOrcamentariaTransformer
           case 'qtd_alcancada':
             $meta_orcamentaria->qtd_alcancada = $value;
             break;
+          case 'acao_id':
+            $meta_orcamentaria->acao_id = $value;
+            break;
           case 'natureza_despesa_id':
             $meta_orcamentaria->natureza_despesa_id = $value;
             break;
           case 'instituicao_id':
             $meta_orcamentaria->instituicao_id = $value;
+            break;
+          case 'unidade_gestora_id':
+            $meta_orcamentaria->unidade_gestora_id = $value;
             break;
         }
       }
