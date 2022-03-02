@@ -23,6 +23,9 @@ class RelatorioController extends Controller
         
         $acoes = Acao::where('exercicio_id', $exercicio_id)->where('instituicao_id', $instituicao_id)->get();
 
+        $infos = [];
+        $resumo = [];
+
         foreach ($acoes as $acao) {
             $fontes_acoes_ids[$acao->id] = FonteAcao::where('unidade_administrativa_id', $unidade_administrativa_id)
                 ->where('exercicio_id', $exercicio_id)
@@ -30,8 +33,13 @@ class RelatorioController extends Controller
                 ->pluck('id')
                 ->toArray();
 
-            if(!isset($infos[$acao->id]))
+
+            if(!isset($infos[$acao->id])) {
                 $infos[$acao->id] = [];
+            }
+                
+            if(!isset($resumo[$acao->id]))
+                $resumo[$acao->id] = [];
         }
 
         $naturezas_despesas_ids = Despesa::select('natureza_despesa_id')
@@ -42,28 +50,7 @@ class RelatorioController extends Controller
 
         $naturezas_despesas = NaturezaDespesa::whereIn('id', $naturezas_despesas_ids)->get();
 
-        $infos = [];
-        $i = 0;
-
         foreach($naturezas_despesas as $natureza_despesa) {
-
-            // $infos[$i]['despesas']['custo_fixo'] = Despesa::where('unidade_administrativa_id', $unidade_administrativa_id)
-            //     ->where('exercicio_id', $exercicio_id)
-            //     ->where('natureza_despesa_id', $natureza_despesa->id)
-            //     ->whereNull('subnatureza_despesa_id')
-            //     ->where('tipo', 'despesa_fixa')
-            //     ->get()
-            //     ->toArray();
-
-            // $infos[$i]['despesas']['custo_variavel'] = Despesa::where('unidade_administrativa_id', $unidade_administrativa_id)
-            //     ->where('exercicio_id', $exercicio_id)
-            //     ->where('natureza_despesa_id', $natureza_despesa->id)
-            //     ->whereNull('subnatureza_despesa_id')
-            //     ->where('tipo', 'despesa_variavel')
-            //     ->get()
-            //     ->toArray();
-            // $i++;
-
             $despesas_fixas = Despesa::with(['fonte_acao:id,acao_id'])
                 ->where('unidade_administrativa_id', $unidade_administrativa_id)
                 ->where('exercicio_id', $exercicio_id)
@@ -76,7 +63,27 @@ class RelatorioController extends Controller
                 foreach($despesas_fixas as $despesa_fixa) {
                     if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['nome']))
                         $infos[$despesa_fixa->fonte_acao->acao_id]['nome'] = "$natureza_despesa->codigo - $natureza_despesa->nome";
-                        $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custo_fixo'][] = $despesa_fixa->toArray();
+                        
+                    if($natureza_despesa->tipo == 'Custeio') {
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo'][] = $despesa_fixa->toArray();
+
+                        if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo']['total']))
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo']['total'] = $despesa_fixa->valor_total; 
+                        else
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo']['total'] += $despesa_fixa->valor_total;
+                    } else {
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo'][] = $despesa_fixa->toArray(); 
+
+                        if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo']['total']))
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo']['total'] = $despesa_fixa->valor_total; 
+                        else
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo']['total'] += $despesa_fixa->valor_total;
+                    }
+
+                    if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['total_acao']))
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['total_acao'] = $despesa_fixa->valor_total;
+                    else
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['total_acao'] += $despesa_fixa->valor_total;
                 }
             }
 
@@ -91,14 +98,31 @@ class RelatorioController extends Controller
                 foreach($despesas_variaveis as $despesa_variavel) {
                     if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['nome']))
                         $infos[$despesa_variavel->fonte_acao->acao_id]['nome'] = "$natureza_despesa->codigo - $natureza_despesa->nome";
-                        $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custo_variavel'][] = $despesa_variavel->toArray();
+
+                    if($natureza_despesa->tipo == 'Custeio') {
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel'][] = $despesa_variavel->toArray();
+
+                        if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel']['total']))
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel']['total'] = $despesa_variavel->valor_total; 
+                        else
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel']['total'] += $despesa_variavel->valor_total;
+                    } else {
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel'][] = $despesa_variavel->toArray(); 
+
+                        if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel']['total']))
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel']['total'] = $despesa_variavel->valor_total; 
+                        else
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel']['total'] += $despesa_variavel->valor_total;
+                    }
+
+                    if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['total_acao']))
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['total_acao'] = $despesa_variavel->valor_total;
+                    else
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['total_acao'] += $despesa_variavel->valor_total;
                 }
             }
-
-            // dd($infos);
         }
 
-        
         return view('unidade_administrativa.relatorio_completo')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
