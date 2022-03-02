@@ -22,6 +22,9 @@ class UnidadeAdministrativaTransformer
           case 'sigla':
             $unidade_administrativa->sigla = $value;
             break;
+          case 'ugr':
+            $unidade_administrativa->ugr = $value;
+            break;
           case 'instituicao_id':
             $unidade_administrativa->instituicao_id = $value;
             break;
