@@ -15,6 +15,29 @@ use App\Models\UnidadeGestora;
 
 class RelatorioController extends Controller
 {
+    public function relatorioCompletoUA($instituicao_id, $exercicio_id, $unidade_administrativa_id) 
+    {
+        $instituicao = Instituicao::find($instituicao_id);
+        $exercicio = Exercicio::find($exercicio_id);
+        $unidade_administrativa = UnidadeAdministrativa::find($unidade_administrativa_id);
+        
+        $acoes = Acao::where('exercicio_id', $exercicio_id)->where('instituicao_id', $instituicao_id)->get();
+
+        // $naturezas_despesas = Despesa::select('natureza_despesa_id')
+        //     ->where('unidade_administrativa_id', $unidade_administrativa_id)
+        //     ->where('exercicio_id', $exercicio_id)
+        //     ->groupBy('natureza_despesa_id')
+        //     ->pluck('natureza_despesa_id');
+
+
+        return view('unidade_administrativa.relatorio_completo')->with([
+            'instituicao' => $instituicao,
+            'exercicio' => $exercicio,
+            'unidade_administrativa' => $unidade_administrativa,
+            'acoes' => $acoes
+        ]);
+    }
+
     public function relatorioSimplificadoUA($instituicao_id, $exercicio_id, $unidade_administrativa_id) 
     {
         $instituicao = Instituicao::find($instituicao_id);

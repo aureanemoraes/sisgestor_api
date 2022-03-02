@@ -25,10 +25,10 @@
        align-items: center;
        justify-content: center;
      }
+
      @media print {
       table { page-break-inside:auto }
       tr    { page-break-inside:avoid; page-break-after:auto }
-   
      }
 
      .container {

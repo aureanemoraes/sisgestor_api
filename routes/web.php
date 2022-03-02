@@ -21,12 +21,14 @@ Route::get('/', function () {
     return "OK";
 });
 
-Route::get('/relatorio_simplificado/instituicao/{instituicao_id}/{exercicio_id}', [RelatorioController::class, 'relatorioSimplificado']);
 
-Route::get('/relatorio_simplificado/unidade_administrativa/{instituicao_id}/{exercicio_id}/{unidade_administrativa_id}', [RelatorioController::class, 'relatorioSimplificadoUA']);
+Route::get('/relatorio_completo/unidade_administrativa/{instituicao_id}/{exercicio_id}/{unidade_administrativa_id}', [RelatorioController::class, 'relatorioCompletoUA']);
+
+Route::get('/relatorio_simplificado/instituicao/{instituicao_id}/{exercicio_id}', [RelatorioController::class, 'relatorioSimplificado']);
 
 Route::get('/relatorio_simplificado/unidade_gestora/{instituicao_id}/{exercicio_id}/{unidade_gestora_id}', [RelatorioController::class, 'relatorioSimplificadoUG']);
 
+Route::get('/relatorio_simplificado/unidade_administrativa/{instituicao_id}/{exercicio_id}/{unidade_administrativa_id}', [RelatorioController::class, 'relatorioSimplificadoUA']);
 
 
 Route::get('/instituicoes/matriz/fontes', function (Request $request) {
