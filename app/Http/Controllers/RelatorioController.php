@@ -46,6 +46,7 @@ class RelatorioController extends Controller
         $i = 0;
 
         foreach($naturezas_despesas as $natureza_despesa) {
+
             // $infos[$i]['despesas']['custo_fixo'] = Despesa::where('unidade_administrativa_id', $unidade_administrativa_id)
             //     ->where('exercicio_id', $exercicio_id)
             //     ->where('natureza_despesa_id', $natureza_despesa->id)
@@ -73,9 +74,28 @@ class RelatorioController extends Controller
 
             if (count($despesas_fixas) > 0) {
                 foreach($despesas_fixas as $despesa_fixa) {
-                    
+                    if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['nome']))
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['nome'] = "$natureza_despesa->codigo - $natureza_despesa->nome";
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custo_fixo'][] = $despesa_fixa->toArray();
                 }
             }
+
+            $despesas_variaveis = Despesa::where('unidade_administrativa_id', $unidade_administrativa_id)
+                ->where('exercicio_id', $exercicio_id)
+                ->where('natureza_despesa_id', $natureza_despesa->id)
+                ->whereNull('subnatureza_despesa_id')
+                ->where('tipo', 'despesa_variavel')
+                ->get();
+
+            if (count($despesas_variaveis) > 0) {
+                foreach($despesas_variaveis as $despesa_variavel) {
+                    if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['nome']))
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['nome'] = "$natureza_despesa->codigo - $natureza_despesa->nome";
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custo_variavel'][] = $despesa_variavel->toArray();
+                }
+            }
+
+            // dd($infos);
         }
 
         

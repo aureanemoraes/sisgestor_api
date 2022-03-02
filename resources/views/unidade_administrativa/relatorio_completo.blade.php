@@ -55,10 +55,24 @@
 
      .table-resumo {
        text-align: right;
+       width: 450px;
      }
      
      .natureza-despesa-title {
        background: #5f9ea0;
+     }
+
+     .table {
+      vertical-align: middle;
+     }
+
+     .resumo {
+       display: flex;
+       justify-content: end;
+     }
+
+     .text-attribute {
+       font-size: 8px;
      }
   </style>
 </head>
@@ -108,7 +122,7 @@
           </table>
         </div>
         <div class="table-responsive">
-          <table class="table">
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <th></th>
@@ -122,67 +136,87 @@
               </tr>
               @if(count($infos) > 0)
                 @foreach($infos as $key => $item)
-                  <tr class="natureza-despesa-title"> 
-                    <th>{{ $item['nome'] }}</th>
-                    <th>QTD. 1</th>
-                    <th>QTD. 2</th>
-                    <th>VALOR UNITÁRIO</th>
-                    <th>VALOR TOTAL</th>
-                    <th>QTD. 1</th>
-                    <th>QTD. 2</th>
-                    <th>VALOR UNITÁRIO</th>
-                    <th>VALOR TOTAL</th>
-                  </tr>
-                  @if(count($item['despesas']) > 0)
-                    @foreach($item['despesas'] as $key => $despesas)
-                      @if($key == 'custo_fixo')
-                        @foreach($despesas as $keyD => $despesa)
-                        <tr>
-                          <td>
-                            {{ $despesa['descricao'] }}
-                          </td>
-                          <td>
-                            {{ $despesa['qtd'] == 1 ? '' : $despesa['qtd'] }}
-                          </td>
-                          <td>
-                            {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
-                          </td>
-                          <td>
-                            {{ $despesa['valor'] }}
-                          </td>
-                          <td>
-                            {{ $despesa['valor_total'] }}
-                          </td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        @endforeach
-                      @elseif($key == 'custo_variavel')
-                        <tr>
-                          <td>
-                            {{ $despesa['descricao'] }}
-                          </td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            {{ $despesa['qtd'] == 1 ? '' : $despesa['qtd'] }}
-                          </td>
-                          <td>
-                            {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
-                          </td>
-                          <td>
-                            {{ $despesa['valor'] }}
-                          </td>
-                          <td>
-                            {{ $despesa['valor_total'] }}
-                          </td>
-                        </tr>
-                      @endif
-                    @endforeach
+                  @if($key == $acao->id)
+                    <tr class="natureza-despesa-title"> 
+                      <th>{{ $item['nome'] }}</th>
+                      <th class="text-center text-attribute">QTD. 1</th>
+                      <th class="text-center text-attribute">QTD. 2</th>
+                      <th class="text-center text-attribute">VALOR UNITÁRIO</th>
+                      <th class="text-center text-attribute">VALOR TOTAL</th>
+                      <th class="text-center text-attribute">QTD. 1</th>
+                      <th class="text-center text-attribute">QTD. 2</th>
+                      <th class="text-center text-attribute">VALOR UNITÁRIO</th>
+                      <th class="text-center text-attribute">VALOR TOTAL</th>
+                    </tr>
+                    @if(count($item['despesas']) > 0)
+                      @foreach($item['despesas'] as $key2 => $despesas)
+                        @if($key2 == 'custo_fixo')
+                          @foreach($despesas as $key3 => $despesa)
+                          <tr>
+                            <td>
+                              {{ $despesa['descricao'] }}
+                            </td>
+                            <td class="text-center" width="4%">
+                              {{ $despesa['qtd'] == 1 ? '' : $despesa['qtd'] }}
+                            </td>
+                            <td class="text-center" width="4%">
+                              {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
+                            </td>
+                            <td class="text-center" width="6%">
+                              @php
+                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                $despesa_valor = $formatter->formatCurrency($despesa['valor'], "BRL")
+                              @endphp
+                              {{ $despesa_valor }}
+                            </td>
+                            <td class="text-center" width="6%">
+                              @php
+                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                $despesa_valor_total = $formatter->formatCurrency($despesa['valor_total'], "BRL")
+                              @endphp
+                              {{ $despesa_valor_total }}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          @endforeach
+                        @elseif($key2 == 'custo_variavel')
+                          @foreach($despesas as $key3 => $despesa)
+                          <tr>
+                            <td>
+                              {{ $despesa['descricao'] }}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center" width="4%">
+                              {{ $despesa['qtd'] == 1 ? '' : $despesa['qtd'] }}
+                            </td>
+                            <td class="text-center" width="4%">
+                              {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
+                            </td>
+                            <td class="text-center" width="6%">
+                              @php
+                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                $despesa_valor = $formatter->formatCurrency($despesa['valor'], "BRL")
+                              @endphp
+                              {{ $despesa_valor }}
+                            </td>
+                            <td class="text-center" width="6%">
+                              @php
+                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                $despesa_valor_total = $formatter->formatCurrency($despesa['valor_total'], "BRL")
+                              @endphp
+                              {{ $despesa_valor_total }}
+                            </td>
+                          </tr>
+                          @endforeach
+                        @endif
+                      @endforeach
+                    @endif
                   @endif
                 @endforeach
               @endif
