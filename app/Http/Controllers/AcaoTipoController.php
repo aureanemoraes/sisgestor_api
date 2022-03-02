@@ -8,6 +8,7 @@ use App\Http\Transformers\AcaoTipoTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiBaseController;
+use Illuminate\Validation\Rule;
 
 class AcaoTipoController extends ApiBaseController
 {
@@ -114,7 +115,7 @@ class AcaoTipoController extends ApiBaseController
 	protected function validation($request) 
 	{
 		$validator = Validator::make($request->all(), [
-            'codigo' => ['required', 'unique:acoes_tipos,codigo'],
+            'codigo' => ['required'],
             'nome' => ['required']
 		]);
 

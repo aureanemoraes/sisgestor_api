@@ -23,18 +23,68 @@ class RelatorioController extends Controller
         
         $acoes = Acao::where('exercicio_id', $exercicio_id)->where('instituicao_id', $instituicao_id)->get();
 
-        // $naturezas_despesas = Despesa::select('natureza_despesa_id')
-        //     ->where('unidade_administrativa_id', $unidade_administrativa_id)
-        //     ->where('exercicio_id', $exercicio_id)
-        //     ->groupBy('natureza_despesa_id')
-        //     ->pluck('natureza_despesa_id');
+        foreach ($acoes as $acao) {
+            $fontes_acoes_ids[$acao->id] = FonteAcao::where('unidade_administrativa_id', $unidade_administrativa_id)
+                ->where('exercicio_id', $exercicio_id)
+                ->where('acao_id', $acao->id)
+                ->pluck('id')
+                ->toArray();
 
+            if(!isset($infos[$acao->id]))
+                $infos[$acao->id] = [];
+        }
 
+        $naturezas_despesas_ids = Despesa::select('natureza_despesa_id')
+            ->where('unidade_administrativa_id', $unidade_administrativa_id)
+            ->where('exercicio_id', $exercicio_id)
+            ->groupBy('natureza_despesa_id')
+            ->pluck('natureza_despesa_id');
+
+        $naturezas_despesas = NaturezaDespesa::whereIn('id', $naturezas_despesas_ids)->get();
+
+        $infos = [];
+        $i = 0;
+
+        foreach($naturezas_despesas as $natureza_despesa) {
+            // $infos[$i]['despesas']['custo_fixo'] = Despesa::where('unidade_administrativa_id', $unidade_administrativa_id)
+            //     ->where('exercicio_id', $exercicio_id)
+            //     ->where('natureza_despesa_id', $natureza_despesa->id)
+            //     ->whereNull('subnatureza_despesa_id')
+            //     ->where('tipo', 'despesa_fixa')
+            //     ->get()
+            //     ->toArray();
+
+            // $infos[$i]['despesas']['custo_variavel'] = Despesa::where('unidade_administrativa_id', $unidade_administrativa_id)
+            //     ->where('exercicio_id', $exercicio_id)
+            //     ->where('natureza_despesa_id', $natureza_despesa->id)
+            //     ->whereNull('subnatureza_despesa_id')
+            //     ->where('tipo', 'despesa_variavel')
+            //     ->get()
+            //     ->toArray();
+            // $i++;
+
+            $despesas_fixas = Despesa::with(['fonte_acao:id,acao_id'])
+                ->where('unidade_administrativa_id', $unidade_administrativa_id)
+                ->where('exercicio_id', $exercicio_id)
+                ->where('natureza_despesa_id', $natureza_despesa->id)
+                ->whereNull('subnatureza_despesa_id')
+                ->where('tipo', 'despesa_fixa')
+                ->get();
+
+            if (count($despesas_fixas) > 0) {
+                foreach($despesas_fixas as $despesa_fixa) {
+                    
+                }
+            }
+        }
+
+        
         return view('unidade_administrativa.relatorio_completo')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
             'unidade_administrativa' => $unidade_administrativa,
-            'acoes' => $acoes
+            'acoes' => $acoes,
+            'infos' => $infos
         ]);
     }
 
