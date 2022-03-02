@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
             AcaoSeeder::class,
             FonteAcaoSeeder::class,
             MetaOrcamentariaSeeder::class,
-            DespesaSeeder::class
+            DespesaSeeder::class,
+            FonteProgramaSeeder::class
         ]);
     }
 }

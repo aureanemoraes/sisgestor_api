@@ -5,21 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CreditoDisponivel extends Model
+class LimiteOrcamentario extends Model
 {
     use HasFactory;
 
-    protected $table = 'creditos_disponiveis';
+    protected $table = 'limites_orcamentarios';
 
     protected $fillable = [
         'descricao',
         'valor_solicitado',
         'valor_disponivel',
+        'numero_processo',
         'despesa_id',
         'unidade_administrativa_id'
     ];
 
-    // protected $appends = [
+     // protected $appends = [
     //     'valor_solicitado' // valor planejado na despesa
     // ];
 

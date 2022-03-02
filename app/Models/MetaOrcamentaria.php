@@ -15,8 +15,10 @@ class MetaOrcamentaria extends Model
         'nome',
         'qtd_estimada',
         'qtd_alcancada',
+        'acao_id',
         'natureza_despesa_id',
-        'instituicao_id'
+        'instituicao_id',
+        'unidade_gestora_id'
     ];
 
     public function getQtdEstimadaAttribute($value)
@@ -58,5 +60,15 @@ class MetaOrcamentaria extends Model
     public function instituicao()
     {
         return $this->belongsTo(Instituicao::class);
+    } 
+
+    public function unidade_gestora()
+    {
+        return $this->belongsTo(UnidadeGestora::class);
+    } 
+
+    public function acao()
+    {
+        return $this->belongsTo(Acao::class);
     } 
 }

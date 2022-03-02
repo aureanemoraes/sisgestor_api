@@ -15,4 +15,11 @@ class Programa extends Model
         'codigo',
         'nome'
     ];
+
+    public function fontes()
+    {
+        return $this->belongsToMany(Fonte::class, 'fontes_programas', 'programa_id', 'fonte_id')->withPivot(
+            'exercicio_id',
+        );
+    }
 }

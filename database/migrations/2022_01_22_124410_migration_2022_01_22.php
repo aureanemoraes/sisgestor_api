@@ -239,6 +239,8 @@ class Migration20220122 extends Migration
             $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
             $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
             $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->unsignedBigInteger('exercicio_id')->nullable();
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->timestamps();
         });
         Schema::create('movimentos', function (Blueprint $table) {
@@ -257,13 +259,30 @@ class Migration20220122 extends Migration
             $table->float('qtd_alcancada')->nullable();
             $table->unsignedBigInteger('natureza_despesa_id')->nullable();
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('acao_id')->nullable();
+            $table->foreign('acao_id')->references('id')->on('acoes');
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('unidade_gestora_id');
+            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
+            $table->timestamps();
+        });
+        Schema::create('limites_orcamentarios', function (Blueprint $table) {
+            $table->id();
+            $table->float('valor_solicitado');
+            $table->float('valor_disponivel')->nullable();
+            $table->string('numero_processo');
+            $table->longText('descricao');
+            $table->unsignedBigInteger('despesa_id');
+            $table->foreign('despesa_id')->references('id')->on('despesas');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
             $table->timestamps();
         });
         Schema::create('creditos_planejados', function (Blueprint $table) {
             $table->id();
             $table->longText('descricao');
+            $table->float('valor_solicitado');
             $table->float('valor_disponivel')->nullable();
             $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');
@@ -274,6 +293,7 @@ class Migration20220122 extends Migration
         Schema::create('creditos_disponiveis', function (Blueprint $table) {
             $table->id();
             $table->longText('descricao');
+            $table->float('valor_solicitado');
             $table->float('valor_disponivel')->nullable();
             $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');

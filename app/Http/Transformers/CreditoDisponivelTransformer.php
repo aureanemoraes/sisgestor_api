@@ -18,6 +18,9 @@ class CreditoDisponivelTransformer
           case 'descricao':
             $credito_disponivel->descricao = $value;
             break;
+          case 'valor_solicitado':
+            $credito_disponivel->valor_solicitado = $value;
+            break;
           case 'valor_disponivel':
             $credito_disponivel->valor_disponivel = $value;
             break;

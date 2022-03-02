@@ -22,7 +22,8 @@ class Despesa extends Model
         'centro_custo_id',
         'natureza_despesa_id',
         'subnatureza_despesa_id',
-        'unidade_administrativa_id'
+        'unidade_administrativa_id',
+        'exercicio_id'
     ];
 
     protected $with = [
@@ -52,7 +53,7 @@ class Despesa extends Model
 
     public function fonte_acao()
     {
-        return $this->belongsTo(FonteAcao::class, 'fonte_acao_id', 'id');
+        return $this->belongsTo(FonteAcao::class);
     } 
 
     public function centro_custo()
@@ -73,5 +74,10 @@ class Despesa extends Model
     public function unidade_administrativa()
     {
         return $this->belongsTo(UnidadeAdministrativa::class);
+    } 
+
+    public function execicio()
+    {
+        return $this->belongsTo(Exercicio::class);
     } 
 }

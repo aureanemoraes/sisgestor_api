@@ -28,5 +28,12 @@ class FonteSeeder extends Seeder
             'instituicao_id' => 1,
             'valor' => 30000
         ]);
+
+        Fonte::create([
+            'fonte_tipo_id' => 2,
+            'exercicio_id' => 1,
+            'instituicao_id' => 1,
+            'valor' => 15000
+        ]);
     }
 }

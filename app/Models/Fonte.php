@@ -20,7 +20,8 @@ class Fonte extends Model
 
     protected $with = [
         'fonte_tipo:id,nome',
-        'exercicio:id,nome'
+        'exercicio:id,nome',
+        'instituicao:id,nome'
     ];
 
     protected $appends = [
@@ -52,6 +53,12 @@ class Fonte extends Model
         return $this->belongsTo(Exercicio::class);
     } 
 
+    public function instituicao()
+    {
+        return $this->belongsTo(Instituicao::class);
+    } 
+
+
     public function acoes()
     {
         return $this->belongsToMany(Acao::class, 'fontes_acoes', 'fonte_id', 'acao_id')->withPivot(
@@ -60,6 +67,13 @@ class Fonte extends Model
             'instituicao_id',
             'unidade_gestora_id',
             'unidade_administrativa_id'
+        );
+    }
+
+    public function programas()
+    {
+        return $this->belongsToMany(Programa::class, 'fontes_programas', 'fonte_id', 'programa_id')->withPivot(
+            'exercicio_id',
         );
     }
 }
