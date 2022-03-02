@@ -46,6 +46,20 @@
        color: white;
        padding: 2px;
      }
+
+     td.resumo-total {
+       background: #ffff4d;
+       color: black;
+       font-weight: bold;
+     }
+
+     .table-resumo {
+       text-align: right;
+     }
+     
+     .natureza-despesa-title {
+       background: #5f9ea0;
+     }
   </style>
 </head>
 <body>
@@ -58,41 +72,124 @@
         UNIDADE ADMINISTRATIVA: <span class="acao">{{ $unidade_administrativa->nome }}</span>
       </p>
     </div>
-    <div class="resumo">
-      <table class="table table-sm table-dark">
-        <tbody>
-          <tr>
-            <td>
-              TOTAL ESTIMADO FUNCIONAMENTO - CUSTEIO (CUSTO FIXO)
-            </td>
-            <td>
-              R$ 00,00
-            </td>
-          </tr>
-          <tr>
-            <td>
-              TOTAL ESTIMADO FUNCIONAMENTO - CUSTEIO (CUSTO VARIÁVEL)
-            </td>
-            <td>
-              R$ 00,00
-            </td>
-          </tr>
-          <tr>
-            <td>
-              TOTAL ESTIMADO FUNCIONAMENTO - CUSTEIO (CUSTO FIXO + CUSTO VARIÁVEL)
-            </td>
-            <td>
-              R$ 00,00
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
     <div class="content">
       @foreach($acoes as $acao)
         <p class="acao">
           <span class="acao-icon">AÇÃO</span> {{ $acao->acao_tipo->codigo }} - {{ $acao->acao_tipo->nome }}
         </p>
+        <div class="resumo">
+          <table class="table table-sm table-dark table-resumo">
+            <tbody>
+              <tr>
+                <td>
+                  TOTAL ESTIMADO FUNCIONAMENTO - CUSTEIO (CUSTO FIXO)
+                </td>
+                <td>
+                  R$ 00,00
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  TOTAL ESTIMADO FUNCIONAMENTO - CUSTEIO (CUSTO VARIÁVEL)
+                </td>
+                <td>
+                  R$ 00,00
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  TOTAL ESTIMADO FUNCIONAMENTO - CUSTEIO (CUSTO FIXO + CUSTO VARIÁVEL)
+                </td>
+                <td class="resumo-total">
+                  R$ 00,00
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th colspan="4">CUSTO FIXO</th>
+                <th colspan="4">CUSTO VARIÁVEL</th>
+              </tr>
+              <tr>
+                <th>NATUREZA DA DESPESA DETALHADA</th>
+                <th colspan="4">ESTIMATIVA DE QUANTIDADES E VALORES PARA {{ $exercicio->nome }}</th>
+                <th colspan="4">ESTIMATIVA DE QUANTIDADES E VALORES PARA {{ $exercicio->nome }}</th>
+              </tr>
+              @if(count($infos) > 0)
+                @foreach($infos as $key => $item)
+                  <tr class="natureza-despesa-title"> 
+                    <th>{{ $item['nome'] }}</th>
+                    <th>QTD. 1</th>
+                    <th>QTD. 2</th>
+                    <th>VALOR UNITÁRIO</th>
+                    <th>VALOR TOTAL</th>
+                    <th>QTD. 1</th>
+                    <th>QTD. 2</th>
+                    <th>VALOR UNITÁRIO</th>
+                    <th>VALOR TOTAL</th>
+                  </tr>
+                  @if(count($item['despesas']) > 0)
+                    @foreach($item['despesas'] as $key => $despesas)
+                      @if($key == 'custo_fixo')
+                        @foreach($despesas as $keyD => $despesa)
+                        <tr>
+                          <td>
+                            {{ $despesa['descricao'] }}
+                          </td>
+                          <td>
+                            {{ $despesa['qtd'] == 1 ? '' : $despesa['qtd'] }}
+                          </td>
+                          <td>
+                            {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
+                          </td>
+                          <td>
+                            {{ $despesa['valor'] }}
+                          </td>
+                          <td>
+                            {{ $despesa['valor_total'] }}
+                          </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        @endforeach
+                      @elseif($key == 'custo_variavel')
+                        <tr>
+                          <td>
+                            {{ $despesa['descricao'] }}
+                          </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                            {{ $despesa['qtd'] == 1 ? '' : $despesa['qtd'] }}
+                          </td>
+                          <td>
+                            {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
+                          </td>
+                          <td>
+                            {{ $despesa['valor'] }}
+                          </td>
+                          <td>
+                            {{ $despesa['valor_total'] }}
+                          </td>
+                        </tr>
+                      @endif
+                    @endforeach
+                  @endif
+                @endforeach
+              @endif
+              <tr></tr>
+            </thead>
+          </table>
+        </div>
       @endforeach
     </div>
   </div>
