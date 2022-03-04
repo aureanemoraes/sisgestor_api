@@ -21,6 +21,7 @@ Route::get('/', function () {
     return "OK";
 });
 
+Route::get('/relatorio_completo/unidade_gestora/{instituicao_id}/{exercicio_id}/{unidade_gestora_id}', [RelatorioController::class, 'relatorioCompletoUG']);
 
 Route::get('/relatorio_completo/unidade_administrativa/{instituicao_id}/{exercicio_id}/{unidade_administrativa_id}', [RelatorioController::class, 'relatorioCompletoUA']);
 

@@ -132,6 +132,139 @@ class RelatorioController extends Controller
         ]);
     }
 
+    public function relatorioCompletoUG($instituicao_id, $exercicio_id, $unidade_gestora_id) 
+    {
+        $instituicao = Instituicao::find($instituicao_id);
+        $exercicio = Exercicio::find($exercicio_id);
+        $unidade_gestora = UnidadeGestora::find($unidade_gestora_id);
+        
+        $acoes = Acao::where('exercicio_id', $exercicio_id)->where('instituicao_id', $instituicao_id)->get();
+
+        $infos = [];
+        $resumo = [];
+
+        foreach ($acoes as $acao) {
+            $fontes_acoes_ids[$acao->id] = FonteAcao::whereHas(
+                    'unidade_administrativa', function ($query) use($unidade_gestora_id) {
+                        $query->where('unidade_gestora_id', $unidade_gestora_id);
+                    }
+                )
+                ->where('exercicio_id', $exercicio_id)
+                ->where('acao_id', $acao->id)
+                ->pluck('id')
+                ->toArray();
+
+
+            if(!isset($infos[$acao->id])) {
+                $infos[$acao->id] = [];
+            }
+                
+            if(!isset($resumo[$acao->id]))
+                $resumo[$acao->id] = [];
+        }
+
+        $naturezas_despesas_ids = Despesa::select('natureza_despesa_id')
+            ->whereHas(
+                'unidade_administrativa', function ($query) use($unidade_gestora_id) {
+                    $query->where('unidade_gestora_id', $unidade_gestora_id);
+                }
+            )
+            ->where('exercicio_id', $exercicio_id)
+            ->groupBy('natureza_despesa_id')
+            ->pluck('natureza_despesa_id');
+
+        $naturezas_despesas = NaturezaDespesa::whereIn('id', $naturezas_despesas_ids)->get();
+
+        foreach($naturezas_despesas as $natureza_despesa) {
+            $despesas_fixas = Despesa::with(['fonte_acao:id,acao_id'])
+                ->whereHas(
+                    'unidade_administrativa', function ($query) use($unidade_gestora_id) {
+                        $query->where('unidade_gestora_id', $unidade_gestora_id);
+                    }
+                )
+                ->where('exercicio_id', $exercicio_id)
+                ->where('natureza_despesa_id', $natureza_despesa->id)
+                ->whereNull('subnatureza_despesa_id')
+                ->where('tipo', 'despesa_fixa')
+                ->get();
+
+            if (count($despesas_fixas) > 0) {
+                foreach($despesas_fixas as $despesa_fixa) {
+                    if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['nome']))
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['nome'] = "$natureza_despesa->codigo - $natureza_despesa->nome";
+                        
+                    if($natureza_despesa->tipo == 'Custeio') {
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo'][] = $despesa_fixa->toArray();
+
+                        if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo']['total']))
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo']['total'] = $despesa_fixa->valor_total; 
+                        else
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['custeio']['custo_fixo']['total'] += $despesa_fixa->valor_total;
+                    } else {
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo'][] = $despesa_fixa->toArray(); 
+
+                        if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo']['total']))
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo']['total'] = $despesa_fixa->valor_total; 
+                        else
+                            $infos[$despesa_fixa->fonte_acao->acao_id]['despesas']['investimento']['custo_fixo']['total'] += $despesa_fixa->valor_total;
+                    }
+
+                    if(!isset($infos[$despesa_fixa->fonte_acao->acao_id]['total_acao']))
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['total_acao'] = $despesa_fixa->valor_total;
+                    else
+                        $infos[$despesa_fixa->fonte_acao->acao_id]['total_acao'] += $despesa_fixa->valor_total;
+                }
+            }
+
+            $despesas_variaveis = Despesa::whereHas(
+                    'unidade_administrativa', function ($query) use($unidade_gestora_id) {
+                        $query->where('unidade_gestora_id', $unidade_gestora_id);
+                    }
+                )
+                ->where('exercicio_id', $exercicio_id)
+                ->where('natureza_despesa_id', $natureza_despesa->id)
+                ->whereNull('subnatureza_despesa_id')
+                ->where('tipo', 'despesa_variavel')
+                ->get();
+
+            if (count($despesas_variaveis) > 0) {
+                foreach($despesas_variaveis as $despesa_variavel) {
+                    if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['nome']))
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['nome'] = "$natureza_despesa->codigo - $natureza_despesa->nome";
+
+                    if($natureza_despesa->tipo == 'Custeio') {
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel'][] = $despesa_variavel->toArray();
+
+                        if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel']['total']))
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel']['total'] = $despesa_variavel->valor_total; 
+                        else
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['custeio']['custo_variavel']['total'] += $despesa_variavel->valor_total;
+                    } else {
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel'][] = $despesa_variavel->toArray(); 
+
+                        if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel']['total']))
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel']['total'] = $despesa_variavel->valor_total; 
+                        else
+                            $infos[$despesa_variavel->fonte_acao->acao_id]['despesas']['investimento']['custo_variavel']['total'] += $despesa_variavel->valor_total;
+                    }
+
+                    if(!isset($infos[$despesa_variavel->fonte_acao->acao_id]['total_acao']))
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['total_acao'] = $despesa_variavel->valor_total;
+                    else
+                        $infos[$despesa_variavel->fonte_acao->acao_id]['total_acao'] += $despesa_variavel->valor_total;
+                }
+            }
+        }
+
+        return view('unidade_gestora.relatorio_completo')->with([
+            'instituicao' => $instituicao,
+            'exercicio' => $exercicio,
+            'unidade_gestora' => $unidade_gestora,
+            'acoes' => $acoes,
+            'infos' => $infos
+        ]);
+    }
+
     public function relatorioSimplificadoUA($instituicao_id, $exercicio_id, $unidade_administrativa_id) 
     {
         $instituicao = Instituicao::find($instituicao_id);
