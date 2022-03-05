@@ -18,4 +18,9 @@ class SubnaturezaDespesa extends Model
         'codigo',
         'natureza_despesa_id'
     ];
+
+    public function natureza_despesa() 
+    {
+        return $this->belongsTo(NaturezaDespesa::class, 'id', 'natureza_despesa_id');
+    }
 }

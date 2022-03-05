@@ -126,7 +126,6 @@ class RelatorioController extends Controller
                 }
             }
         }
-
         return view('unidade_administrativa.relatorio_completo')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
@@ -581,6 +580,7 @@ class RelatorioController extends Controller
                 }
             }
         }
+        dd($infos);
 
         return view('unidade_administrativa.relatorio_simplificado')->with([
             'instituicao' => $instituicao,
