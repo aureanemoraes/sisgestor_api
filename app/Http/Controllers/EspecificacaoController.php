@@ -27,7 +27,7 @@ class EspecificacaoController extends ApiBaseController
 	public function index()
 	{
 		try {
-			return $this->response(true, Especificacao::orderBy('fav', 'desc')->orderBy('nome')->get(), 200);
+			return $this->response(true, Especificacao::select('nome as label', 'id')->orderBy('fav', 'desc')->orderBy('nome')->get(), 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
