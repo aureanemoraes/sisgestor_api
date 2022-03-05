@@ -116,7 +116,8 @@ class NaturezaDespesaController extends ApiBaseController
 		$validator = Validator::make($request->all(), [
 			'nome' => ['required'],
 			'codigo' => ['required'],
-			'tipo' => ['required']
+			'tipo' => ['required'],
+			'comentario' => ['nullable']
 		]);
 
 		if ($validator->fails()) {

@@ -65,6 +65,10 @@
      td.borderless {
        border: none;
      }
+
+     .card {
+       margin-bottom: 10px;
+     }
   </style>
 </head>
 <body>
@@ -225,6 +229,13 @@
                       </tr>
                   </thead>
                 </table>
+                @if(!empty($item['comentario']))
+                <div class="card">
+                  <p>
+                    <strong>OBS.: </strong>{!! $item['comentario'] !!}
+                  </p>
+                </div>
+                @endif
             @endforeach
             <table class="table">
               <tr>

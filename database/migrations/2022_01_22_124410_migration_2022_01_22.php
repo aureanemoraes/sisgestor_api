@@ -203,6 +203,7 @@ class Migration20220122 extends Migration
             $table->string('codigo');
             $table->string('tipo');
             $table->tinyInteger('fav')->default(0);
+            $table->longText('comentario')->nullable();
             $table->timestamps();
         });
         // Tabela de Subnaturezas Despesas
@@ -249,7 +250,7 @@ class Migration20220122 extends Migration
             $table->float('valor');
             $table->unsignedBigInteger('exercicio_id')->nullable();
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->string('tipo'); // entrada ou saída (contigenciamento)
+            $table->string('tipo'); // 'entrada' ou 'bloqueio' (contigenciamento)
             $table->timestamps();
         });
         Schema::create('metas_orcamentarias', function (Blueprint $table) {
