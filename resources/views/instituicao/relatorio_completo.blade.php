@@ -77,9 +77,6 @@
       <p>
         PLANEJAMENTO ORÇAMENTÁRIO <strong>{{ Str::upper($instituicao->nome) }}</strong> - EXERCÍCIO <strong>{{ Str::upper($exercicio->nome) }}</strong> - {{ $exercicio->aprovado ? 'LOA' : 'PLOA' }}
       </p>
-      <p>
-        UNIDADE GESTORA: <span class="bg-dark text-white">{{ $unidade_gestora->nome }}</span>
-      </p>
     </div>
     <div class="content">
       @foreach($acoes as $acao)
