@@ -14,7 +14,7 @@ class GrupoFonteController extends ApiBaseController
 	public function index()
 	{
 		try {
-			return $this->response(true, GrupoFonte::select('nome as label', 'id')orderBy('fav', 'desc')->orderBy('nome')->get(), 200);
+			return $this->response(true, GrupoFonte::select('nome as label', 'id')->orderBy('fav', 'desc')->orderBy('nome')->get(), 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
