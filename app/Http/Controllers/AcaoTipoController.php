@@ -25,10 +25,19 @@ class AcaoTipoController extends ApiBaseController
 		}
 	}
 
-	public function index()
+	public function index(Request $request)
 	{
 		try {
-			return $this->response(true, AcaoTipo::orderBy('fav', 'desc')->orderBy('nome')->paginate(), 200);
+			if(isset($request->termo)) {
+				$termo = $request->termo;
+	
+				$resultado = AcaoTipo::where('nome', 'ilike', '%' . $termo . '%')->get();
+	
+				if(count($resultado) > 0) return $this->response(true, $resultado, 200);
+				else return $this->response(true, 'Nenhum resultado encontrado.', 404);
+			} else {
+				return $this->response(true, AcaoTipo::orderBy('fav', 'desc')->orderBy('nome')->paginate(), 200);
+			}
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
