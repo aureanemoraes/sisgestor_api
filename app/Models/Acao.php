@@ -43,7 +43,7 @@ class Acao extends Model
     
     public function exercicio()
     {
-        return $this->belongsTo(exercicio::class);
+        return $this->belongsTo(Exercicio::class);
     }
 
     public function fontes()
