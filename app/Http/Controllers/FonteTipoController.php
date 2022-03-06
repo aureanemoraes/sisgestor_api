@@ -11,23 +11,19 @@ use App\Http\Controllers\ApiBaseController;
 
 class FonteTipoController extends ApiBaseController
 {
-	public function pesquisa(Request $request) {
-		if(isset($request->termo)) {
-			$termo = $request->termo;
-
-			$resultado = FonteTipo::where('nome', 'ilike', '%' . $termo . '%')->get();
-
-			if(count($resultado) > 0) return $this->response(true, $resultado, 200);
-			else return $this->response(true, 'Nenhum resultado encontrado.', 404);
-		} else {
-			return $this->response(false, 'Nenhum termo enviado para pesquisa.', 404);
-		}
-	}
-
-	public function index()
+	public function index(Request $request)
 	{
 		try {
-			return $this->response(true, FonteTipo::orderBy('fav', 'desc')->orderBy('nome')->paginate(), 200);
+			if(isset($request->termo)) {
+				$termo = $request->termo;
+	
+				$resultado = FonteTipo::where('nome', 'ilike', '%' . $termo . '%')->get();
+	
+				if(count($resultado) > 0) return $this->response(true, $resultado, 200);
+				else return $this->response(true, 'Nenhum resultado encontrado.', 404);
+			} else {
+				return $this->response(true, FonteTipo::orderBy('fav', 'desc')->orderBy('nome')->paginate(), 200);
+			}
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}

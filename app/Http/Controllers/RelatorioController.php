@@ -580,7 +580,7 @@ class RelatorioController extends Controller
                 }
             }
         }
-        dd($infos);
+        // dd($infos);
 
         return view('unidade_administrativa.relatorio_simplificado')->with([
             'instituicao' => $instituicao,

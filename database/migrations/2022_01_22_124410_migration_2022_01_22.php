@@ -312,6 +312,35 @@ class Migration20220122 extends Migration
             $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
             $table->timestamps();
         });
+
+        Schema::create('dimensoes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->longText('descricao');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('exercicio_id');
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->timestamps();
+        });
+
+        Schema::create('objetivos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->longText('descricao');
+            $table->unsignedBigInteger('dimensao_id');
+            $table->foreign('dimensao_id')->references('id')->on('dimensoes');
+            $table->timestamps();
+        });
+
+        Schema::create('metas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->longText('descricao');
+            $table->unsignedBigInteger('objetivo_id');
+            $table->foreign('objetivo_id')->references('id')->on('objetivos');
+            $table->timestamps();
+        });
     }
 
     /**
