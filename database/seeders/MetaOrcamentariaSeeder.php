@@ -20,13 +20,14 @@ class MetaOrcamentariaSeeder extends Seeder
             'qtd_alcancada' => 50,
             'instituicao_id' => 1,
             'unidade_gestora_id' => 1,
-            'exercicio_id' => 1
-        ]);
+            'exercicio_id' => 1,
+            'acao_id' => 4
+         ]);
 
         MetaOrcamentaria::create([
             'nome' => 'Meta Orçamentária 2',
-            'acao_id' => 1,
-            'natureza_despesa_id' => 1,
+            'acao_id' => 2,
+            'natureza_despesa_id' => 111,
             'instituicao_id' => 1,
             'unidade_gestora_id' => 1,
             'exercicio_id' => 1

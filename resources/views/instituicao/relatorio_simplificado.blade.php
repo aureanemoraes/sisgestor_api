@@ -66,6 +66,7 @@
        display: flex;
        justify-content: space-around;
        align-items: center;
+       gap: 30px;
      }
 
      .valor-matriz {
@@ -91,8 +92,82 @@
     </div>
     <div class="resumo">
       <div class="resumo-metas">
-        <table class="table">
-          <p>Metas Orçamentárias</p>
+        <table class="table table-bordered">
+          <thead>
+            <th>Ação</th>
+            <th>Natureza de Despesa</th>
+            <th>Meta</th>
+            <th>Qtd. Estimada</th>
+            <th>Qtd. Alcançada</th>
+          </thead>
+          <tbody>
+            @php $contador=0 @endphp
+            @foreach($resumo_metas as $acao_id => $resumo_meta)
+              <tr>
+                <td rowspan={{ count($resumo_meta['metas']) }}>{{ $resumo_meta['acao'] }}</td>
+                @foreach($resumo_meta['metas'] as $index => $meta)
+                  @if($contador > 1)
+                    <tr>
+                      @if(isset($meta['natureza_despesa']))
+                        <td>{{ $meta['natureza_despesa'] }}</td>
+                      @else
+                        <td class="text-center"> - </td>
+                      @endif
+                      <td>{{ $meta['nome_meta'] }}</td>
+                      <td class="text-center">
+                        @php
+                          if(isset($meta['natureza_despesa'])) {
+                            $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                            $qtd_estimada = $formatter->formatCurrency($meta['qtd_estimada'], "BRL");
+                          } else 
+                            $qtd_estimada = $meta['qtd_estimada'];
+                        @endphp
+                        {{ $qtd_estimada }}
+                      </td>
+                      <td class="text-center">
+                        @php
+                          if(isset($meta['natureza_despesa'])) {
+                            $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                            $qtd_alcancada = $formatter->formatCurrency($meta['qtd_alcancada'], "BRL");
+                          } else 
+                            $qtd_alcancada = $meta['qtd_alcancada'];
+                        @endphp
+                        {{ $qtd_alcancada }}
+                      </td>
+                    </tr>
+                  @else
+                    @if(isset($meta['natureza_despesa']))
+                      <td>{{ $meta['natureza_despesa'] }}</td>
+                    @else
+                      <td class="text-center"> - </td>
+                    @endif
+                    <td>{{ $meta['nome_meta'] }}</td>
+                    <td class="text-center">
+                      @php
+                        if(isset($meta['natureza_despesa'])) {
+                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                          $qtd_estimada = $formatter->formatCurrency($meta['qtd_estimada'], "BRL");
+                        } else 
+                          $qtd_estimada = $meta['qtd_estimada'];
+                      @endphp
+                      {{ $qtd_estimada }}
+                    </td>
+                    <td class="text-center">
+                      @php
+                        if(isset($meta['natureza_despesa'])) {
+                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                          $qtd_alcancada = $formatter->formatCurrency($meta['qtd_alcancada'], "BRL");
+                        } else 
+                          $qtd_alcancada = $meta['qtd_alcancada'];
+                      @endphp
+                      {{ $qtd_alcancada }}
+                    </td>
+                  @endif
+                  @php $contador++ @endphp
+                @endforeach
+              </tr>
+            @endforeach
+          </tbody>
         </table>
       </div>
       <div class="resumo-acoes">

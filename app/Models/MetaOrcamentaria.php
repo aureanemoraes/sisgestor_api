@@ -22,6 +22,10 @@ class MetaOrcamentaria extends Model
         'exercicio_id'
     ];
 
+    protected $with = [
+        'natureza_despesa'
+    ];
+
     public function getQtdEstimadaAttribute($value)
     {
         if(!isset($value)) {
@@ -38,15 +42,18 @@ class MetaOrcamentaria extends Model
     {
         if(!isset($value)) {
             if(isset($this->natureza_despesa_id)) {
-                $qtd_estimada = Empenho::whereHas(
+                $empenho = Empenho::whereHas(
                     'credito_disponivel', function ($query) {
                         $query->whereHas(
                             'despesa', function ($query2) {
                             $query2->where('natureza_despesa_id', $this->natureza_despesa_id);
                         });
                     }
-                )->first()->valor_empenhado;
-                return $qtd_estimada;
+                )->first();
+                
+                if(isset($empenho)) $qtd_alcancada = $empenho->valor_empenhado;
+                else $qtd_alcancada = 0;
+                return $qtd_alcancada;
             }
         } else {
             return $value;

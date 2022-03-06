@@ -12,6 +12,7 @@ use App\Models\Instituicao;
 use App\Models\Exercicio;
 use App\Models\UnidadeAdministrativa;
 use App\Models\UnidadeGestora;
+use App\Models\MetaOrcamentaria;
 
 class RelatorioController extends Controller
 {
@@ -439,13 +440,6 @@ class RelatorioController extends Controller
             ->groupBy('natureza_despesa_id')
             ->pluck('natureza_despesa_id');
 
-        $metas_orcamentarias = MetaOrcamentaria::whereHas(
-            'unidade_gestora', function ($query) use($unidade_administrativa_id) {
-                $query->where('unidade_gestora.unidade_administrativa', $unidade_administrativa_id);
-            }
-        )
-        ->where('instituicao_id', $instituicao_id);
-
         $infos = [];
         $total_custo_fixo = 0;
         $total_custo_variavel = 0;
@@ -608,6 +602,31 @@ class RelatorioController extends Controller
         $unidade_gestora = UnidadeGestora::find($unidade_gestora_id);
         
         $acoes = Acao::where('exercicio_id', $exercicio_id)->where('instituicao_id', $instituicao_id)->get();
+
+        $metas_orcamentarias = MetaOrcamentaria::where('unidade_gestora_id', $unidade_gestora_id)
+            ->where('instituicao_id', $instituicao_id)
+            ->where('exercicio_id', $exercicio_id)
+            ->orderBy('acao_id')
+            ->orderBy('nome')
+            ->get();
+
+        $resumo_metas = [];
+
+        foreach($metas_orcamentarias as $meta) {
+            if(!isset($resumo_metas[$meta->acao_id]))
+                $resumo_metas[$meta->acao_id]['acao'] = $meta->acao->acao_tipo->codigo;
+
+            if(isset($meta->natureza_despesa_id))
+                $resumo_metas[$meta->acao_id]['metas'][$meta->id]['natureza_despesa'] = $meta->natureza_despesa->codigo . ' - ' . $meta->natureza_despesa->nome;
+            else
+                $resumo_metas[$meta->acao_id]['metas'][$meta->id]['natureza_despesa']  = null;
+
+            $resumo_metas[$meta->acao_id]['metas'][$meta->id]['nome_meta'] = $meta->nome;
+            $resumo_metas[$meta->acao_id]['metas'][$meta->id]['qtd_estimada'] = $meta->qtd_estimada;
+            $resumo_metas[$meta->acao_id]['metas'][$meta->id]['qtd_alcancada'] = $meta->qtd_alcancada;
+        }
+
+        // dd($resumo_metas);
 
         // Tabela principal
         $naturezas_despesas = Despesa::whereHas(
@@ -808,7 +827,8 @@ class RelatorioController extends Controller
             'infos' => $infos,
             'total_custo_fixo' => $total_custo_fixo,
             'total_custo_variavel' => $total_custo_variavel,
-            'resumo_acoes' => $resumo_acoes
+            'resumo_acoes' => $resumo_acoes,
+            'resumo_metas' => $resumo_metas
         ]);
     }
 
@@ -818,6 +838,35 @@ class RelatorioController extends Controller
         $exercicio = Exercicio::find($exercicio_id);
         
         $acoes = Acao::where('exercicio_id', $exercicio_id)->where('instituicao_id', $instituicao_id)->get();
+
+        $metas_orcamentarias = MetaOrcamentaria::whereHas(
+            'unidade_gestora', function ($query) use ($instituicao_id) {
+                $query->where('unidades_gestoras.instituicao_id', $instituicao_id);
+            }
+            )
+            ->where('instituicao_id', $instituicao_id)
+            ->where('exercicio_id', $exercicio_id)
+            ->orderBy('acao_id')
+            ->orderBy('nome')
+            ->get();
+
+        $resumo_metas = [];
+
+        foreach($metas_orcamentarias as $meta) {
+            if(!isset($resumo_metas[$meta->acao_id]))
+                $resumo_metas[$meta->acao_id]['acao'] = $meta->acao->acao_tipo->codigo;
+
+            if(isset($meta->natureza_despesa_id))
+                $resumo_metas[$meta->acao_id]['metas'][$meta->id]['natureza_despesa'] = $meta->natureza_despesa->codigo . ' - ' . $meta->natureza_despesa->nome;
+            else
+                $resumo_metas[$meta->acao_id]['metas'][$meta->id]['natureza_despesa']  = null;
+
+            $resumo_metas[$meta->acao_id]['metas'][$meta->id]['nome_meta'] = $meta->nome;
+            $resumo_metas[$meta->acao_id]['metas'][$meta->id]['qtd_estimada'] = $meta->qtd_estimada;
+            $resumo_metas[$meta->acao_id]['metas'][$meta->id]['qtd_alcancada'] = $meta->qtd_alcancada;
+        }
+
+        // dd($resumo_metas);
 
         // Tabela principal
         $naturezas_despesas = Despesa::whereHas(
@@ -1061,7 +1110,8 @@ class RelatorioController extends Controller
             'infos' => $infos,
             'total_custo_fixo' => $total_custo_fixo,
             'total_custo_variavel' => $total_custo_variavel,
-            'resumo_acoes' => $resumo_acoes
+            'resumo_acoes' => $resumo_acoes,
+            'resumo_metas' => $resumo_metas
         ]);
     }
 }
