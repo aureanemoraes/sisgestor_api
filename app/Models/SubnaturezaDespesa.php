@@ -21,6 +21,6 @@ class SubnaturezaDespesa extends Model
 
     public function natureza_despesa() 
     {
-        return $this->belongsTo(NaturezaDespesa::class, 'id', 'natureza_despesa_id');
+        return $this->belongsTo(NaturezaDespesa::class);
     }
 }

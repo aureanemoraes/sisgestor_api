@@ -22,11 +22,12 @@ class NaturezaDespesa extends Model
     ];
 
     protected $with = [
-        'subnaturezas_despesas:id,nome'
+        'subnaturezas_despesas'
     ];
 
     public function subnaturezas_despesas()
     {
         return $this->hasMany(SubnaturezaDespesa::class);
     }
+    
 }
