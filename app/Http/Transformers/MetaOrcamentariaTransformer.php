@@ -36,6 +36,9 @@ class MetaOrcamentariaTransformer
           case 'unidade_gestora_id':
             $meta_orcamentaria->unidade_gestora_id = $value;
             break;
+          case 'exercicio_id':
+            $meta_orcamentaria->exercicio_id = $value;
+            break;
         }
       }
 

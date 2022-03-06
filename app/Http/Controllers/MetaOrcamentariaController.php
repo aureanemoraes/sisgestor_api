@@ -129,7 +129,8 @@ class MetaOrcamentariaController extends ApiBaseController
 			'qtd_estimada' => ['nullable'],
 			'qtd_alcancada' => ['nullable'],
 			'natureza_despesa_id' => ['nullable', 'exists:naturezas_despesas,id'],
-			'instituicao_id' => ['required', 'exists:instituicoes,id']
+			'instituicao_id' => ['required', 'exists:instituicoes,id'],
+			'exercicio_id' => ['required', 'exists:exercicios,id']
 		]);
 
 		if ($validator->fails()) {

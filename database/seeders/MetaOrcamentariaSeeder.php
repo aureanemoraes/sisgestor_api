@@ -19,7 +19,8 @@ class MetaOrcamentariaSeeder extends Seeder
             'qtd_estimada' => 100,
             'qtd_alcancada' => 50,
             'instituicao_id' => 1,
-            'unidade_gestora_id' => 1
+            'unidade_gestora_id' => 1,
+            'exercicio_id' => 1
         ]);
 
         MetaOrcamentaria::create([
@@ -27,7 +28,8 @@ class MetaOrcamentariaSeeder extends Seeder
             'acao_id' => 1,
             'natureza_despesa_id' => 1,
             'instituicao_id' => 1,
-            'unidade_gestora_id' => 1
+            'unidade_gestora_id' => 1,
+            'exercicio_id' => 1
         ]);
 
         // MetaOrcamentaria::create([
@@ -43,7 +45,8 @@ class MetaOrcamentariaSeeder extends Seeder
             'acao_id' => 4,
             'natureza_despesa_id' => 103,
             'instituicao_id' => 1,
-            'unidade_gestora_id' => 1
+            'unidade_gestora_id' => 1,
+            'exercicio_id' => 1
         ]);
     }
 }

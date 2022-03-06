@@ -439,6 +439,13 @@ class RelatorioController extends Controller
             ->groupBy('natureza_despesa_id')
             ->pluck('natureza_despesa_id');
 
+        $metas_orcamentarias = MetaOrcamentaria::whereHas(
+            'unidade_gestora', function ($query) use($unidade_administrativa_id) {
+                $query->where('unidade_gestora.unidade_administrativa', $unidade_administrativa_id);
+            }
+        )
+        ->where('instituicao_id', $instituicao_id);
+
         $infos = [];
         $total_custo_fixo = 0;
         $total_custo_variavel = 0;

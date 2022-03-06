@@ -266,6 +266,8 @@ class Migration20220122 extends Migration
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->unsignedBigInteger('unidade_gestora_id');
             $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
+            $table->unsignedBigInteger('exercicio_id')->nullable();
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->timestamps();
         });
         Schema::create('limites_orcamentarios', function (Blueprint $table) {
