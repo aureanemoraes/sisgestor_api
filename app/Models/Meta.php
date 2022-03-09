@@ -22,6 +22,17 @@ class Meta extends Model
         'unidade_gestora_id'
     ];
 
+    protected $appends = ['porcentagem_atual'];
+
+    public function getPorcentagemAtualAttribute()
+    {
+        if(isset($this->attributes['valor_atingido'])) {
+            $porcentagem_atual = ($this->attributes['valor_atingido'] * 100)/$this->attributes['valor_final'];
+            return $porcentagem_atual;
+        } else 
+            return null;
+    }
+
     public function objetivo()
     {
         return $this->belongsTo(Objetivo::class);
