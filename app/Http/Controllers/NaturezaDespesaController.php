@@ -11,17 +11,8 @@ use App\Http\Controllers\ApiBaseController;
 
 class NaturezaDespesaController extends ApiBaseController
 {
-	public function pesquisa(Request $request) {
-		if(isset($request->termo)) {
-			$termo = $request->termo;
-
-			$resultado = NaturezaDespesa::where('nome', 'ilike', '%' . $termo . '%')->get();
-
-			if(count($resultado) > 0) return $this->response(true, $resultado, 200);
-			else return $this->response(true, 'Nenhum resultado encontrado.', 404);
-		} else {
-			return $this->response(false, 'Nenhum termo enviado para pesquisa.', 404);
-		}
+	public function opcoes() {
+		return $this->response(true, NaturezaDespesa::select('nome as label', 'id')->orderBy('fav', 'desc')->orderBy('nome')->get(), 200);
 	}
 
 	public function index(Request $request)

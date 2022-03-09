@@ -67,6 +67,7 @@ Route::apiResource('grupos_fontes', GrupoFonteController::class);
 Route::apiResource('especificacoes', EspecificacaoController::class);
 Route::apiResource('fontes_tipos', FonteTipoController::class);
 Route::apiResource('acoes_tipos', AcaoTipoController::class);
+Route::get('naturezas_despesas/opcoes', [NaturezaDespesaController::class, 'opcoes']);
 Route::apiResource('naturezas_despesas', NaturezaDespesaController::class);
 Route::apiResource('subnaturezas_despesas', SubnaturezaDespesaController::class);
 Route::apiResource('centros_custos', CentroCustoController::class);
