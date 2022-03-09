@@ -102,6 +102,40 @@ class Migration20220122 extends Migration
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
+        Schema::create('dimensoes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->longText('descricao')->nullable();
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->unsignedBigInteger('exercicio_id');
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->timestamps();
+        });
+
+        Schema::create('objetivos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->longText('descricao')->nullable();
+            $table->unsignedBigInteger('dimensao_id');
+            $table->foreign('dimensao_id')->references('id')->on('dimensoes');
+            $table->timestamps();
+        });
+
+        Schema::create('metas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->longText('descricao')->nullable();
+            $table->string('tipo');
+            $table->string('valor_inicial');
+            $table->string('valor_final');
+            $table->string('valor_atingido')->nullable();
+            $table->unsignedBigInteger('objetivo_id');
+            $table->foreign('objetivo_id')->references('id')->on('objetivos');
+            $table->unsignedBigInteger('unidade_gestora_id');
+            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
+            $table->timestamps();
+        });
         // Tabela de GruposFontes
         Schema::create('grupos_fontes', function (Blueprint $table) {
             $table->id();
@@ -315,40 +349,7 @@ class Migration20220122 extends Migration
             $table->timestamps();
         });
 
-        Schema::create('dimensoes', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
-            $table->longText('descricao')->nullable();
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            $table->unsignedBigInteger('exercicio_id');
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->timestamps();
-        });
-
-        Schema::create('objetivos', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
-            $table->longText('descricao')->nullable();
-            $table->unsignedBigInteger('dimensao_id');
-            $table->foreign('dimensao_id')->references('id')->on('dimensoes');
-            $table->timestamps();
-        });
-
-        Schema::create('metas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
-            $table->longText('descricao')->nullable();
-            $table->string('tipo');
-            $table->string('valor_inicial');
-            $table->string('valor_final');
-            $table->string('valor_atingido')->nullable();
-            $table->unsignedBigInteger('objetivo_id');
-            $table->foreign('objetivo_id')->references('id')->on('objetivos');
-            $table->unsignedBigInteger('unidade_gestora_id');
-            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
-            $table->timestamps();
-        });
+        
     }
 
     /**
