@@ -18,6 +18,16 @@ class Dimensao extends Model
         'exercicio_id'
     ];
 
+    public function instituicao()
+    {
+        return $this->belongsTo(Instituicao::class);
+    } 
+
+    public function exercicio()
+    {
+        return $this->belongsTo(Exercicio::class);
+    } 
+
     public function objetivos()
     {
         return $this->hasMany(Objetivo::class);

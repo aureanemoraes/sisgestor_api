@@ -329,7 +329,7 @@ class Migration20220122 extends Migration
         Schema::create('objetivos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->longText('descricao');
+            $table->longText('descricao')->nullable();
             $table->unsignedBigInteger('dimensao_id');
             $table->foreign('dimensao_id')->references('id')->on('dimensoes');
             $table->timestamps();
@@ -338,7 +338,7 @@ class Migration20220122 extends Migration
         Schema::create('metas', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->longText('descricao');
+            $table->longText('descricao')->nullable();
             $table->string('tipo');
             $table->string('valor_inicial');
             $table->string('valor_final');

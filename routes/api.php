@@ -28,7 +28,7 @@ use App\Http\Controllers\CreditoPlanejadoController;
 use App\Http\Controllers\CreditoDisponivelController;
 use App\Http\Controllers\EmpenhoController;
 use App\Http\Controllers\DimensaoController;
-
+use App\Http\Controllers\ObjetivoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -86,6 +86,7 @@ Route::apiResource('creditos_planejados', CreditoPlanejadoController::class);
 Route::apiResource('creditos_disponiveis', CreditoDisponivelController::class);
 Route::apiResource('empenhos', EmpenhoController::class);
 Route::apiResource('dimensoes', DimensaoController::class);
+Route::apiResource('objetivos', ObjetivoController::class);
 
 Route::get('/index_instituicao/{unidade_gestora_id}/{exercicio_id}', [DistribuicaoController::class, 'index_instituicao']);
 Route::get('/index_unidade_gestora/{unidade_administrativa_id}/{exercicio_id}', [DistribuicaoController::class, 'index_unidade_gestora']);
