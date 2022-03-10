@@ -82,7 +82,7 @@ class Migration20220122 extends Migration
             $table->id();
             $table->string('nome');
             $table->string('cpf');
-            $table->string('senha');
+            $table->string('password');
             $table->string('perfil');
             $table->tinyInteger('ativo')->default(0);
             $table->unsignedBigInteger('instituicao_id')->nullable();

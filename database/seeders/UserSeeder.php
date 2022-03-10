@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         User::create([
             'nome' => 'Usuário Instituição Teste',
             'cpf' => '00607092270',
-            'senha' => Hash::make('12345678'),
+            'password' => Hash::make('12345678'),
             'perfil' => 'instituicao',
             'ativo' => 0,
             'instituicao_id' => 1,

@@ -30,6 +30,7 @@ use App\Http\Controllers\EmpenhoController;
 use App\Http\Controllers\DimensaoController;
 use App\Http\Controllers\ObjetivoController;
 use App\Http\Controllers\MetaController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -95,4 +96,7 @@ Route::get('/index_unidade_gestora/{unidade_administrativa_id}/{exercicio_id}', 
 Route::get('/index_unidade_administrativa/{unidade_administrativa_id}/{exercicio_id}', [DistribuicaoController::class, 'index_unidade_administrativa']);
 
 Route::get('/teste', [ManutencoesController::class, 'teste']);
+
+Route::post('/login', [AuthController::class, 'login']);
+
 
