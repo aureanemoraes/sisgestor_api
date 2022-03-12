@@ -128,18 +128,20 @@
                                   {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
                                 </td>
                                 <td class="text-center" width="10%">
-                                  @php
+                                  {{-- @php
                                     $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
                                     $despesa_valor = $formatter->formatCurrency($despesa['valor'], "BRL");
-                                  @endphp
-                                  {{ $despesa_valor }}
+                                  @endphp --}}
+                                  {{-- {{ $despesa_valor }} --}}
+                                  {{ $despesa['valor'] }}
                                 </td>
                                 <td class="text-center" width="10%">
-                                  @php
+                                  {{-- @php
                                     $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
                                     $despesa_valor_total = $formatter->formatCurrency($despesa['valor_total'], "BRL");
                                   @endphp
-                                  {{ $despesa_valor_total }}
+                                  {{ $despesa_valor_total }} --}}
+                                  {{ $despesa['valor_total'] }}
                                 </td>
                                 <td class="text-center" width="4%"></td>
                                 <td class="text-center" width="4%"></td>
@@ -166,18 +168,20 @@
                                   {{ $despesa['qtd_pessoas'] == 1 ? '' : $despesa['qtd_pessoas'] }}
                                 </td>
                                 <td class="text-center" width="10%">
-                                  @php
+                                  {{-- @php
                                     $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
                                     $despesa_valor = $formatter->formatCurrency($despesa['valor'], "BRL")
                                   @endphp
-                                  {{ $despesa_valor }}
+                                  {{ $despesa_valor }} --}}
+                                  {{ $despesa['valor'] }}
                                 </td>
                                 <td class="text-center" width="10%">
-                                  @php
+                                  {{-- @php
                                     $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
                                     $despesa_valor_total = $formatter->formatCurrency($despesa['valor_total'], "BRL")
                                   @endphp
-                                  {{ $despesa_valor_total }}
+                                  {{ $despesa_valor_total }} --}}
+                                  {{ $despesa['valor_total'] }}
                                 </td>
                               </tr>
                             @endif
@@ -190,14 +194,17 @@
                           @php
                             if($tipo_natureza == 'custeio') {
                               if(isset($item['despesas']['custeio']['custo_fixo']['total'])) {
-                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $total_custo_fixo = $formatter->formatCurrency($item['despesas']['custeio']['custo_fixo']['total'], "BRL");
+                                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                // $total_custo_fixo = $formatter->formatCurrency($item['despesas']['custeio']['custo_fixo']['total'], "BRL");
+
+                                $total_custo_fixo = $item['despesas']['custeio']['custo_fixo']['total'];
                               } else 
                                 $total_custo_fixo = '';
                             } else {
                               if(isset($item['despesas']['investimento']['custo_fixo']['total'])) {
-                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $total_custo_fixo = $formatter->formatCurrency($item['despesas']['investimento']['custo_fixo']['total'], "BRL");
+                                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                // $total_custo_fixo = $formatter->formatCurrency($item['despesas']['investimento']['custo_fixo']['total'], "BRL");
+                                $total_custo_fixo = $item['despesas']['investimento']['custo_fixo']['total'];
                               } else 
                                 $total_custo_fixo = '';
                             }
@@ -209,14 +216,16 @@
                           @php
                             if($tipo_natureza == 'custeio') {
                               if(isset($item['despesas']['custeio']['custo_variavel']['total'])) {
-                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $total_custo_variavel = $formatter->formatCurrency($item['despesas']['custeio']['custo_variavel']['total'], "BRL");
+                                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                // $total_custo_variavel = $formatter->formatCurrency($item['despesas']['custeio']['custo_variavel']['total'], "BRL");
+                                $total_custo_variavel = $item['despesas']['custeio']['custo_variavel']['total'];
                               } else 
                                 $total_custo_variavel = '';
                             } else {
                               if(isset($item['despesas']['investimento']['custo_variavel']['total'])) {
-                                $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $total_custo_variavel = $formatter->formatCurrency($item['despesas']['investimento']['custo_variavel']['total'], "BRL");
+                                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
+                                // $total_custo_variavel = $formatter->formatCurrency($item['despesas']['investimento']['custo_variavel']['total'], "BRL");
+                                $total_custo_variavel = $item['despesas']['investimento']['custo_variavel']['total'];
                               } else 
                                 $total_custo_variavel = '';
                             }
@@ -238,14 +247,15 @@
               <tr>
                 <th class="text-end table-active">Total Ação:</th>
                 <td width="10%">
-                  @php
+                  {{-- @php
                     if(isset($item['total_acao'])) {
                       $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
                       $total_acao = $formatter->formatCurrency($item['total_acao'], "BRL");
                     } else 
                       $total_acao = '';
                   @endphp
-                  {{ $total_acao }}
+                  {{ $total_acao }} --}}
+                  {{ $item['total_acao'] }}
                 </td>
               </tr>
             </table>

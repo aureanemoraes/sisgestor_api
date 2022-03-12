@@ -13,11 +13,11 @@ class Meta extends Model
 
     protected $fillable = [
         'nome',
-        'descricao',
-        'tipo',
-        'valor_inicial',
-        'valor_final',
-        'valor_atingido',
+        'descricao', // dar mais bolsas para alunos carentes
+        'tipo', // porcentagem, valor, maior_que, menor_que 
+        'valor_inicial', //
+        'valor_final', // 100%
+        'valor_atingido', // 2%
         'objetivo_id',
         'unidade_gestora_id'
     ];

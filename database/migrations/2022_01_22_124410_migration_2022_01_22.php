@@ -311,8 +311,8 @@ class Migration20220122 extends Migration
             $table->longText('descricao');
             $table->unsignedBigInteger('despesa_id');
             $table->foreign('despesa_id')->references('id')->on('despesas');
-            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
-            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->unsignedBigInteger('unidade_gestora_id')->nullable();
+            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
             $table->timestamps();
         });
         Schema::create('creditos_planejados', function (Blueprint $table) {
