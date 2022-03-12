@@ -12,7 +12,8 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "twig/extensions": "~1.0"
+        "twig/extensions": "~1.0",
+        "ext-intl": "^7.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
