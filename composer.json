@@ -12,6 +12,7 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "twig/extensions": "~1.0",
         "ext-php_intl": "*"
     },
     "require-dev": {
