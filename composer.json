@@ -12,7 +12,7 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "php_intl": "*"
+        "ext-php_intl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
