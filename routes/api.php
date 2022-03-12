@@ -70,6 +70,7 @@ Route::apiResource('programas', ProgramaController::class);
 Route::apiResource('grupos_fontes', GrupoFonteController::class);
 Route::apiResource('especificacoes', EspecificacaoController::class);
 Route::apiResource('fontes_tipos', FonteTipoController::class);
+Route::get('acoes_tipos/opcoes', [AcaoTipoController::class, 'opcoes']);
 Route::apiResource('acoes_tipos', AcaoTipoController::class);
 Route::get('naturezas_despesas/opcoes', [NaturezaDespesaController::class, 'opcoes']);
 Route::apiResource('naturezas_despesas', NaturezaDespesaController::class);
