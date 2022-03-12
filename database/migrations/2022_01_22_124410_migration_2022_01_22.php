@@ -80,13 +80,12 @@ class Migration20220122 extends Migration
          // Tabela de Usuários
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nome');
             $table->string('cpf');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('perfil');
-            $table->unsignedBigInteger('instituicao_id');
+            $table->tinyInteger('ativo')->default(0);
+            $table->unsignedBigInteger('instituicao_id')->nullable();
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->unsignedBigInteger('unidade_gestora_id')->nullable();
             $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
