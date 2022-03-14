@@ -12,21 +12,17 @@ use App\Http\Controllers\ApiBaseController;
 class AcaoController extends ApiBaseController
 {
 
-	public function pesquisa(Request $request) {
-		if(isset($request->termo)) {
-			$termo = $request->termo;
+	public function opcoes()
+	{
+		$acoes = Acao::select(
+				'acoes_tipos.nome as label',
+				'acoes.id as id',
+				'acoes.acao_tipo_id'
+			)
+			->join('acoes_tipos', 'acoes_tipos.id', '=', 'acoes.acao_tipo_id')
+			->get();
 
-			$resultado = Acao::whereHas('acao_tipo', function ($query) use ($termo) {
-					$query->where('nome', 'ilike', '%' . $termo . '%')
-					->orderBy('fav', 'desc');
-				}
-			)->get();
-
-			if(count($resultado) > 0) return $this->response(true, $resultado, 200);
-			else return $this->response(true, 'Nenhum resultado encontrado.', 404);
-		} else {
-			return $this->response(false, 'Nenhum termo enviado para pesquisa.', 404);
-		}
+			return $this->response(true, $acoes, 200);
 	}
 
 	public function index(Request $request)
