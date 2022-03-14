@@ -31,14 +31,16 @@ class DespesaController extends ApiBaseController
 		try {
 			DB::beginTransaction();
 			$despesa = DespesaTransformer::toInstance($request->all());
-            $rule = $this->rules($despesa);
-            if($rule['status']) {
-                $despesa->save();
-                DB::commit();
-			    return $this->response($rule['status'], $despesa, 200);
-            } else {
-                return $this->response($rule['status'], $rule['msg'], 400);
-            }
+			$extras['acao_id'] = $request->acao_id;
+			$extras['fonte_id'] = $request->fonte_id;
+			$rule = $this->rules($despesa, $extras);
+			if($rule['status']) {
+					$despesa->save();
+					DB::commit();
+			return $this->response($rule['status'], $despesa, 200);
+			} else {
+					return $this->response($rule['status'], $rule['msg'], 400);
+			}
 		} catch (Exception $ex) {
 			DB::rollBack();
 			return $this->response(false, $ex->getMessage(), 409);
@@ -112,7 +114,8 @@ class DespesaController extends ApiBaseController
 			'qtd' => ['nullable', 'integer'],
 			'qtd_pessoas' => ['nullable', 'integer'],
 			'tipo' => ['required'],
-			'fonte_acao_id' => ['required', 'exists:fontes_acoes,id'],
+			'fonte_id' => ['required', 'exists:fontes,id'],
+			'acao_id' => ['required', 'exists:acoes,id'],
 			'centro_custo_id' => ['required', 'exists:centros_custos,id'],
 			'natureza_despesa_id' => ['required', 'exists:naturezas_despesas,id'],
 			'subnatureza_despesa_id' => ['nullable', 'exists:subnaturezas_despesas,id'],
@@ -124,24 +127,34 @@ class DespesaController extends ApiBaseController
 		}
 	}
 
-    protected function rules($despesa) 
+    protected function rules($despesa, $extras) 
 		{
-        // Verificar se tem recurso disponível para cadastrar a despesa no valor setado
-				$fonte_acao = FonteAcao::find($despesa->fonte_acao_id);
+				$fonte_acao = FonteAcao::where('fonte_id', $extras['fonte_id'])
+					->where('acao_id', $extras['acao_id'])
+					->where('unidade_administrativa_id', $despesa->unidade_administrativa_id)
+					->first();
 
-				$recurso_planejado = $fonte_acao->valor;
-				$despesas_lancadas = Despesa::where('fonte_acao_id', $fonte_acao->id)->sum('valor_total');
-				$recurso_disponivel = $recurso_planejado - $despesas_lancadas;
+        if(isset($fonte_acao)) {
+					// Verificar se tem recurso disponível para cadastrar a despesa no valor setado
+					$recurso_planejado = $fonte_acao->valor;
+					$despesas_lancadas = Despesa::where('fonte_acao_id', $fonte_acao->id)->sum('valor_total');
+					$recurso_disponivel = $recurso_planejado - $despesas_lancadas;
 
-				if($despesa->valor <= $recurso_disponivel) {
-					return [
-						'status' => true,
-						'msg' => ''
-					];
+					if($despesa->valor <= $recurso_disponivel) {
+						return [
+							'status' => true,
+							'msg' => ''
+						];
+					} else {
+						return [
+							'status' => false,
+							'msg' => 'O valor inserido não está disponível.'
+						];
+					}
 				} else {
 					return [
 						'status' => false,
-						'msg' => 'O valor inserido não está disponível.'
+						'msg' => 'O vínculo não existe.'
 					];
 				}
     }   
