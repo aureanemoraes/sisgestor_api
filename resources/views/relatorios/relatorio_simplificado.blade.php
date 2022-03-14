@@ -90,28 +90,57 @@
         PLANEJAMENTO ORÇAMENTÁRIO <strong>{{ Str::upper($instituicao->nome) }}</strong> - EXERCÍCIO <strong>{{ Str::upper($exercicio->nome) }}</strong> - {{ $exercicio->aprovado ? 'LOA' : 'PLOA' }}
       </p>
       <p>
-        UNIDADE GESTORA: <span class="acao">{{ $unidade_gestora->nome }}</span>
+        @switch($tipo)
+            @case('unidade_administrativa')
+                UNIDADE ADMINISTRATIVA: <span class="acao">{{ $unidade_administrativa->nome }}</span>
+                @break
+            @case('unidade_gestora')
+                UNIDADE GESTORA: <span class="acao">{{ $unidade_gestora->nome }}</span>
+                @break
+            @default
+        @endswitch
       </p>
     </div>
     
     <div class="resumo">
       <div class="resumo-metas">
-        <table class="table table-bordered">
-          <thead>
-            <th>Ação</th>
-            <th>Natureza de Despesa</th>
-            <th>Meta</th>
-            <th>Qtd. Estimada</th>
-            <th>Qtd. Alcançada</th>
-          </thead>
-          <tbody>
-            @php $contador=0 @endphp
-            @foreach($resumo_metas as $acao_id => $resumo_meta)
-              <tr>
-                <td rowspan={{ count($resumo_meta['metas']) }}>{{ $resumo_meta['acao'] }}</td>
-                @foreach($resumo_meta['metas'] as $index => $meta)
-                  @if($contador > 1)
-                    <tr>
+        @if($tipo == 'unidade_gestora' ||$tipo == 'instituicao')
+          <table class="table table-bordered">
+            <thead>
+              <th>Ação</th>
+              <th>Natureza de Despesa</th>
+              <th>Meta</th>
+              <th>Qtd. Estimada</th>
+              <th>Qtd. Alcançada</th>
+            </thead>
+            <tbody>
+              @php $contador=0 @endphp
+              @foreach($resumo_metas as $acao_id => $resumo_meta)
+                <tr>
+                  <td rowspan={{ count($resumo_meta['metas']) }}>{{ $resumo_meta['acao'] }}</td>
+                  @foreach($resumo_meta['metas'] as $index => $meta)
+                    @if($contador > 1)
+                      <tr>
+                        @if(isset($meta['natureza_despesa']))
+                          <td>{{ $meta['natureza_despesa'] }}</td>
+                        @else
+                          <td class="text-center"> - </td>
+                        @endif
+                        <td>{{ $meta['nome_meta'] }}</td>
+                        <td class="text-center">
+                          @php
+                              $qtd_estimada = $meta['qtd_estimada'];
+                          @endphp
+                          {{ 'R$ ' . number_format($qtd_estimada, 2) }}
+                        </td>
+                        <td class="text-center">
+                          @php
+                              $qtd_alcancada = $meta['qtd_alcancada'];
+                          @endphp
+                          {{ 'R$ ' . number_format($qtd_alcancada, 2) }}
+                        </td>
+                      </tr>
+                    @else
                       @if(isset($meta['natureza_despesa']))
                         <td>{{ $meta['natureza_despesa'] }}</td>
                       @else
@@ -122,7 +151,7 @@
                         @php
                             $qtd_estimada = $meta['qtd_estimada'];
                         @endphp
-                        {{ 'R$ ' . number_format($qtd_estimada, 2) }}
+                        {{ 'R$ ' . number_format($qtd_estimada, 2)}}
                       </td>
                       <td class="text-center">
                         @php
@@ -130,34 +159,16 @@
                         @endphp
                         {{ 'R$ ' . number_format($qtd_alcancada, 2) }}
                       </td>
-                    </tr>
-                  @else
-                    @if(isset($meta['natureza_despesa']))
-                      <td>{{ $meta['natureza_despesa'] }}</td>
-                    @else
-                      <td class="text-center"> - </td>
                     @endif
-                    <td>{{ $meta['nome_meta'] }}</td>
-                    <td class="text-center">
-                      @php
-                          $qtd_estimada = $meta['qtd_estimada'];
-                      @endphp
-                      {{ 'R$ ' . number_format($qtd_estimada, 2)}}
-                    </td>
-                    <td class="text-center">
-                      @php
-                          $qtd_alcancada = $meta['qtd_alcancada'];
-                      @endphp
-                      {{ 'R$ ' . number_format($qtd_alcancada, 2) }}
-                    </td>
-                  @endif
-                  @php $contador++ @endphp
-                @endforeach
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
+                    @php $contador++ @endphp
+                  @endforeach
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        @endif
       </div>
+
       <div class="resumo-acoes">
         <table class="table table-bordered">
           <thead>

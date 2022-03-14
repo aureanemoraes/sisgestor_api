@@ -116,23 +116,15 @@
                       <td>{{ $meta['nome_meta'] }}</td>
                       <td class="text-center">
                         @php
-                          // if(isset($meta['natureza_despesa'])) {
-                          //   // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                          //   // $qtd_estimada = $formatter->formatCurrency($meta['qtd_estimada'], "BRL");
-                          // } else 
                             $qtd_estimada = $meta['qtd_estimada'];
                         @endphp
-                        {{ $qtd_estimada }}
+                        {{ 'R$ ' . number_format($qtd_estimada, 2) }}
                       </td>
                       <td class="text-center">
                         @php
-                          // if(isset($meta['natureza_despesa'])) {
-                          //   // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                          //   // $qtd_alcancada = $formatter->formatCurrency($meta['qtd_alcancada'], "BRL");
-                          // } else 
                             $qtd_alcancada = $meta['qtd_alcancada'];
                         @endphp
-                        {{ $qtd_alcancada }}
+                        {{ 'R$ ' . number_format($qtd_alcancada, 2) }}
                       </td>
                     </tr>
                   @else
@@ -144,23 +136,15 @@
                     <td>{{ $meta['nome_meta'] }}</td>
                     <td class="text-center">
                       @php
-                        // if(isset($meta['natureza_despesa'])) {
-                        //   // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                        //   // $qtd_estimada = $formatter->formatCurrency($meta['qtd_estimada'], "BRL");
-                        // } else 
                           $qtd_estimada = $meta['qtd_estimada'];
                       @endphp
-                      {{ $qtd_estimada }}
+                      {{ 'R$ ' . number_format($qtd_estimada, 2)}}
                     </td>
                     <td class="text-center">
                       @php
-                        // if(isset($meta['natureza_despesa'])) {
-                        //   // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                        //   // $qtd_alcancada = $formatter->formatCurrency($meta['qtd_alcancada'], "BRL");
-                        // } else 
                           $qtd_alcancada = $meta['qtd_alcancada'];
                       @endphp
-                      {{ $qtd_alcancada }}
+                      {{ 'R$ ' . number_format($qtd_alcancada, 2) }}
                     </td>
                   @endif
                   @php $contador++ @endphp
@@ -186,29 +170,13 @@
               <th>AÇÃO</th>
               <th>DETALHAMENTO</th>
               <td class="resumo-valores">
-                {{-- @php
-                  $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                  $total_matriz = $formatter->formatCurrency($resumo_acoes['total_matriz'], "BRL")
-                @endphp
-                {{ $total_matriz }} --}}
-                {{ $resumo_acoes['total_matriz'] }}
+                {{ 'R$ ' . number_format($resumo_acoes['total_matriz'], 2) }}
               </td>
               <td class="resumo-valores">
-                {{-- @php
-                  $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                  $total_planejado = $formatter->formatCurrency($resumo_acoes['total_planejado'], "BRL")
-                @endphp
-                {{ $total_planejado }} --}}
-
-                {{ $resumo_acoes['total_planejado'] }}
+                {{ 'R$ ' . number_format($resumo_acoes['total_planejado']) }}
               </td>
               <td class="resumo-valores">
-                {{-- @php
-                  $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                  $total_diferenca = $formatter->formatCurrency($resumo_acoes['total_diferenca'], "BRL")
-                @endphp
-                {{ $total_diferenca }} --}}
-                {{ $resumo_acoes['total_diferenca'] }}
+                {{ 'R$ ' . number_format($resumo_acoes['total_diferenca'], 2) }}
               </td>
             </tr>
             @foreach($resumo_acoes as $keyR => $resumo_acao)
@@ -220,53 +188,19 @@
                   <tr>
                     <td>Custeio</td>
                     <td rowspan="2" class="valor-matriz">
-                      {{-- @php
-                        if($acao['valores']['matriz'] > 0) {
-                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                          $valor_matriz = $formatter->formatCurrency($acao['valores']['matriz'], "BRL");
-                        } else 
-                          $valor_matriz = '';
-                      @endphp
-                      {{ $valor_matriz }} --}}
-                      {{ $acao['valores']['matriz'] }}
+                      {{ 'R$ ' . number_format($acao['valores']['matriz'], 2) }}
                     </td>
                     <td>
-                      {{-- @php
-                        if($acao['valores']['planejado']['custeio'] > 0) {
-                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                          $valor_planejado_custeio = $formatter->formatCurrency($acao['valores']['planejado']['custeio'], "BRL");
-                        } else 
-                          $valor_planejado_custeio = '';
-                      @endphp
-                      {{ $valor_planejado_custeio }} --}}
-                      {{ $acao['valores']['planejado']['custeio'] }}
+                      {{ 'R$ ' . number_format($acao['valores']['planejado']['custeio'], 2) }}
                     </td>
                     <td rowspan="2" class="valor-matriz">
-                      {{-- @php
-                        if($acao['valores']['diferenca'] > 0) {
-                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                          $valor_diferenca = $formatter->formatCurrency($acao['valores']['diferenca'], "BRL");
-                        } else 
-                          $valor_diferenca = '';
-                      @endphp
-                      {{ $valor_diferenca }} --}}
-
-                      {{ $acao['valores']['diferenca'] }}
+                      {{ 'R$ ' . number_format($acao['valores']['diferenca'], 2) }}
                     </td>
                   </tr>
                   <tr>
                     <td>Investimento</td>
                     <td>
-                      {{-- @php
-                        if($acao['valores']['planejado']['investimento'] > 0) {
-                          $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                          $valor_planejado_investimento = $formatter->formatCurrency($acao['valores']['planejado']['investimento'], "BRL");
-                        } else 
-                          $valor_planejado_investimento = '';
-                      @endphp
-                      {{ $valor_planejado_investimento }} --}}
-
-                      {{ $acao['valores']['planejado']['investimento'] }}
+                      {{ 'R$ ' . number_format($acao['valores']['planejado']['investimento'], 2) }}
                     </td>
                   </tr>
                 @endforeach
@@ -291,18 +225,10 @@
           <tbody>
             <tr>
               <td>
-                {{-- @php
-                  $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                  $total_custo_fixo = $formatter->formatCurrency($total_custo_fixo, "BRL")
-                @endphp --}}
-                {{ $total_custo_fixo }}
+                {{ 'R$ ' . number_format($total_custo_fixo, 2) }}
               </td>
               <td>
-                {{-- @php
-                  $total_custo_variavel_formatado = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                  $total_custo_variavel = $total_custo_variavel_formatado->formatCurrency($total_custo_variavel, "BRL")
-                @endphp --}}
-                {{ $total_custo_variavel }}
+                {{ 'R$ ' . number_format($total_custo_variavel, 2) }}
               </td>
             </tr>
           </tbody>
@@ -339,28 +265,13 @@
                           {{ $item['nome'] }}
                         </td>
                         <td>
-                          {{-- @php
-                            $custo_fixo = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                            $custo_fixo = $custo_fixo->formatCurrency($item['custo_fixo'], "BRL");
-                          @endphp
-                          {{ $custo_fixo }} --}}
-                          {{ $item['custo_fixo'] }}
+                          {{ 'R$ ' . number_format($item['custo_fixo'], 2) }}
                         </td>
                         <td>
-                          {{-- @php
-                            $custo_variavel = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                            $custo_variavel = $custo_variavel->formatCurrency($item['custo_variavel'], "BRL");
-                          @endphp
-                          {{ $custo_variavel }} --}}
-                          {{ $item['custo_variavel'] }}
+                          {{ 'R$ ' . number_format($item['custo_variavel'], 2) }}
                         </td>
                         <td>
-                          {{-- @php
-                            $custo_total = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                            $custo_total = $custo_total->formatCurrency($item['custo_total'], "BRL");
-                          @endphp
-                          {{ $custo_total }} --}}
-                          {{ $item['custo_total'] }}
+                          {{ 'R$ ' . number_format($item['custo_total'], 2) }}
                         </td>
                       </tr>
                       @if(isset($item['subnaturezas_despesas']) && count($item['subnaturezas_despesas']) > 0)
@@ -370,28 +281,13 @@
                               {{ $subnatureza['nome'] }}
                             </td>
                             <td>
-                              {{-- @php
-                                $custo_fixo = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $custo_fixo = $custo_fixo->formatCurrency($subnatureza['custo_fixo'], "BRL");
-                              @endphp
-                              {{ $custo_fixo }} --}}
-                              {{ $subnatureza['custo_fixo'] }}
+                              {{ 'R$ ' . number_format($subnatureza['custo_fixo'], 2) }}
                             </td>
                             <td>
-                              {{-- @php
-                                $custo_variavel = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $custo_variavel = $custo_variavel->formatCurrency($subnatureza['custo_variavel'], "BRL");
-                              @endphp
-                              {{ $custo_variavel }} --}}
-                              {{ $subnatureza['custo_variavel'] }}
+                              {{ 'R$ ' . number_format($subnatureza['custo_variavel'], 2) }}
                             </td>
                             <td>
-                              {{-- @php
-                                $custo_total = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $custo_total = $custo_total->formatCurrency($subnatureza['custo_total'], "BRL");
-                              @endphp
-                              {{ $custo_total }} --}}
-                              {{ $subnatureza['custo_total'] }}
+                              {{ 'R$ ' . number_format($subnatureza['custo_total'], 2) }}
                             </td>
                           </tr>
                         @endforeach
@@ -412,20 +308,12 @@
                   $total_variavel = 0;
                   $total = 0;
                 }
-                
-                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                // $total_fixo = $formatter->formatCurrency($total_fixo, "BRL");
 
-                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                // $total_variavel = $formatter->formatCurrency($total_variavel, "BRL");
-
-                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                // $total = $formatter->formatCurrency($total, "BRL");
               @endphp
               <th class="total-custeio">TOTAL CUSTEIO:</th>
-              <td>{{ $total_fixo }}</td>
-              <td>{{ $total_variavel }}</td>
-              <td>{{ $total }}</td>
+              <td>{{ 'R$ ' . number_format($total_fixo, 2) }}</td>
+              <td>{{ 'R$ ' . number_format($total_variavel, 2) }}</td>
+              <td>{{ 'R$ ' . number_format($total, 2) }}</td>
             </tr>
             <tr>
               <th class="tipo-despesa" colspan="100%">Investimento</th>
@@ -446,28 +334,13 @@
                           {{ $item['nome'] }}
                         </td>
                         <td>
-                          {{-- @php
-                            $custo_fixo = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                            $custo_fixo = $custo_fixo->formatCurrency($item['custo_fixo'], "BRL");
-                          @endphp
-                          {{ $custo_fixo }} --}}
-                          {{ $item['custo_fixo'] }}
+                          {{ 'R$ ' . number_format($item['custo_fixo'], 2) }}
                         </td>
                         <td>
-                          {{-- @php
-                            $custo_variavel = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                            $custo_variavel = $custo_variavel->formatCurrency($item['custo_variavel'], "BRL");
-                          @endphp
-                          {{ $custo_variavel }} --}}
-                          {{ $item['custo_variavel'] }}
+                          {{ 'R$ ' . number_format($item['custo_variavel'], 2) }}
                         </td>
                         <td>
-                          {{-- @php
-                            $custo_total = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                            $custo_total = $custo_total->formatCurrency($item['custo_total'], "BRL");
-                          @endphp
-                          {{ $custo_total }} --}}
-                          {{ $item['custo_total'] }}
+                          {{ 'R$ ' . number_format($item['custo_total'], 2) }}
                         </td>
                       </tr>
                       @if(isset($item['subnaturezas_despesas']) && count($item['subnaturezas_despesas']) > 0)
@@ -477,27 +350,12 @@
                               {{ $subnatureza['nome'] }}
                             </td>
                             <td>
-                              {{-- @php
-                                $custo_fixo = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $custo_fixo = $custo_fixo->formatCurrency($subnatureza['custo_fixo'], "BRL");
-                              @endphp
-                              {{ $custo_fixo }} --}}
                               {{ 'R$ ' . number_format($subnatureza['custo_fixo'], 2) }}
                             </td>
                             <td>
-                              {{-- @php
-                                $custo_variavel = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $custo_variavel = $custo_variavel->formatCurrency($subnatureza['custo_variavel'], "BRL");
-                              @endphp
-                              {{ $custo_variavel }} --}}
                               {{ 'R$ ' . number_format($subnatureza['custo_variavel'], 2) }}
                             </td>
                             <td>
-                              {{-- @php
-                                $custo_total = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                                $custo_total = $custo_total->formatCurrency($subnatureza['custo_total'], "BRL");
-                              @endphp
-                              {{ $custo_total }} --}}
                               {{ 'R$ ' . number_format($subnatureza['custo_total'], 2) }}
                             </td>
                           </tr>
@@ -519,20 +377,11 @@
                   $total_variavel = 0;
                   $total = 0;
                 }
-                
-                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                // $total_fixo = $formatter->formatCurrency($total_fixo, "BRL");
-            
-                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                // $total_variavel = $formatter->formatCurrency($total_variavel, "BRL");
-            
-                // $formatter = new NumberFormatter( 'pt_BR', NumberFormatter::CURRENCY );
-                // $total = $formatter->formatCurrency($total, "BRL");
               @endphp
               <th class="total-custeio">TOTAL INVESTIMENTO:</th>
               <td>{{ 'R$ ' . number_format($total_fixo, 2) }}</td>
-              <td>{{ $total_variavel }}</td>
-              <td>{{ $total }}</td>
+              <td>{{ 'R$ ' . number_format($total_variavel, 2) }}</td>
+              <td>{{ 'R$ ' . number_format($total, 2) }}</td>
             </tr>
           @endforeach
         </tbody>

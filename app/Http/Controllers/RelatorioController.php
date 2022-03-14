@@ -127,12 +127,13 @@ class RelatorioController extends Controller
                 }
             }
         }
-        return view('unidade_administrativa.relatorio_completo')->with([
+        return view('relatorios.relatorio_completo')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
             'unidade_administrativa' => $unidade_administrativa,
             'acoes' => $acoes,
-            'infos' => $infos
+            'infos' => $infos,
+            'tipo' => 'unidade_administrativa'
         ]);
     }
 
@@ -265,12 +266,13 @@ class RelatorioController extends Controller
         }
         // dd($infos);
 
-        return view('unidade_gestora.relatorio_completo')->with([
+        return view('relatorios.relatorio_completo')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
             'unidade_gestora' => $unidade_gestora,
             'acoes' => $acoes,
-            'infos' => $infos
+            'infos' => $infos,
+            'tipo' => 'unidade_gestora'
         ]);
     }
 
@@ -418,11 +420,12 @@ class RelatorioController extends Controller
         }
         // dd($infos);
 
-        return view('instituicao.relatorio_completo')->with([
+        return view('relatorios.relatorio_completo')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
             'acoes' => $acoes,
-            'infos' => $infos
+            'infos' => $infos,
+            'tipo' => 'instituicao'
         ]);
     }
 
@@ -583,7 +586,7 @@ class RelatorioController extends Controller
         }
         // dd($infos);
 
-        return view('unidade_administrativa.relatorio_simplificado')->with([
+        return view('relatorios.relatorio_simplificado')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
             'unidade_administrativa' => $unidade_administrativa,
@@ -591,7 +594,8 @@ class RelatorioController extends Controller
             'infos' => $infos,
             'total_custo_fixo' => $total_custo_fixo,
             'total_custo_variavel' => $total_custo_variavel,
-            'resumo_acoes' => $resumo_acoes
+            'resumo_acoes' => $resumo_acoes,
+            'tipo' => 'unidade_administrativa'
         ]);
     }
 
@@ -819,7 +823,7 @@ class RelatorioController extends Controller
 
         // Resumo
 
-        return view('unidade_gestora.relatorio_simplificado')->with([
+        return view('relatorios.relatorio_simplificado')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
             'unidade_gestora' => $unidade_gestora,
@@ -828,7 +832,8 @@ class RelatorioController extends Controller
             'total_custo_fixo' => $total_custo_fixo,
             'total_custo_variavel' => $total_custo_variavel,
             'resumo_acoes' => $resumo_acoes,
-            'resumo_metas' => $resumo_metas
+            'resumo_metas' => $resumo_metas,
+            'tipo' => 'unidade_gestora'
         ]);
     }
 
@@ -1103,7 +1108,7 @@ class RelatorioController extends Controller
 
         // Resumo
 
-        return view('instituicao.relatorio_simplificado')->with([
+        return view('relatorios.relatorio_simplificado')->with([
             'instituicao' => $instituicao,
             'exercicio' => $exercicio,
             'acoes' => $acoes,
@@ -1111,7 +1116,8 @@ class RelatorioController extends Controller
             'total_custo_fixo' => $total_custo_fixo,
             'total_custo_variavel' => $total_custo_variavel,
             'resumo_acoes' => $resumo_acoes,
-            'resumo_metas' => $resumo_metas
+            'resumo_metas' => $resumo_metas,
+            'tipo' => 'instituicao'
         ]);
     }
 }
