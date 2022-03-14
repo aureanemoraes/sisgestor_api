@@ -482,7 +482,7 @@
                                 $custo_fixo = $custo_fixo->formatCurrency($subnatureza['custo_fixo'], "BRL");
                               @endphp
                               {{ $custo_fixo }} --}}
-                              {{ $subnatureza['custo_fixo'] }}
+                              {{ 'R$ ' . number_format($subnatureza['custo_fixo'], 2) }}
                             </td>
                             <td>
                               {{-- @php
@@ -490,7 +490,7 @@
                                 $custo_variavel = $custo_variavel->formatCurrency($subnatureza['custo_variavel'], "BRL");
                               @endphp
                               {{ $custo_variavel }} --}}
-                              {{ $subnatureza['custo_variavel'] }}
+                              {{ 'R$ ' . number_format($subnatureza['custo_variavel'], 2) }}
                             </td>
                             <td>
                               {{-- @php
@@ -498,7 +498,7 @@
                                 $custo_total = $custo_total->formatCurrency($subnatureza['custo_total'], "BRL");
                               @endphp
                               {{ $custo_total }} --}}
-                              {{ $subnatureza['custo_total'] }}
+                              {{ 'R$ ' . number_format($subnatureza['custo_total'], 2) }}
                             </td>
                           </tr>
                         @endforeach
@@ -530,7 +530,7 @@
                 // $total = $formatter->formatCurrency($total, "BRL");
               @endphp
               <th class="total-custeio">TOTAL INVESTIMENTO:</th>
-              <td>{{ $total_fixo }}</td>
+              <td>{{ 'R$ ' . number_format($total_fixo, 2) }}</td>
               <td>{{ $total_variavel }}</td>
               <td>{{ $total }}</td>
             </tr>
