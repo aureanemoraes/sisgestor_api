@@ -35,6 +35,7 @@ class DespesaController extends ApiBaseController
 			$extras['fonte_id'] = $request->fonte_id;
 			$rule = $this->rules($despesa, $extras);
 			if($rule['status']) {
+					$despesa->fonte_acao_id = $rule['extras']['fonte_acao_id'];
 					$despesa->save();
 					DB::commit();
 			return $this->response($rule['status'], $despesa, 200);
@@ -143,7 +144,10 @@ class DespesaController extends ApiBaseController
 					if($despesa->valor <= $recurso_disponivel) {
 						return [
 							'status' => true,
-							'msg' => ''
+							'msg' => '',
+							'extras' => [
+								'fonte_acao_id' => $fonte_acao->id
+							]
 						];
 					} else {
 						return [
