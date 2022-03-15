@@ -13,10 +13,16 @@ use App\Http\Controllers\ApiBaseController;
 
 class DespesaController extends ApiBaseController
 {
-	public function index()
+	public function index(Request $request)
 	{
 		try {
-			return $this->response(true, Despesa::paginate(), 200);
+			if(isset($request->unidade_administrativa_id)) {
+				$despesas = Despesa::where('unidade_administrativa_id', $request->unidade_administrativa_id)->paginate();
+				return $this->response(true, $despesas, 200);
+			} else {
+				return $this->response(true, Despesa::paginate(), 200);
+
+			}
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
