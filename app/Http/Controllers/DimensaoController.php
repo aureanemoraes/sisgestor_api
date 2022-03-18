@@ -11,6 +11,11 @@ use App\Http\Controllers\ApiBaseController;
 
 class DimensaoController extends ApiBaseController
 {
+	public function opcoes() 
+	{
+		return $this->response(true, Dimensao::select('nome as label', 'id')->get(), 200);
+	}
+
 	public function index()
 	{
 		try {
@@ -94,9 +99,8 @@ class DimensaoController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
 			'nome' => ['required'],
-			'descricao' => ['nullable'],
+			'eixo_estrategico_id' => ['required', 'exists:eixos_estrategicos,id'],
 			'instituicao_id' => ['required', 'exists:instituicoes,id'],
-            'exercicio_id' => ['required', 'exists:exercicios,id']
 		]);
 
 		if ($validator->fails()) {

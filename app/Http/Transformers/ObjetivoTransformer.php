@@ -18,8 +18,8 @@ class ObjetivoTransformer
           case 'nome':
             $objetivo->nome = $value;
             break;
-          case 'descricao':
-            $objetivo->descricao = $value;
+          case 'ativo':
+            $objetivo->ativo = $value;
             break;
           case 'dimensao_id':
             $objetivo->dimensao_id = $value;

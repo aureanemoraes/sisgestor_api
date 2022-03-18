@@ -13,7 +13,7 @@ class Objetivo extends Model
 
     protected $fillable = [
         'nome',
-        'descricao',
+        'ativo',
         'dimensao_id'
     ];
 

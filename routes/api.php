@@ -100,7 +100,9 @@ Route::get('planos_acoes/opcoes', [PlanoAcaoController::class, 'opcoes']);
 Route::apiResource('planos_acoes', PlanoAcaoController::class);
 Route::get('eixos_estrategicos/opcoes', [EixoEstrategicoController::class, 'opcoes']);
 Route::apiResource('eixos_estrategicos', EixoEstrategicoController::class);
+Route::get('dimensoes/opcoes', [DimensaoController::class, 'opcoes']);
 Route::apiResource('dimensoes', DimensaoController::class);
+Route::get('objetivos/opcoes', [ObjetivoController::class, 'opcoes']);
 Route::apiResource('objetivos', ObjetivoController::class);
 Route::apiResource('metas', MetaController::class);
 

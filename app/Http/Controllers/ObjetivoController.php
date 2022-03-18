@@ -11,6 +11,11 @@ use App\Http\Controllers\ApiBaseController;
 
 class ObjetivoController extends ApiBaseController
 {
+	public function opcoes() 
+	{
+		return $this->response(true, Objetivo::select('nome as label', 'id')->where('ativo', 1)->get(), 200);
+	}
+
 	public function index()
 	{
 		try {
@@ -102,7 +107,7 @@ class ObjetivoController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
             'nome' => ['required'],
-            'descricao' => ['nullable'],
+            'ativo' => ['nullable'],
             'dimensao_id' => ['required', 'exists:dimensoes,id']
 		]);
 

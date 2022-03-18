@@ -13,9 +13,8 @@ class Dimensao extends Model
 
     protected $fillable = [
         'nome',
-        'descricao',
+        'eixo_estrategico_id',
         'instituicao_id',
-        'exercicio_id'
     ];
 
     public function instituicao()

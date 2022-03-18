@@ -18,14 +18,11 @@ class DimensaoTransformer
           case 'nome':
             $dimensao->nome = $value;
             break;
-          case 'descricao':
-            $dimensao->descricao = $value;
+          case 'eixo_estrategico_id':
+            $dimensao->eixo_estrategico_id = $value;
             break;
           case 'instituicao_id':
             $dimensao->instituicao_id = $value;
-            break;
-          case 'exercicio_id':
-            $dimensao->exercicio_id = $value;
             break;
         }
       }
