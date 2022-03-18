@@ -107,6 +107,17 @@ class Migration20220122 extends Migration
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
         });
+        Schema::create('planos_acoes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->date('data_inicio');
+            $table->date('data_fim');
+            $table->unsignedBigInteger('plano_estrategico_id');
+            $table->foreign('plano_estrategico_id')->references('id')->on('planos_estrategicos');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->timestamps();
+        });
         Schema::create('dimensoes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');

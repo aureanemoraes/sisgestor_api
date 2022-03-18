@@ -32,6 +32,7 @@ use App\Http\Controllers\ObjetivoController;
 use App\Http\Controllers\MetaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlanoEstrategicoController;
+use App\Http\Controllers\PlanoAcaoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -93,6 +94,8 @@ Route::apiResource('creditos_disponiveis', CreditoDisponivelController::class);
 Route::apiResource('empenhos', EmpenhoController::class);
 Route::get('planos_estrategicos/opcoes', [PlanoEstrategicoController::class, 'opcoes']);
 Route::apiResource('planos_estrategicos', PlanoEstrategicoController::class);
+Route::get('planos_acoes/opcoes', [PlanoAcaoController::class, 'opcoes']);
+Route::apiResource('planos_acoes', PlanoAcaoController::class);
 Route::apiResource('dimensoes', DimensaoController::class);
 Route::apiResource('objetivos', ObjetivoController::class);
 Route::apiResource('metas', MetaController::class);
