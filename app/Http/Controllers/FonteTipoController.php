@@ -17,7 +17,10 @@ class FonteTipoController extends ApiBaseController
 			if(isset($request->termo)) {
 				$termo = $request->termo;
 	
-				$resultado = FonteTipo::where('nome', 'ilike', '%' . $termo . '%')->get();
+				$resultado = FonteTipo::where('nome', 'ilike', '%' . $termo . '%')
+					->orWhere('codigo', 'ilike', '%' . $termo . '%')
+					->orderBy('fav', 'desc')
+					->paginate();
 	
 				if(count($resultado) > 0) return $this->response(true, $resultado, 200);
 				else return $this->response(true, 'Nenhum resultado encontrado.', 404);
@@ -111,7 +114,8 @@ class FonteTipoController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
 			'grupo_fonte_id' => ['required', 'exists:grupos_fontes,id'],
-			'especificacao_id' => ['required', 'exists:especificacoes,id']
+			'especificacao_id' => ['required', 'exists:especificacoes,id'],
+			'nome' => ['required']
 		]);
 
 		if ($validator->fails()) {
