@@ -21,6 +21,12 @@ class AcaoTipoTransformer
           case 'nome':
             $acao_tipo->nome = $value;
             break;
+          case 'custeio':
+            $acao_tipo->custeio = $value;
+            break;
+          case 'investimento':
+            $acao_tipo->investimento = $value;
+            break;
           case 'fav':
             $acao_tipo->fav = $value;
             break;

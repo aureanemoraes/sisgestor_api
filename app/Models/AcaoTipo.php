@@ -16,6 +16,8 @@ class AcaoTipo extends Model
     protected $fillable = [
         'codigo',
         'nome',
-        'fav'
+        'fav',
+        'custeio',
+        'investimento'
     ];
 }

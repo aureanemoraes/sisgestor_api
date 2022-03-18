@@ -22,7 +22,10 @@ class AcaoTipoController extends ApiBaseController
 			if(isset($request->termo)) {
 				$termo = $request->termo;
 	
-				$resultado = AcaoTipo::where('nome', 'ilike', '%' . $termo . '%')->get();
+				$resultado = AcaoTipo::where('nome', 'ilike', '%' . $termo . '%')
+					->orWhere('codigo', 'ilike', '%' . $termo . '%')
+					->orderBy('fav', 'desc')
+					->paginate();
 	
 				if(count($resultado) > 0) return $this->response(true, $resultado, 200);
 				else return $this->response(true, 'Nenhum resultado encontrado.', 404);
@@ -116,7 +119,9 @@ class AcaoTipoController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
             'codigo' => ['required'],
-            'nome' => ['required']
+            'nome' => ['required'],
+						'custeio' => ['nullable'],
+						'investimento' => ['nullable']
 		]);
 
 		if ($validator->fails()) {

@@ -17,8 +17,7 @@ class NaturezaDespesa extends Model
         'nome',
         'codigo',
         'tipo',
-        'fav',
-        'comentario'
+        'fav'
     ];
 
     protected $with = [

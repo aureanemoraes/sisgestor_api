@@ -27,9 +27,6 @@ class NaturezaDespesaTransformer
           case 'fav':
             $natureza_despesa_tipo->fav = $value;
             break;
-          case 'comentario':
-            $natureza_despesa_tipo->comentario = $value;
-            break;
         }
       }
 
