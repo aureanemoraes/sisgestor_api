@@ -15,6 +15,7 @@ class FonteTipo extends Model
     protected $fillable = [
         'grupo_fonte_id',
         'especificacao_id',
+        'codigo',
         'nome',
         'fav'
     ];
@@ -23,6 +24,11 @@ class FonteTipo extends Model
         'grupo_fonte:id,nome',
         'especificacao:id,nome'
     ];
+
+    public function setCodigoAttribute($value)
+    {
+        $this->attributes['codigo'] = $this->attributes['grupo_fonte_id'] . str_pad($this->attributes['especificacao_id'], 2, '0', STR_PAD_LEFT);
+    }
 
     public function grupo_fonte()
     {

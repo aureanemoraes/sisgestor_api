@@ -13,7 +13,8 @@ class Programa extends Model
 
     protected $fillable = [
         'codigo',
-        'nome'
+        'nome',
+        'fav'
     ];
 
     public function fontes()

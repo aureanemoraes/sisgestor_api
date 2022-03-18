@@ -21,7 +21,7 @@ class NaturezaDespesaController extends ApiBaseController
 			if(isset($request->termo)) {
 				$termo = $request->termo;
 	
-				$resultado = NaturezaDespesa::where('nome', 'ilike', '%' . $termo . '%')->get();
+				$resultado = NaturezaDespesa::where('nome', 'ilike', '%' . $termo . '%')->orderBy('fav', 'desc')->paginate();
 	
 				if(count($resultado) > 0) return $this->response(true, $resultado, 200);
 				else return $this->response(true, 'Nenhum resultado encontrado.', 404);

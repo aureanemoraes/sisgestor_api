@@ -30,6 +30,8 @@ class FonteTipoTransformer
         }
       }
 
+      $fonte_tipo->codigo = null;
+
       return $fonte_tipo;
     }
 }

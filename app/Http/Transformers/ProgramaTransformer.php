@@ -21,6 +21,9 @@ class ProgramaTransformer
           case 'nome':
             $programa->nome = $value;
             break;
+          case 'fav':
+            $programa->fav = $value;
+            break;
         }
       }
 

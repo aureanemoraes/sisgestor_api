@@ -32,9 +32,6 @@ class Migration20220122 extends Migration
             $table->string('nome');
             $table->date('data_inicio');
             $table->date('data_fim');
-            $table->date('data_inicio_loa');
-            $table->date('data_fim_loa');
-            $table->tinyInteger('aprovado')->default(0);
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
@@ -158,6 +155,7 @@ class Migration20220122 extends Migration
             $table->foreign('especificacao_id')->references('id')->on('especificacoes');
             $table->tinyInteger('fav')->default(0);
             $table->string('nome');
+            $table->string('codigo')->nullable();
             $table->timestamps();
         });
         // Tabela Fontes
@@ -216,6 +214,7 @@ class Migration20220122 extends Migration
             $table->id();
             $table->string('codigo');
             $table->string('nome');
+            $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
         // Tabela Fontes Programas

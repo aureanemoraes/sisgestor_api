@@ -11,10 +11,22 @@ use App\Http\Controllers\ApiBaseController;
 
 class ProgramaController extends ApiBaseController
 {
-	public function index()
+	public function index(Request $request)
 	{
 		try {
-			return $this->response(true, Programa::paginate(), 200);
+			if(isset($request->termo)) {
+				$termo = $request->termo;
+	
+				$resultado = Programa::where('nome', 'ilike', '%' . $termo . '%')
+					->orWhere('codigo', 'ilike', '%' . $termo . '%')
+					->orderBy('fav', 'desc')
+					->paginate();
+	
+				if(count($resultado) > 0) return $this->response(true, $resultado, 200);
+				else return $this->response(true, 'Nenhum resultado encontrado.', 404);
+			} else {
+				return $this->response(true, Programa::orderBy('fav', 'desc')->paginate(), 200);
+			}
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}

@@ -24,15 +24,6 @@ class ExercicioTransformer
           case 'data_fim':
             $exercicio->data_fim = $value;
             break;
-          case 'data_inicio_loa':
-            $exercicio->data_inicio_loa = $value;
-            break;
-          case 'data_fim_loa':
-            $exercicio->data_fim_loa = $value;
-            break;
-          case 'aprovado':
-            $exercicio->aprovado = $value;
-            break;
           case 'instituicao_id':
             $exercicio->instituicao_id = $value;
             break;
