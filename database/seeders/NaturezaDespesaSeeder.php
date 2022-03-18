@@ -118,7 +118,7 @@ NaturezaDespesa::create([ 'codigo' => '339009', 'nome' => 'Salário-Família', '
 NaturezaDespesa::create([ 'codigo' => '339010', 'nome' => 'Outros Benefícios de Natureza Social', 'tipo' => 'Custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339014', 'nome' => 'Diárias - Civil', 'tipo' => 'Custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339015', 'nome' => 'Diárias - Militar', 'tipo' => 'Custeio' ]);
-NaturezaDespesa::create([ 'codigo' => '339018', 'nome' => 'Auxílio Financeiro a Estudantes', 'tipo' => 'Custeio', 'comentario' => 'QTD.1: Quantidade de pessoas <br> QTD.2: Quantidade de passagens']);
+NaturezaDespesa::create([ 'codigo' => '339018', 'nome' => 'Auxílio Financeiro a Estudantes', 'tipo' => 'Custeio']);
 NaturezaDespesa::create([ 'codigo' => '339019', 'nome' => 'Auxílio-Fardamento', 'tipo' => 'Custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339020', 'nome' => 'Auxílio Financeiro a Pesquisadores', 'tipo' => 'Custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339026', 'nome' => 'Obrigações Decorrentes de Política Monetária', 'tipo' => 'Custeio' ]);

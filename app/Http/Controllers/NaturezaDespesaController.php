@@ -11,7 +11,8 @@ use App\Http\Controllers\ApiBaseController;
 
 class NaturezaDespesaController extends ApiBaseController
 {
-	public function opcoes() {
+	public function opcoes() 
+	{
 		return $this->response(true, NaturezaDespesa::select('nome as label', 'id')->orderBy('fav', 'desc')->orderBy('nome')->get(), 200);
 	}
 

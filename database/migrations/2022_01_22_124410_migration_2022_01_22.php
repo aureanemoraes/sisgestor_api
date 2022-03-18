@@ -98,6 +98,15 @@ class Migration20220122 extends Migration
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
+        Schema::create('planos_estrategicos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->date('data_inicio');
+            $table->date('data_fim');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->timestamps();
+        });
         Schema::create('dimensoes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');

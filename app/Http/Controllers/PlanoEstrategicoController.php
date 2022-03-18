@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dimensao;
+use App\Models\PlanoEstrategico;
 use Illuminate\Http\Request;
-use App\Http\Transformers\DimensaoTransformer;
+use App\Http\Transformers\PlanoEstrategicoTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiBaseController;
 
-class DimensaoController extends ApiBaseController
+class PlanoEstrategicoController extends ApiBaseController
 {
+	public function opcoes() 
+	{
+		return $this->response(true, PlanoEstrategico::select('nome as label', 'id')->get(), 200);
+	}
+
 	public function index()
 	{
 		try {
-			return $this->response(true, Dimensao::paginate(), 200);
+			return $this->response(true, PlanoEstrategico::paginate(), 200);
 		} catch (Exception $ex) {
 			return $this->response(false, $ex->getMessage(), 409);
 		}
@@ -28,11 +33,11 @@ class DimensaoController extends ApiBaseController
 
 		try {
 			DB::beginTransaction();
-			$dimensao = DimensaoTransformer::toInstance($request->all());
-			$dimensao->save();
+			$plano_estrategico = PlanoEstrategicoTransformer::toInstance($request->all());
+			$plano_estrategico->save();
 			DB::commit();
 
-			return $this->response(true, $dimensao, 200);
+			return $this->response(true, $plano_estrategico, 200);
 		} catch (Exception $ex) {
 			DB::rollBack();
 			return $this->response(false, $ex->getMessage(), 409);
@@ -42,10 +47,10 @@ class DimensaoController extends ApiBaseController
 	public function show($id)
 	{
 		try {
-			$dimensao = Dimensao::find($id);
+			$plano_estrategico = PlanoEstrategico::find($id);
 			
-			if(isset($dimensao)) 
-				return $this->response(true, $dimensao, 200);
+			if(isset($plano_estrategico)) 
+				return $this->response(true, $plano_estrategico, 200);
 			else 
 				return $this->response(false,'Not found.', 404);
 		} catch (Exception $ex) {
@@ -59,15 +64,15 @@ class DimensaoController extends ApiBaseController
 
 		if($invalido) return $this->response(false, $invalido, 422);
 		
-		$dimensao = Dimensao::find($id);
-		if(isset($dimensao)) {
+		$plano_estrategico = PlanoEstrategico::find($id);
+		if(isset($plano_estrategico)) {
 			try {
 				DB::beginTransaction();
-				$dimensao = DimensaoTransformer::toInstance($request->all(), $dimensao);
-				$dimensao->save();
+				$plano_estrategico = PlanoEstrategicoTransformer::toInstance($request->all(), $plano_estrategico);
+				$plano_estrategico->save();
 				DB::commit();
 
-				return $this->response(true, $dimensao, 200);
+				return $this->response(true, $plano_estrategico, 200);
 			} catch (Exception $ex) {
 				DB::rollBack();
 				return $this->response(false, $ex->getMessage(), 409);
@@ -77,10 +82,10 @@ class DimensaoController extends ApiBaseController
 
 	public function destroy($id)
 	{
-		$dimensao = Dimensao::find($id);
+		$plano_estrategico = PlanoEstrategico::find($id);
 		try {
-			if(isset($dimensao)) {
-				$dimensao->delete();
+			if(isset($plano_estrategico)) {
+				$plano_estrategico->delete();
 				return $this->response(true, 'Item deleted.', 200);
 			} else {
 				return $this->response(false, 'Item not found.', 404);
@@ -94,9 +99,9 @@ class DimensaoController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
 			'nome' => ['required'],
-			'descricao' => ['nullable'],
-			'instituicao_id' => ['required', 'exists:instituicoes,id'],
-            'exercicio_id' => ['required', 'exists:exercicios,id']
+			'data_inicio' => ['required'],
+			'data_fim' => ['required'],
+			'instituicao_id' => ['required', 'exists:instituicoes,id']
 		]);
 
 		if ($validator->fails()) {
