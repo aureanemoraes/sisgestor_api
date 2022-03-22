@@ -19,30 +19,7 @@ class UnidadeGestoraController extends ApiBaseController
 			return $this->response(false, $ex->getMessage(), 409);
 		}
 	}
-
-	public function restore($id) {
-		$unidade_gestora = UnidadeGestora::withTrashed()->where('id', $id)->first();
-		if(isset($unidade_gestora)) {
-			try {
-				$unidade_gestora->restore();
-				return $this->response(true, 'Item restored.', 200);
-			}	catch(Exception $ex) {
-				return $this->response(false, $ex->getMessage(), 409);
-			}
-		} else {
-			return $this->response(false, 'Item not found.', 404);
-		}
-	}
-
-	public function indexWithTrashed()
-	{
-		try {
-			return $this->response(true, UnidadeGestora::withTrashed()->paginate(), 200);
-		} catch (Exception $ex) {
-			return $this->response(false, $ex->getMessage(), 409);
-		}
-	}
-
+	
 	public function index()
 	{
 		try {
@@ -130,9 +107,8 @@ class UnidadeGestoraController extends ApiBaseController
 	{
 		$validator = Validator::make($request->all(), [
 			'nome' => ['required'],
-			'cnpj' => ['required'],
-			'uasg' => ['required'],
-			'instituicao_id' => ['required', 'exists:instituicoes,id']
+			'ugr' => ['required'],
+			'unidade_gestora_id' => ['required', 'exists:unidades_gestoras,id']
 		]);
 
 		if ($validator->fails()) {
